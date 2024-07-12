@@ -49,12 +49,15 @@ function getView(){
         },
         vista_listado:()=>{
             return `
-            <div class="card card-rounded col-12 border-personal">
+            <div class="card card-rounded col-12 border-naranja">
                 <div class="card-body p-4">
 
                     <div class="row">
-                        <div class="col-6">
-                            <h5 class="text-personal negrita">Catálogo de Productos</h5>
+                        <div class="col-3">
+                            <img src="./favicon.png" width="50px" height="50px">
+                        </div>    
+                        <div class="col-3">
+                            <h5 class="text-naranja negrita">Catálogo de Productos</h5>
                             
                             <select class="form-control" id="cmbTipoLista">
                                 <option value="SI" class="negrita text-info">HABILITADOS</option>
@@ -73,24 +76,23 @@ function getView(){
                 </div>
             </div>
             <br>
-            <div class="card card-rounded col-12 border-personal">
+            <div class="card card-rounded col-12 border-naranja">
                 <div class="card-body p-2">
 
                     <div class="form-group">
                         <label>Búsqueda de productos</label>
-                        <input type="text" class="form-control border-personal negrita text-personal" placeholder="Escriba para filtrar..." id="txtBuscar">
+                        <input type="text" class="form-control border-naranja negrita text-naranja" placeholder="Escriba para filtrar..." id="txtBuscar">
                     </div>
                     <table class="table table-responsive h-full" id="tblProductos">
-                        <thead class="bg-personal text-white f-med">
+                        <thead class="bg-naranja text-white f-med">
                             <tr>
                                 <td>CÓDIGO</td>
                                 <td>DESCRIPCIÓN</td>
-                                <td>COSTO</td>
+                                <td>COSTO ULTIMO</td>
+                                <td>COSTO ANTERIOR</td>
                                 <td>MARCA</td>
                                 <td>TIPO</td>
-                                <td>UXC</td>
                                 <td>ACT</td>
-                                <td>EXISTENCIA</td>
                             </tr>
                         </thead>
                         <tbody id="tblDataProductos">
@@ -113,7 +115,7 @@ function getView(){
             <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_menu_producto">
                 <div class="modal-dialog modal-dialog-left modal-lg">
                     <div class="modal-content">
-                        <div class="dropdown-header bg-personal d-flex justify-content-center align-items-center w-100">
+                        <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
                             <h4 class="m-0 text-center color-white">
                                  Opciones del Producto
                             </h4>
@@ -131,9 +133,9 @@ function getView(){
                                                 <i class="fal fa-edit"></i>
                                             </button>  <b class="text-info hand">Editar Producto</b>
                                         <hr class="solid">
-                                            <button class="btn btn-circle btn-personal" id="btnProdMenKardex">
+                                            <button class="btn btn-circle btn-naranja" id="btnProdMenKardex">
                                                 <i class="fal fa-list"></i>
-                                            </button>  <b class="text-personal hand">Kardex</b>
+                                            </button>  <b class="text-naranja hand">Kardex</b>
                                         <hr class="solid">
                                         
                                             <button class="btn btn-circle btn-danger" id="btnProdMenEliminar">
@@ -143,14 +145,14 @@ function getView(){
                                     </div>
 
                                     <div class="col-6">
-                                            <button class="btn btn-circle btn-personal" id="btnProdMenVentas">
+                                            <button class="btn btn-circle btn-naranja" id="btnProdMenVentas">
                                                 <i class="fal fa-chart-pie"></i>
-                                            </button>  <b class="text-personal hand">Ventas por Fechas</b>
+                                            </button>  <b class="text-naranja hand">Ventas por Fechas</b>
                                         
                                         <hr class="solid">
-                                            <button class="btn btn-circle btn-personal" id="btnProdMenCompras">
+                                            <button class="btn btn-circle btn-naranja" id="btnProdMenCompras">
                                                 <i class="fal fa-box"></i>
-                                            </button>  <b class="text-personal hand">Compras por Fechas</b>
+                                            </button>  <b class="text-naranja hand">Compras por Fechas</b>
                                         
                                         <hr class="solid">
                                             <button class="btn btn-circle btn-warning" id="btnProdMenActivar">
@@ -169,7 +171,7 @@ function getView(){
                                 <div class="card-body">
 
                                     <table class="table table-responsive h-full">
-                                        <thead class="bg-personal text-white">
+                                        <thead class="bg-naranja text-white">
                                             <tr>
                                                 <td>MEDIDA</td>
                                                 <td>EQ</td>
@@ -211,22 +213,28 @@ function getView(){
             <div class="row">
 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="card card-rounded col-12 border-personal">
+                        <div class="card card-rounded col-12 border-naranja">
                             <div class="card-body p-4" style="font-size:80%"> 
-                                    
-                                        <label class="negrita text-personal">Código</label>
-                                        <input type="text" class="form-control" id="txtCodprod" maxlength="50">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="negrita text-naranja">Código</label>
+                                            <input type="text" class="form-control" id="txtCodprod" maxlength="50">
+                                        </div>
+                                        <div class="col-6">
+                                           <label class="negrita text-naranja">Código Alterno (Barras)</label>
+                                            <input type="text" class="form-control" id="txtCodprod2" maxlength="50">
+                                        </div>
+                                    </div>
+                                  
+                                     
                                     <br>
-                                        <label class="negrita text-personal">Código Alterno (Barras)</label>
-                                        <input type="text" class="form-control" id="txtCodprod2" maxlength="50">
-                                    <br>
-                                        <label class="negrita text-personal">Descripción</label>
+                                        <label class="negrita text-naranja">Descripción</label>
                                         <input type="text" class="form-control" id="txtDesprod" maxlength="255">
                                     <br>
-                                        <label class="negrita text-personal">Descripción 2</label>
+                                        <label class="negrita text-naranja">Componente</label>
                                         <input type="text" class="form-control" id="txtDesprod2" maxlength="255">
                                     <br>
-                                        <label class="negrita text-personal">Descripción 3</label>
+                                        <label class="negrita text-naranja">Uso / Dosis</label>
                                         <input type="text" class="form-control" id="txtDesprod3" maxlength="255">
                                     <br>
                                      
@@ -235,34 +243,26 @@ function getView(){
                 </div>
                 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="card card-rounded col-12 border-personal">
+                        <div class="card card-rounded col-12 border-naranja">
                             <div class="card-body p-4" style="font-size:80%">
 
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <label class="negrita text-personal">Unidades por Caja (UxC)</label>
+                                            
+                                                <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
                                                 <input type="number" class="form-control" id="txtUxc">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="negrita text-personal">Inventario Mínimo</label>
+                                            <br><br>
+                                                <label class="negrita text-naranja">Inventario Mínimo</label>
                                                 <input type="number" class="form-control text-danger" id="txtInvminimo" value=0>
-                                            </div>
-                                        </div>
-                                        
-                                        <br>
-
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label class="negrita text-personal">Tipo Producto</label>
+                                            <br><br>                                       
+                                                <label class="negrita text-naranja">Tipo Producto</label>
                                                 <select class="form-control" id="cmbTipoProd">
                                                     <option value="P">BIEN</option>
                                                     <option value="S">SERVICIO</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="negrita text-personal">Color Alerta</label>
+                                            <br><br>
+                                                <label class="negrita text-naranja">Color Alerta</label>
                                                 <select class="form-control" id="cmbColor">
                                                     <option value="0">NINGUNO</option>
                                                     <option value="1">AMARILLO</option>
@@ -273,51 +273,51 @@ function getView(){
                                                     <option value="6">ROSADO</option>
                                                     <option value="7">NARANJA</option>
                                                 </select>
-                                            </div>
                                         </div>
-                                        <br>
+
                                     </div>
+
                                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         
 
-                                        <label class="negrita text-personal">Marca</label>
+                                        <label class="negrita text-naranja">Marca</label>
                                         <div class="input-group">
                                             <select class="form-control" id="cmbMarca">
                                             </select>
-                                            <button class="btn btn-personal hand" id="btnBuscarMarca">
+                                            <button class="btn btn-naranja hand" id="btnBuscarMarca">
                                                 <i class="fal fa-search"></i>
                                             </button>
                                         </div>
                                         
                                         <br>
 
-                                        <label class="negrita text-personal">Fabricante</label>
+                                        <label class="negrita text-naranja">Fabricante</label>
                                         <div class="input-group">
                                             <select class="form-control" id="cmbClaseuno">
                                             </select>
-                                            <button class="btn btn-personal hand" id="btnBuscarClaseuno">
+                                            <button class="btn btn-naranja hand" id="btnBuscarClaseuno">
                                                 <i class="fal fa-search"></i>
                                             </button>
                                         </div>
                                         
                                         <br>
 
-                                        <label class="negrita text-personal">Proveedor</label>
+                                        <label class="negrita text-naranja">Proveedor</label>
                                         <div class="input-group">
                                             <select class="form-control" id="cmbProveedor">
                                             </select>    
-                                            <button class="btn btn-personal hand" id="btnBuscarProv">
+                                            <button class="btn btn-naranja hand" id="btnBuscarProv">
                                                 <i class="fal fa-search"></i>
                                             </button>
                                         </div>
                                         
                                         <br>
 
-                                        <label class="negrita text-personal">Clasificación</label>
+                                        <label class="negrita text-naranja">Clasificación</label>
                                         <div class="input-group">
                                             <select class="form-control" id="cmbClasedos">
                                             </select>
-                                            <button class="btn btn-personal hand">
+                                            <button class="btn btn-naranja hand">
                                                 <i class="fal fa-search"></i>
                                             </button>
                                         </div>
@@ -335,12 +335,12 @@ function getView(){
 
             <div class="row">
                 <div class="col-12">
-                        <div class="card card-rounded col-12 border-personal">
+                        <div class="card card-rounded col-12 border-naranja">
                             <div class="card-body p-4" style="font-size:80%"> 
 
                                 <h5 class="negrita text-danger">Gestión de Precios</h5>
                                 <br>
-                                <label class="negrita text-personal">Costo Unitario</label>
+                                <label class="negrita text-naranja">Costo Unitario</label>
                                 <div class="input-group">
                                     <input type="number" class="form-control text-danger col-3 negrita" id="txtCosto">
                                     <button class="btn btn-success hand hidden" id="">
@@ -396,7 +396,7 @@ function getView(){
             <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_nuevo_precio">
                 <div class="modal-dialog modal-dialog-right modal-xl">
                     <div class="modal-content">
-                        <div class="dropdown-header bg-personal d-flex justify-content-center align-items-center w-100">
+                        <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
                             <h4 class="m-0 text-center color-white" id="">
                                 Nuevo Precio
                             </h4>
@@ -406,7 +406,7 @@ function getView(){
                                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
 
                                     <table class="table table-responsive h-full f-med">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>MEDIDA_PRECIO</td>
                                                 <td>EQUIVALE</td>
@@ -418,7 +418,7 @@ function getView(){
                                                     <div class="input-group">
                                                         <select class="form-control bg-amarillo" id="cmbPreMedida">
                                                         </select>
-                                                        <button class="btn btn-personal hand" id="btnBuscarMedidas">
+                                                        <button class="btn btn-naranja hand" id="btnBuscarMedidas">
                                                             <i class="fal fa-search"></i>
                                                         </button>
                                                     </div>
@@ -435,7 +435,7 @@ function getView(){
                                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
 
                                     <table class="table table-responsive h-full f-med">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>COSTO UN.</td>
                                                 <td>COSTO MEDIDA</td>
@@ -465,8 +465,8 @@ function getView(){
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td class="negrita text-personal">Utilidad</td>
-                                            <td class="negrita text-personal">Margen %</td>
+                                            <td class="negrita text-naranja">Utilidad</td>
+                                            <td class="negrita text-naranja">Margen %</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -536,7 +536,7 @@ function getView(){
                             <div class="card card-rounded">
                                 <div class="card-body p-2">
                                     <table class="table table-responsive">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>MEDIDA</td>
                                                 <td></td>    
@@ -545,9 +545,9 @@ function getView(){
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="text" maxlength="30" class="border-personal form-control negrita text-personal" id="txtProdCodmedida"></td>
+                                                    <input type="text" maxlength="30" class="border-naranja form-control negrita text-naranja" id="txtProdCodmedida"></td>
                                                 <td>
-                                                    <button class="btn btn-personal hand shadow" id="btnProdAgregarMedida">
+                                                    <button class="btn btn-naranja hand shadow" id="btnProdAgregarMedida">
                                                         <i class="fal fa-plus"></i> Agregar
                                                     </button>
                                                 </td>    
@@ -560,7 +560,7 @@ function getView(){
                             
 
                             <table class="table table-responsive h-full f-med" id="">
-                                <thead class="negrita bg-personal text-white">
+                                <thead class="negrita bg-naranja text-white">
                                     <tr>
                                         <td>MEDIDA</td>
                                         <td></td>
@@ -601,7 +601,7 @@ function getView(){
                             <div class="card card-rounded">
                                 <div class="card-body p-2">
                                     <table class="table table-responsive">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>CÓDIGO</td>
                                                 <td>MARCA</td>
@@ -611,11 +611,11 @@ function getView(){
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="number" class="border-personal form-control negrita text-personal" id="txtProdCodmarca"></td>
+                                                    <input type="number" class="border-naranja form-control negrita text-naranja" id="txtProdCodmarca"></td>
                                                 <td>
-                                                    <input type="text" class="border-personal form-control negrita text-personal" id="txtProdDesmarca"></td>
+                                                    <input type="text" class="border-naranja form-control negrita text-naranja" id="txtProdDesmarca"></td>
                                                 <td>
-                                                    <button class="btn btn-personal hand shadow" id="btnProdAgregarMarca">
+                                                    <button class="btn btn-naranja hand shadow" id="btnProdAgregarMarca">
                                                         <i class="fal fa-plus"></i> Agregar
                                                     </button>
                                                 </td>    
@@ -627,11 +627,11 @@ function getView(){
 
                             <div class="form-group">
                                 <label>Búsqueda de Marcas</label>
-                                <input type="search" class="negrita text-personal border-personal form-control" id="txtBuscarProdMarcas" oninput="funciones.FiltrarTabla('tblProdMarcas','txtBuscarProdMarcas')">
+                                <input type="search" class="negrita text-naranja border-naranja form-control" id="txtBuscarProdMarcas" oninput="funciones.FiltrarTabla('tblProdMarcas','txtBuscarProdMarcas')">
                             </div>
 
                             <table class="table table-responsive h-full f-med" id="tblProdMarcas">
-                                <thead class="negrita bg-personal text-white">
+                                <thead class="negrita bg-naranja text-white">
                                     <tr>
                                         <td>CODIGO</td>
                                         <td>MARCA</td>
@@ -673,7 +673,7 @@ function getView(){
                             <div class="card card-rounded">
                                 <div class="card-body p-2">
                                     <table class="table table-responsive">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>CÓDIGO</td>
                                                 <td>FABRICANTE</td>
@@ -683,11 +683,11 @@ function getView(){
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="number" class="border-personal form-control negrita text-personal" id="txtProdCodClaseuno"></td>
+                                                    <input type="number" class="border-naranja form-control negrita text-naranja" id="txtProdCodClaseuno"></td>
                                                 <td>
-                                                    <input type="text" class="border-personal form-control negrita text-personal" id="txtProdDesClaseuno"></td>
+                                                    <input type="text" class="border-naranja form-control negrita text-naranja" id="txtProdDesClaseuno"></td>
                                                 <td>
-                                                    <button class="btn btn-personal hand shadow" id="btnProdAgregarClaseuno">
+                                                    <button class="btn btn-naranja hand shadow" id="btnProdAgregarClaseuno">
                                                         <i class="fal fa-plus"></i> Agregar
                                                     </button>
                                                 </td>    
@@ -699,11 +699,11 @@ function getView(){
 
                             <div class="form-group">
                                 <label>Búsqueda de Fabricantes</label>
-                                <input type="search" class="negrita text-personal border-personal form-control" id="txtBuscarProdClaseuno" oninput="funciones.FiltrarTabla('tblProdClaseuno','txtBuscarProdClaseuno')">
+                                <input type="search" class="negrita text-naranja border-naranja form-control" id="txtBuscarProdClaseuno" oninput="funciones.FiltrarTabla('tblProdClaseuno','txtBuscarProdClaseuno')">
                             </div>
 
                             <table class="table table-responsive h-full f-med" id="tblProdClaseuno">
-                                <thead class="negrita bg-personal text-white">
+                                <thead class="negrita bg-naranja text-white">
                                     <tr>
                                         <td>CODIGO</td>
                                         <td>FABRICANTE</td>
@@ -745,7 +745,7 @@ function getView(){
                             <div class="card card-rounded">
                                 <div class="card-body p-2">
                                     <table class="table table-responsive">
-                                        <thead class="negrita text-personal">
+                                        <thead class="negrita text-naranja">
                                             <tr>
                                                 <td>CODIGO</td>
                                                 <td>PROVEEDOR</td>
@@ -755,11 +755,11 @@ function getView(){
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="number" class="border-personal form-control negrita text-personal" id="txtProdCodProv"></td>
+                                                    <input type="number" class="border-naranja form-control negrita text-naranja" id="txtProdCodProv"></td>
                                                 <td>
-                                                    <input type="text" class="border-personal form-control negrita text-personal" id="txtProdDesProv"></td>
+                                                    <input type="text" class="border-naranja form-control negrita text-naranja" id="txtProdDesProv"></td>
                                                 <td>
-                                                    <button class="btn btn-personal hand shadow" id="btnProdAgregarProv">
+                                                    <button class="btn btn-naranja hand shadow" id="btnProdAgregarProv">
                                                         <i class="fal fa-plus"></i> Agregar
                                                     </button>
                                                 </td>    
@@ -771,11 +771,11 @@ function getView(){
 
                             <div class="form-group">
                                 <label>Búsqueda de Fabricantes</label>
-                                <input type="search" class="negrita text-personal border-personal form-control" id="txtBuscarProdProv" oninput="funciones.FiltrarTabla('tblProdProv','txtBuscarProdProv')">
+                                <input type="search" class="negrita text-naranja border-naranja form-control" id="txtBuscarProdProv" oninput="funciones.FiltrarTabla('tblProdProv','txtBuscarProdProv')">
                             </div>
 
                             <table class="table table-responsive h-full f-med" id="tblProdProv">
-                                <thead class="negrita bg-personal text-white">
+                                <thead class="negrita bg-naranja text-white">
                                     <tr>
                                         <td>CODIGO</td>
                                         <td>PROVEEDOR</td>
@@ -2232,30 +2232,27 @@ function get_tbl_productos(){
     data_productos_listado(filtro)
     .then((data)=>{
         
-        let conteo = 0;
         data.recordset.map((r)=>{
-            let strClass= ''; if(Number(r.EXISTENCIA)>0){strClass='text-success'}else{strClass='text-danger'};
-            conteo += 1;
             str += `
-                <tr class="hand border-bottom border-personal" 
+                <tr class="hand border-bottom border-naranja" 
                 onclick="get_detalle_producto('${r.CODPROD}','${r.DESPROD}','${r.DESPROD2}','${funciones.setMoneda(r.COSTO,'Q')}','${funciones.convertDateNormal(r.LASTUPDATE)}','${r.HABILITADO}')">
                     <td>${r.CODPROD}</td>
                     <td>${r.DESPROD}</td>
                     <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
+                     <td>${funciones.setMoneda(r.COSTO_ANTERIOR,'Q')}</td>
                     <td>${r.DESMARCA}</td>
                     <td>${r.TIPOPROD}</td>
-                    <td>${r.UXC}</td>
                     <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
-                    <td class="negrita ${strClass}">${r.EXISTENCIA}</td>
                 </tr>
             `
         })
         container.innerHTML = str;
-        lbTotalProductos.innerText = conteo;
+        lbTotalProductos.innerText = '';
     })
     .catch((err)=>{
+        console.log(err)
         container.innerHTML = 'No hay datos para mostrar...';
-        lbTotalProductos.innerText = '-----';
+        lbTotalProductos.innerText = '';
     })
 
 };
