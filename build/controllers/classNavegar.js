@@ -19,6 +19,13 @@ let Navegar = {
             initView();
         })
     },
+    menu:()=>{
+        if(Number(GlobalNivelUsuario)==0){return;}
+        funciones.loadScript('../views/menu/menu.js','root')
+        .then(async()=>{
+            initView();
+        })
+    },
     inicio:()=>{
 
         switch (Number(GlobalNivelUsuario)) {
@@ -75,21 +82,8 @@ let Navegar = {
             initView();
         })
     },
-    pos:()=>{
-        funciones.loadScript('../views/pos/view_pos.js','root')
-        .then(async()=>{
-            initView();
-        })
-    },
     tasks:()=>{
         funciones.loadScript('../views/tasks/tasks.js','root')
-        .then(async()=>{
-            initView();
-        })
-    },
-    mantenimientos_productos:()=>{
-        if(Number(GlobalNivelUsuario)==0){return;}
-        funciones.loadScript('../views/productos/view_productos.js','root')
         .then(async()=>{
             initView();
         })

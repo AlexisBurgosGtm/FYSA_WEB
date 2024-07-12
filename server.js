@@ -32,7 +32,7 @@ app.use(cors({
 }));
 
 
-const PORT = process.env.PORT || 2001;
+const PORT = process.env.PORT || 2002;
 
 //app.use(bodyParser.json());
 app.use(express.json({limit: '25mb'}));

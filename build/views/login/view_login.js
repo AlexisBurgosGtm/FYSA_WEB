@@ -9,11 +9,11 @@ function getView(){
 
             <div class="col-md-6 col-sm-12 col-lg-6 col-lx-6">
    
-                <div  class="card shadow p-2 card-rounded border-personal">
+                <div  class="card shadow p-2 card-rounded border-naranja">
                     <div class="card-header text-center bg-white">
                         <div class="row" >
                             <div  id="scene" class="text-center">
-                                <img data-depth="1.0" id="imgLogo" src="./favicon.png" width="110" height="80" ondblclick="send_test()">                            
+                                <img data-depth="1.0" id="imgLogo" src="./favicon.png" width="110" height="110" ondblclick="send_test()">                            
                             </div>    
                         </div>
                     </div>
@@ -21,7 +21,7 @@ function getView(){
                         <div class="" id="frmLogin" autocomplete="off">
                            
                             <div class="form-group">
-                                <label class="negrita text-personal">Usuario:</label>
+                                <label class="negrita text-naranja">Usuario:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -32,7 +32,7 @@ function getView(){
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="negrita text-personal">Clave:</label>
+                                <label class="negrita text-naranja">Clave:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -48,7 +48,7 @@ function getView(){
                                     <small data-depth="0.8" class="text-secondary negrita">${versionapp}</small>
                                 </div>
                                 <div class="col-6" align="right">
-                                    <button class="btn btn-personal btn-xl shadow btn-circle" id="btnIniciar">
+                                    <button class="btn btn-naranja btn-xl shadow btn-circle" id="btnIniciar">
                                         <i class="fal fa-unlock"></i>  
                                     </button>
                                 </div>
@@ -76,12 +76,9 @@ function getView(){
 
 function addListeners(){
     
-    TOKEN = 'LOCAL';
-
-    document.getElementById('btnIniciar').style="visibility:hidden";
+    TOKEN = 'FSYA';
 
     cmbEmpresa.innerHTML = get_empresas();
-    document.getElementById('btnIniciar').style="visibility:visible";
 
     /*
         get_data_empresas()
@@ -101,18 +98,23 @@ function addListeners(){
       */
 
         GlobalNivelUsuario = 0;
-        //data_empresas = [];
-         `<option value=''>No hay empresas disponibles...</option>`;
-
+    
         let btnIniciar = document.getElementById('btnIniciar');
         btnIniciar.addEventListener('click',()=>{
             
+            console.log('iniciando...')
+            GlobalNivelUsuario = 1;
+            Navegar.menu();
+            return;
+
+
             let u = document.getElementById('txtUser').value || '';
             let p = document.getElementById('txtPass').value || '';
 
             btnIniciar.innerHTML = `<i class="fal fa-unlock fa-spin"></i>`;
             btnIniciar.disabled = true;
 
+            
             login(u,p)
             .then((data)=>{
                 

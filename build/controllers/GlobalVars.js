@@ -3,7 +3,8 @@
 let GlobalUrlCalls = '';
 let GlobalUrlServicioLocal = 'http://192.168.1.16:8080'
 let GlobalUrlPrinter = 'http://192.168.0.250:9000'
-let TOKEN = '';
+let TOKEN = 'FSYA';
+let GlobalEmpnitBodega = 'FSYA000';
 
 let GlobalUsuario = '';
 let GlobalPass = '';
@@ -23,9 +24,9 @@ let navmenu = document.getElementById('js-nav-menu');
 let GlobalLoader = `
 
                 <div>
-                    <div class="spinner-border text-warning" role="status"><span class="sr-only">Loading...</span></div>
-                    <div class="spinner-border text-warning" role="status"><span class="sr-only">Loading...</span></div>
-                    <div class="spinner-border text-warning" role="status"><span class="sr-only">Loading...</span></div>
+                    <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>
+                    <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>
+                    <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>
                 </div>
                 `
                

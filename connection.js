@@ -1,86 +1,18 @@
 ﻿
 function get_conf_token(token){
-
+	//token = empresa que manda la solicitud (puede cambiarse entre empresas)
 	let config = [];
 
-	switch (token) {
-		case 'PRUEBAS':
-			config = {
-				user: 'db_a6478c_onneweb_admin',
-				password: 'razors1805',
-				server: 'sql5092.site4now.net',
-				database: 'db_a6478c_onneweb',
-				pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-			};
-			break;
-		case 'SACOR':
-			config = {
-				user: 'db_a6478c_sacor_admin',
-				password: 'razors1805',
-				server: 'sql5052.site4now.net',
-				database: 'db_a6478c_sacor',
-				pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-			};
-			break;
-		case 'ONNE':
-			config = {
-				user: 'db_a6478c_onneweb_admin',
-				password: 'razors1805',
-				server: 'sql5092.site4now.net',
-				database: 'db_a6478c_onneweb',
-				pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-			};
-			break;	
-		case 'PROXY':
-				config = {
-					user: 'db_a6478c_onneweb_admin',
-					password: 'razors1805',
-					server: 'sql5092.site4now.net',
-					database: 'db_a6478c_onneweb',
-					pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-				};
-				break;
-		case 'LOCAL':
-			config = {
-				user: 'iEx',
-				password: 'iEx',
-				server: 'DESKTOP-E0KG096\\SQL17',
-				database: 'ONNE',
-				pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-			};
-			break;
-		case '':
-			
-			break;
-
-	}
-
-	/*
-	config = {
-		user: 'iEx',
-		password: 'iEx',
-		server: 'DESKTOP-E0KG096\\SQL17',
-		database: 'ONNE',
-		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-	};
-	*/
 	
 	config = {
-		user: 'db_a6478c_onneweb_admin',
+		user: 'db_a6478c_fsyaweb_admin',
 		password: 'razors1805',
-		server: 'sql5092.site4now.net',
-		database: 'db_a6478c_onneweb',
+		server: 'sql5108.site4now.net',
+		database: 'db_a6478c_fsyaweb',
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 	
-	let configxx = {
-		user: 'db_a6478c_sacor_admin',
-		password: 'razors1805',
-		server: 'sql5052.site4now.net',
-		database: 'db_a6478c_sacor',
-		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-	};
-	
+
 	return config;
 	
 }

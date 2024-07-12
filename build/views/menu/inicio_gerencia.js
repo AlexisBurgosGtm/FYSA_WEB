@@ -170,6 +170,7 @@ function getView(){
 
 function addListeners(){
 
+    console.log('inicio gerencia')
 
     cmbEmpresa.removeEventListener('change', handle_empresa_change)
     cmbEmpresa.addEventListener('change', handle_empresa_change)

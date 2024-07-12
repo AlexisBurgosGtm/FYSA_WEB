@@ -242,22 +242,20 @@ router.post("/listado", async(req,res)=>{
     let qry = `
         SELECT TOP 50 PRODUCTOS.CODPROD, 
             PRODUCTOS.DESPROD, PRODUCTOS.DESPROD2, PRODUCTOS.DESPROD3, 
-            PRODUCTOS.UXC, PRODUCTOS.COSTO, 
+            PRODUCTOS.UXC, PRODUCTOS.COSTO_ULTIMO AS COSTO, 
             PRODUCTOS.CODMARCA, MARCAS.DESMARCA, 
             PRODUCTOS.TIPOPROD, 
             ISNULL(PRODUCTOS.LASTUPDATE,'2020-01-01') AS LASTUPDATE, 
             PRODUCTOS.EXISTENCIA,
             PRODUCTOS.HABILITADO
         FROM PRODUCTOS LEFT OUTER JOIN
-        MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA AND PRODUCTOS.EMPNIT = MARCAS.EMPNIT
-        WHERE (PRODUCTOS.EMPNIT = '${sucursal}')
-            AND (PRODUCTOS.CODPROD='${filtro}') 
+        MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
+        WHERE (PRODUCTOS.CODPROD='${filtro}') 
             AND (PRODUCTOS.HABILITADO='${habilitado}')
             OR
-            (PRODUCTOS.EMPNIT = '${sucursal}')
-            AND (PRODUCTOS.DESPROD LIKE '%${filtro}%') 
+            (PRODUCTOS.DESPROD LIKE '%${filtro}%') 
             AND (PRODUCTOS.HABILITADO='${habilitado}')
-        ORDER BY PRODUCTOS.CODPROD
+        ORDER BY PRODUCTOS.DESPROD
     `
   
     execute.QueryToken(res,qry,token);
@@ -272,11 +270,11 @@ router.post("/lista_precios", async(req,res)=>{
    
     let qry = `
     SELECT ID,  
-    EMPNIT,CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO AS PRECIOP,
+    ODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO AS PRECIOP,
 	UTILIDAD,PORCUTILIDAD,HABILITADO,MAYOREOA AS PRECIOA,
 	MAYOREOB AS PRECIOB,MAYOREOC AS PRECIOC,PESO,MARGEN,LASTUPDATE
     FROM
-    PRECIOS WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
+    PRECIOS WHERE CODPROD='${codprod}';
     `
 
     execute.QueryToken(res,qry,token);
@@ -306,8 +304,7 @@ router.post("/listado_medidas", async(req,res)=>{
     const { token, sucursal } = req.body;
 
     let qry = `
-        SELECT CODMEDIDA, TIPOPRECIO AS DESMEDIDA FROM MEDIDAS  
-        WHERE EMPNIT='${sucursal}';
+        SELECT CODMEDIDA, DESMEDIDA FROM MEDIDAS  
     `
     
   
@@ -320,8 +317,8 @@ router.post("/insert_medida", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO MEDIDAS (EMPNIT,CODMEDIDA,TIPOPRECIO) 
-    VALUES ('${sucursal}','${codigo}','${descripcion}');
+    INSERT INTO MEDIDAS (CODMEDIDA,DESMEDIDA) 
+    VALUES ('${codigo}','${descripcion}');
     `
 
     execute.QueryToken(res,qry,token);
@@ -337,7 +334,6 @@ router.post("/listado_marcas", async(req,res)=>{
     let qry = `
         SELECT CODMARCA, DESMARCA 
         FROM MARCAS 
-        WHERE EMPNIT='${sucursal}'
         ORDER BY DESMARCA;
     `
     
@@ -352,7 +348,7 @@ router.post("/insert_marca", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO MARCAS (EMPNIT,CODMARCA,DESMARCA) VALUES ('${sucursal}',${codmarca},'${desmarca}');
+    INSERT INTO MARCAS (CODMARCA,DESMARCA) VALUES (${codmarca},'${desmarca}');
     `
 
     execute.QueryToken(res,qry,token);
@@ -365,7 +361,6 @@ router.post("/listado_claseuno", async(req,res)=>{
 
     let qry = `
         SELECT CODCLAUNO, DESCLAUNO FROM CLASIFICACIONUNO  
-        WHERE EMPNIT='${sucursal}'
         ORDER BY DESCLAUNO;
     `
     
@@ -380,8 +375,8 @@ router.post("/insert_claseuno", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO CLASIFICACIONUNO (EMPNIT,CODCLAUNO,DESCLAUNO) 
-    VALUES ('${sucursal}',${codigo},'${descripcion}');
+    INSERT INTO CLASIFICACIONUNO (CODCLAUNO,DESCLAUNO) 
+    VALUES (${codigo},'${descripcion}');
     `
 
     execute.QueryToken(res,qry,token);
@@ -397,7 +392,6 @@ router.post("/listado_proveedores", async(req,res)=>{
 
     let qry = `
         SELECT CODPROV, EMPRESA FROM PROVEEDORES  
-        WHERE EMPNIT='${sucursal}'
         ORDER BY EMPRESA;
     `
     
@@ -412,8 +406,8 @@ router.post("/insert_proveedor", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO PROVEEDORES (EMPNIT,CODPROV,EMPRESA,RAZONSOCIAL,DIRECCION,TELEMPRESA,CONTACTO,TELCONTACTO,NIT,SALDO) 
-    VALUES ('${sucursal}',${codigo},'${descripcion}','${descripcion}','CIUDAD','000','SN','SN','CF',0);
+    INSERT INTO PROVEEDORES (CODPROV,EMPRESA,RAZONSOCIAL,DIRECCION,TELEMPRESA,CONTACTO,TELCONTACTO,NIT,SALDO) 
+    VALUES (${codigo},'${descripcion}','${descripcion}','CIUDAD','000','SN','SN','CF',0);
     `
 
     execute.QueryToken(res,qry,token);
@@ -429,7 +423,6 @@ router.post("/listado_clasedos", async(req,res)=>{
 
     let qry = `
         SELECT CODCLADOS, DESCLADOS FROM CLASIFICACIONDOS  
-        WHERE EMPNIT='${sucursal}'
         ORDER BY DESCLADOS;
     `
     
