@@ -483,7 +483,7 @@ function getView(){
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="negrita">Precio Mayoreo A</td>
+                                            <td class="negrita">Precio A</td>
                                             <td>
                                                 <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoA">
                                             </td>
@@ -492,6 +492,66 @@ function getView(){
                                             </td>
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoA" disabled=true>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="negrita">Precio B</td>
+                                            <td>
+                                                <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoB">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreUtilidadMayoreoB" disabled=true>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoB" disabled=true>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="negrita">Precio C</td>
+                                            <td>
+                                                <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoC">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreUtilidadMayoreoC" disabled=true>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoC" disabled=true>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="negrita">Precio D</td>
+                                            <td>
+                                                <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoD">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreUtilidadMayoreoD" disabled=true>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoD" disabled=true>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="negrita">Precio E</td>
+                                            <td>
+                                                <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoE">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreUtilidadMayoreoE" disabled=true>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoE" disabled=true>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="negrita">Precio F</td>
+                                            <td>
+                                                <input type="number" class="bg-amarillo form-control negrita text-danger" id="txtPreMayoreoF">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreUtilidadMayoreoF" disabled=true>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoF" disabled=true>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -816,12 +876,9 @@ function addListeners(){
 
     listeners_precios();
     
-    listeners_menu_productos();+
+    listeners_menu_productos();
 
     //LISTENERS DEL MENÚ PRODUCTOS
-    
-
-
     funciones.slideAnimationTabs();
 
 };
@@ -2157,7 +2214,6 @@ function delete_temp_precio(idbtn,id){
 };
 
 function delete_lista_temp_precios(){
-    
     
     return new Promise((resolve,reject)=>{
 

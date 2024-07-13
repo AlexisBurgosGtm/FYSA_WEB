@@ -4,16 +4,13 @@ const router = express.Router();
 
 
 
-
-
-
 router.post("/delete_lista_temp_precio", async(req,res)=>{
    
-    const {token,sucursal} = req.body;
+    const {token,sucursal,usuario} = req.body;
 
    
     let qry = `
-    DELETE FROM TEMP_PRECIOS WHERE EMPNIT='${sucursal}';
+    DELETE FROM TEMP_PRECIOS WHERE USUARIO='${usuario}';
     `
 
     execute.QueryToken(res,qry,token);
@@ -35,15 +32,16 @@ router.post("/delete_temp_precio", async(req,res)=>{
 
 router.post("/lista_precios_temp", async(req,res)=>{
    
-    const {token,sucursal} = req.body;
-
+    const {token,sucursal,usuario} = req.body;
    
     let qry = `
-    SELECT  
-    ID,CODMEDIDA,EQUIVALE,COSTO,PRECIO AS PRECIOP,UTILIDAD,MARGEN,
-    MAYOREOA AS PRECIOA,MAYOREOB AS PRECIOB,MAYOREOC AS PRECIOC,PESO
-    FROM 
-    TEMP_PRECIOS WHERE EMPNIT='${sucursal}';
+    SELECT ID,
+    CODMEDIDA, EQUIVALE, COSTO,
+    PRECIO, PRECIO_A, PRECIO_B, 
+    PRECIO_C, PRECIO_D, PRECIO_E, PRECIO_F, PESO
+        FROM 
+    TEMP_PRECIOS 
+    WHERE USUARIO='${usuario}';
     `
 
     execute.QueryToken(res,qry,token);
@@ -52,21 +50,24 @@ router.post("/lista_precios_temp", async(req,res)=>{
 
 router.post("/insert_temp_precio", async(req,res)=>{
    
-    const {token,sucursal,codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc} = req.body;
+    const {token,sucursal,codprod,usuario,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,preciod,precioe,preciof} = req.body;
 
-    let utilidadq = (Number(preciop)-Number(costo))
-    let margen = (utilidadq / Number(preciop))*100;
+
     let qry = `
     INSERT INTO TEMP_PRECIOS 
-    (EMPNIT,CODMEDIDA,EQUIVALE,COSTO,PRECIO,UTILIDAD,MARGEN,MAYOREOA,MAYOREOB,MAYOREOC,PESO) 
+    (CODMEDIDA,EQUIVALE,COSTO,
+    PRECIO,PRECIO_A,PRECIO_B,PRECIO_C,PRECIO_D,PRECIO_E,PRECIO_F,PESO,USUARIO) 
     VALUES 
-    ('${sucursal}','${codmedida}',${equivale},${costo},${preciop},${utilidadq},${margen},
-    ${precioa},${preciob},${precioc},${peso});
+    ('${codmedida}',${equivale},${costo},
+    ${preciop},${precioa},${preciob},${precioc},${preciod},${precioe},${preciof},${peso},'${usuario}');
     `
     
     execute.QueryToken(res,qry,token);
      
 });
+
+
+
 
 router.post("/verify_codprod", async(req,res)=>{
    
@@ -156,8 +157,7 @@ router.post("/datos_producto", async(req,res)=>{
 
     let qry = `
         SELECT * FROM PRODUCTOS
-        WHERE (EMPNIT = '${sucursal}')
-            AND (CODPROD='${codprod}')
+        WHERE (CODPROD='${codprod}')
         `
   
     execute.QueryToken(res,qry,token);
@@ -192,7 +192,7 @@ router.post("/desactivar_producto", async(req,res)=>{
     let qry = `
         UPDATE PRODUCTOS
             SET HABILITADO='${st}' 
-            WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
+            WHERE CODPROD='${codprod}';
             `
     
   
@@ -206,29 +206,26 @@ router.post("/delete_producto", async(req,res)=>{
     const {token,sucursal,codprod} = req.body;
 
     let qry = `
-    DELETE FROM PRODUCTOS WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
-    DELETE FROM PRECIOS WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
-    DELETE FROM INVSALDO WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
+    DELETE FROM PRODUCTOS WHERE CODPROD='${codprod}';
+    DELETE FROM PRECIOS WHERE CODPROD='${codprod}';
     `
-    
+
     execute.QueryToken(res,qry,token);
      
 });
 
 router.post("/insert_precio", async(req,res)=>{
    
-    const {token,sucursal,codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,lastupdate} = req.body;
+    const {token,sucursal,codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,preciod,precioe,preciof,lastupdate} = req.body;
 
-    let utilidadq = (Number(preciop)-Number(costo))
-    let margen = (utilidadq / Number(preciop))*100;
     let qry = `
     INSERT INTO PRECIOS 
-    (EMPNIT,CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO,UTILIDAD,MARGEN,MAYOREOA,MAYOREOB,MAYOREOC,PESO,HABILITADO,LASTUPDATE) 
+    (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO,PRECIO_A,PRECIO_B,PRECIO_C,PRECIO_D,PRECIO_E,PRECIO_F,PESO,HABILITADO,LASTUPDATE) 
     VALUES 
-    ('${sucursal}','${codprod}','${codmedida}',${equivale},${costo},${preciop},${utilidadq},${margen},
-    ${precioa},${preciob},${precioc},${peso},'SI','${lastupdate}');
+    ('${codprod}','${codmedida}',${equivale},${costo},${preciop},${precioa},${preciob},
+    ${precioc},${preciod},${precioe},${preciof},${peso},'SI','${lastupdate}');
     `
-    console.log(qry)
+   
     execute.QueryToken(res,qry,token);
      
 });
@@ -272,9 +269,9 @@ router.post("/lista_precios", async(req,res)=>{
    
     let qry = `
     SELECT ID,  
-    ODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO AS PRECIOP,
-	UTILIDAD,PORCUTILIDAD,HABILITADO,MAYOREOA AS PRECIOA,
-	MAYOREOB AS PRECIOB,MAYOREOC AS PRECIOC,PESO,MARGEN,LASTUPDATE
+    CODPROD,CODMEDIDA,EQUIVALE,COSTO,
+    PRECIO, PRECIO_A,PRECIO_B, PRECIO_C, PRECIO_D, PRECIO_E, PRECIO_F,
+	HABILITADO,PESO,LASTUPDATE
     FROM
     PRECIOS WHERE CODPROD='${codprod}';
     `
@@ -350,7 +347,7 @@ router.post("/insert_marca", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO MARCAS (CODMARCA,DESMARCA) VALUES (${codmarca},'${desmarca}');
+    INSERT INTO MARCAS (CODMARCA,DESMARCA,PORCENTAJE) VALUES (${codmarca},'${desmarca}',0);
     `
 
     execute.QueryToken(res,qry,token);
@@ -408,8 +405,8 @@ router.post("/insert_proveedor", async(req,res)=>{
 
    
     let qry = `
-    INSERT INTO PROVEEDORES (CODPROV,EMPRESA,RAZONSOCIAL,DIRECCION,TELEMPRESA,CONTACTO,TELCONTACTO,NIT,SALDO) 
-    VALUES (${codigo},'${descripcion}','${descripcion}','CIUDAD','000','SN','SN','CF',0);
+    INSERT INTO PROVEEDORES (EMPRESA,RAZONSOCIAL,DIRECCION,TELEMPRESA,CONTACTO,TELCONTACTO,NIT,SALDO) 
+    VALUES ('${descripcion}','${descripcion}','CIUDAD','000','SN','SN','CF',0);
     `
 
     execute.QueryToken(res,qry,token);
