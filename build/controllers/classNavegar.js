@@ -21,13 +21,14 @@ let Navegar = {
     },
     menu:()=>{
         if(Number(GlobalNivelUsuario)==0){return;}
+        btnMenu.style = "visibility:visible";   
         funciones.loadScript('../views/menu/menu.js','root')
         .then(async()=>{
             initView();
         })
     },
     inicio:()=>{
-
+      
         switch (Number(GlobalNivelUsuario)) {
             case 1:
                 Navegar.inicio_gerencia();
@@ -45,7 +46,7 @@ let Navegar = {
                 Navegar.inicio_administrador();
                 break;
         }
-        //btnMenu.style = "visibility:visible";
+            
     },
     inicio_gerencia:()=>{
         if(Number(GlobalNivelUsuario)==0){return;}

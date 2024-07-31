@@ -20,6 +20,8 @@ var router_despacho = require('./router/router_despacho');
 var router_ordenes = require('./router/router_ordenes');
 var router_equipos = require('./router/router_equipos');
 var router_clientes = require('./router/router_clientes');
+var router_tipodocumentos = require('./router/router_tipodocumentos');
+
 
 var http = require('http').Server(app);
 //var io = require('socket.io')(http);
@@ -161,6 +163,7 @@ app.use('/despacho', router_despacho);
 app.use('/ordenes', router_ordenes);
 app.use('/equipos', router_equipos);
 app.use('/clientes', router_clientes);
+app.use('/tipodocumentos', router_tipodocumentos);
 
 
 

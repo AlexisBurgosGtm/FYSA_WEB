@@ -7,14 +7,14 @@ function getView(){
                     <div class="col-2 text-left">
                             <img src="./favicon.png" width="50px" height="50px">
                     </div>
-                    <div class="card bg-personal card-rounded shadow col-10 p-2">
+                    <div class="card bg-naranja card-rounded shadow col-10 p-2">
                         
                             <div class="row">
                                 <div class="col-4 text-left">   
-                                    <label class="text-white negrita h5" style="font-size:180%">Punto de Venta</label>
+                                    <label class="text-white negrita h5" style="font-size:120%">Punto de Venta</label>
                                 </div>
                                 <div class="col-4 text-left">
-                                    <label class="text-white negrita h5" style="font-size:140%" id="lbTotalItems">0 items</label>
+                                    <label class="text-white negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
                                 <div class="col-4 text-right">
                                     <h1 class="text-white negrita" id="lbTotalVenta">Q 0.00</h1>
@@ -34,7 +34,7 @@ function getView(){
                         </div>
 
                         <div class="tab-pane fade" id="documento" role="tabpanel" aria-labelledby="home-tab">
-                            ${view.documento() + view.modal_lista_clientes() + view.modal_cobro_factura_fel() + view.modal_cobro_factura_envio() + view.modal_cobro_cotizacion()}
+                            ${view.documento() + view.modal_lista_clientes()}
                         </div>
                     </div>
 
@@ -63,8 +63,10 @@ function getView(){
 
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" list="lista_productos" autocomplete="off" class="form-control border-personal negrita col-12" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                            <button class="btn btn-personal hand" id="btnBuscarProd">
+                            <select class="form-control col-4" id="cmbTipoPrecio">
+                            </select>
+                            <input type="text" list="lista_productos" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
                                 <i class="fal fa-search"></i>
                             </button>
                             <datalist width="100%" id="lista_productos" class="col-12">
@@ -73,33 +75,41 @@ function getView(){
                    
                 </datalist>
                 <hr class="solid">
-
-                    <div class="card card-rounded shadow border-personal col-12 p-2">
-                        <div class="card-body">
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <b class="text-personal">Productos agregados a la Factura</b>
+                
+                   <div class="row">
+                        <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                            <div class="card card-rounded shadow border-naranja col-12 p-2">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b class="text-naranja">Productos agregados a la Factura</b>
+                                        </div>
+                                    </div>
+                                    <table class="table table-responsive  table-hover col-12">
+                                        <thead class="bg-verde text-white">
+                                            <tr>
+                                                <td>PRODUCTO</td>
+                                                <td>CANTIDAD</td>
+                                                <td>PRECIO</td>
+                                                <td>SUBTOTAL</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblPosPedido"></tbody>
+                                    </table>
                                 </div>
-                            </div>
-                            
-                           
-                                <table class="table table-responsive  table-hover col-12">
-                                    <thead class="bg-personal text-white">
-                                        <tr>
-                                            <td>PRODUCTO</td>
-                                            <td>CANTIDAD</td>
-                                            <td>PRECIO</td>
-                                            <td>SUBTOTAL</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblPosPedido"></tbody>
-                                </table>
+                            </div>      
+                        </div>
+                        <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                            <div class="card card-rounded shadow border-naranja col-12 p-2">
+                                <div class="card-body"> 
+                                    <b class="text-naranja">Contenedor de la gráfica</b>
+                                </div>
+                            </div> 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             
@@ -109,10 +119,10 @@ function getView(){
             </div>
 
             <button class="btn btn-warning btn-xl btn-bottom-l btn-circle shadow hand" id="btnListadoDocumentos">
-                <i class="fal fa-folder"></i>
+                <i class="fal fa-folder"></i>  
             </button>
             
-            <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow hand" id="btnPosCobro">
+            <button class="btn btn-verde btn-xl btn-bottom-r btn-circle shadow hand" id="btnPosCobro">
                 <i class="fal fa-arrow-right"></i>
             </button>
             `
@@ -124,7 +134,7 @@ function getView(){
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <label class="modal-title text-personal h3" id="lbCantidadDesprod">Cantidad de producto</label>
+                            <label class="modal-title text-naranja h3" id="lbCantidadDesprod">Cantidad de producto</label>
                         </div>
             
                         <div class="modal-body p-4">
@@ -137,17 +147,17 @@ function getView(){
                                 <div class="col-8">
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Cantidad:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-personal shadow col-10" id="txtMCCantidad">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCCantidad">
                                     </div>   
                                     
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Precio ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-personal shadow col-10" id="txtMCPrecio">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCPrecio">
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-personal shadow col-10" id="txtMCTotalPrecio" disabled>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecio" disabled>
                                     </div>
                                 </div>            
                             </div>
@@ -164,7 +174,7 @@ function getView(){
                                     <div class="col-1"></div>
         
                                     <div class="col-5 text-right">
-                                        <button class="btn btn-personal btn-xl btn-circle hand shadow waves-effect waves-themed" id="btnMCGuardar">
+                                        <button class="btn btn-naranja btn-xl btn-circle hand shadow waves-effect waves-themed" id="btnMCGuardar">
                                             <i class="fal fa-check mr-1"></i>
                                         </button>
                                     </div>
@@ -180,7 +190,7 @@ function getView(){
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
 
-                        <div class="modal-header bg-personal">
+                        <div class="modal-header bg-naranja">
                             <label class="modal-title text-white h3" id="lbCantidadDesprodE">Cantidad de producto</label>
                         </div>
             
@@ -192,17 +202,17 @@ function getView(){
                                 <div class="col-8">
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Cantidad:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-personal shadow col-10" id="txtMCCantidadE">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCCantidadE">
                                     </div>   
                                     
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Precio ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-personal shadow col-10" id="txtMCPrecioE">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCPrecioE">
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-personal shadow col-10" id="txtMCTotalPrecioE" disabled>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioE" disabled>
                                     </div>
                                 </div>            
                             </div>
@@ -219,7 +229,7 @@ function getView(){
                                     <div class="col-1"></div>
         
                                     <div class="col-5 text-right">
-                                        <button class="btn btn-personal btn-xl btn-circle hand shadow waves-effect waves-themed" id="btnMCGuardarE">
+                                        <button class="btn btn-naranja btn-xl btn-circle hand shadow waves-effect waves-themed" id="btnMCGuardarE">
                                             <i class="fal fa-check mr-1"></i>
                                         </button>
                                     </div>
@@ -237,44 +247,74 @@ function getView(){
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-                    <div class="card card-rounded shadow col-12">
+                    <div class="card card-rounded shadow col-12 border-naranja">
                         <div class="card-body">
 
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="negrita text-secondary h4">Total a Pagar</label>
-                                    <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
-                                </div>  
-                            </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Caja</label>
+                                        <div class="input-group">
+                                            <select class="form-control col-12" id="cmbCaja">
+                                            </select>
+                                            <input type="date" id="txtFecha" class="form-control text-naranja negrita border-naranja">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Vendedor</label>
+                                        <select class="form-control col-12" id="cmbVendedor">
+                                        </select>   
+                                    </div>
+                                </div>    
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group text-right">
+                                        <label class="negrita text-secondary h4">Total a Pagar</label>
+                                        <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
+                                    </div>
+                                </div>
+
+                                  
+                            </div>  
+
+                            <br>
 
                             <div class="row">
+                          
+
                                 <div class="form-group text-left">
-                                    <label class="text-secondary">Vendedor</label>
-                                    <select class="form-control" id="cmbVendedor">
-                                    </select>
+                                    <label class="text-secondary">Tipo de Documento</label>
+                                    <select class="form-control col-12" id="cmbTipoDocumento">
+                                        <option value="FAC">FACTURA NORMAL</option>
+                                        <option value="FEL">FACTURA ELECTRONICA</option>
+                                        <option value="COT">COTIZACIÓN</option>
+                                    </select>   
+                                </div>
+                            </div>
+
+                            
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Serie Documento</label>
+                                        <div class="input-group">
+                                            <select class="form-control col-12" id="cmbCoddoc">
+                                            </select>
+                                            <input type="number" id="txtCorrelativo" class="form-control" value=0>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <button class="btn btn-xl btn-verde hand shadow col-12 form-control" id="btnGuardar">
+                                        <i class="fal fa-save"></i> Guardar (ctrl+g)
+                                    </button>
                                 </div>
                             </div>
                             
-                            <hr class="solid">
-                            <hr class="solid">
-
-                            <div class="row">
-                                <div class="col-4">
-                                    <button class="btn btn-outline-info shadow hand col-12" id="btnCobrarFel">
-                                        Crear Factura Contable (F7)
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-outline-personal shadow hand col-12" id="btnCobrarFactura">
-                                        Crear Factura Interna (F8)
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-outline-secondary shadow hand col-12" id="btnCobrarCotizacion">
-                                        Crear       Cotización (F9)
-                                    </button>
-                                </div>
-                            </div>
+                      
+                            
                         </div>
                     </div>
                     <hr>
@@ -289,14 +329,14 @@ function getView(){
         },
         documento_card_cliente:()=>{
             return `
-            <div class="card card-rounded shadow border-personal p-4"  style="font-size:80%">
+            <div class="card card-rounded shadow border-naranja p-4"  style="font-size:80%">
                 <div class="card-body">
                             
                             <div class="form-group">
-                                <label class="negrita text-personal">NIT / DPI</label>
+                                <label class="negrita text-naranja">NIT / DPI</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-md border-personal negrita text-personal" id="txtPosCobroNit">
-                                    <button class="btn btn-personal text-white hand" id="btnBuscarCliente">
+                                    <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNit">
+                                    <button class="btn btn-naranja text-white hand" id="btnBuscarCliente">
                                         <i class="fal fa-search"></i>
                                     </button>
                                 </div>
@@ -305,23 +345,23 @@ function getView(){
                             </div>
 
                             <div class="form-group">
-                                <label class="negrita text-personal">CÓDIGO CLIENTE</label>
-                                <input disabled type="text" class="form-control form-control-md border-personal negrita text-personal" id="txtPosCobroNitclie" autocomplete="off">                            
+                                <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
+                                <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
                             </div>
 
                             <div class="form-group">
-                                <label class="negrita text-personal">CLIENTE</label>
-                                <input type="text" class="form-control form-control-md border-personal negrita text-personal" id="txtPosCobroNombre">
+                                <label class="negrita text-naranja">CLIENTE</label>
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNombre">
                             </div>
                             
                             <div class="form-group">
-                                <label class="negrita text-personal">DIRECCIÓN</label>
-                                <input type="text" class="form-control form-control-md border-personal negrita text-personal" id="txtPosCobroDireccion">
+                                <label class="negrita text-naranja">DIRECCIÓN</label>
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroDireccion">
                             </div>
 
                         </div>
                     </div>
-            `
+            `   
         },
         modal_lista_clientes:()=>{
             return `
@@ -329,7 +369,7 @@ function getView(){
                 <div class="modal-dialog modal-lg modal-dialog-left" role="document">
                     <div class="modal-content">
                     
-                        <div class="modal-header bg-personal">
+                        <div class="modal-header bg-naranja">
                         </div>
                         
                         <div class="modal-body p-4">
@@ -337,8 +377,8 @@ function getView(){
                                 <div class="form-group col-12">
                                     <label>Búsqueda de Clientes</label>
                                     <div class="input-group">
-                                        <input type="search" autocomplete="off" class="form-control border-personal negrita" id="txtBuscarClie">
-                                        <button class="btn btn-personal hand text-white" id="btnBuscarClie">
+                                        <input type="search" autocomplete="off" class="form-control border-naranja negrita" id="txtBuscarClie">
+                                        <button class="btn btn-naranja hand text-white" id="btnBuscarClie">
                                             <i class="fal fa-search"></i>
                                         </button>
                                     </div>
@@ -347,7 +387,7 @@ function getView(){
                             <br>
                             <div class="row">
                                 <table class="col-12 table table-responsive table-hover table-border">
-                                    <thead class="bg-personal text-white">
+                                    <thead class="bg-naranja text-white">
                                         <tr>
                                             <td>NIT / CÓDIGO</td>
                                             <td>CLIENTE</td>
@@ -373,7 +413,7 @@ function getView(){
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="negrita text-personal">Filtrar documentos por...</label>
+                                        <label class="negrita text-naranja">Filtrar documentos por...</label>
                                         <div class="input-group">
                                             <input type="date" class="negrita form-control" id="txtFechaDoc">
                                             <select class="form-control negrita" id="cmbTipoDoc">
@@ -390,49 +430,6 @@ function getView(){
 
                                 
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        },
-        modal_cobro_factura_fel:()=>{
-            return `
-            <div class="modal fade" id="modal_cobro_fel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-right" role="document">
-                    <div class="modal-content">
-                    
-                        <div class="modal-body p-4">
-                            <input type="date" id="txtFecha">
-                            <select id="cmbCoddoc"></select>
-                            <input type="text" id="txtCorrelativo">
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        },
-        modal_cobro_factura_envio:()=>{
-            return `
-            <div class="modal fade" id="modal_cobro_factura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-right" role="document">
-                    <div class="modal-content">
-                    
-                        <div class="modal-body p-4">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        },
-        modal_cobro_cotizacion:()=>{
-            return `
-            <div class="modal fade" id="modal_cobro_cotizacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-right" role="document">
-                    <div class="modal-content">
-                    
-                        <div class="modal-body p-4">
-                            <input type="date" id="txtFecha">
-                            <select id="cmbCoddocCot"></select>
-                            <input type="text" id="txtCorrelativoCot">
                         </div>
                     </div>
                 </div>
@@ -466,87 +463,109 @@ function addListeners(){
 
 
     document.getElementById('txtFecha').value = funciones.getFecha();
-    //document.getElementById('txtFechaDoc').value = funciones.getFecha();
-
+    
    
 
     //CARGA CODDOC DEFAULT
-    let cmbCoddoc = document.getElementById('cmbCoddoc');
-    let cmbCoddocCot = document.getElementById('cmbCoddocCot');
+    //let cmbCoddoc = document.getElementById('cmbCoddoc');
+    //let cmbCoddocCot = document.getElementById('cmbCoddocCot');
     
-    get_coddoc('PED')
-        .then((data)=>{
-            let str = '';
-            data.recordset.map((r)=>{
-                str += `<option value="${r.CODDOC}">${r.CODDOC}</option>`;
-            })
-            cmbCoddoc.innerHTML = str;
-            cmbCoddoc.value = GlobalCoddoc;
-            get_correlativo_coddoc(cmbCoddoc.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativo').value = correlativo;
-            })
-        })
-        .catch(()=>{
-            cmbCoddoc.innerHTML = '';
-            document.getElementById('txtCorrelativo').value = '';
-        });
-
-    get_coddoc('COT')
-        .then((data)=>{
-            let strs = '';
-            data.recordset.map((r)=>{
-                strs += `<option value="${r.CODDOC}">${r.CODDOC}</option>`;
-            })
-            cmbCoddocCot.innerHTML = strs;
-            cmbCoddocCot.value = GlobalCotiz;
-            get_correlativo_coddoc(cmbCoddocCot.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativoCot').value = correlativo;
-            })
-        })
-        .catch(()=>{
-            cmbCoddocCot.innerHTML = '';
-            document.getElementById('txtCorrelativoCot').value = '';
-        });
+   
     
-    
-    cmbCoddoc.addEventListener('change',()=>{
-            get_correlativo_coddoc(cmbCoddoc.value)
-            .then((correlativo)=>{
-                document.getElementById('txtCorrelativo').value = correlativo;
-            })
-    });
-
-    cmbCoddocCot.addEventListener('change',()=>{
-        get_correlativo_coddoc(cmbCoddocCot.value)
-        .then((correlativo)=>{
-            document.getElementById('txtCorrelativoCot').value = correlativo;
-        })
-    });
-
     //carga el código vendedor
     get_vendedores();
     
-    document.getElementById('btnCobrarFel').addEventListener("click",()=>{
-        $("#modal_cobro_fel").modal('show');
-    });
+    listener_coddoc();
 
-    document.getElementById('btnCobrarFactura').addEventListener("click",()=>{
-        $("#modal_cobro_factura").modal('show');
-    });
-
-    document.getElementById('btnCobrarCotizacion').addEventListener("click",()=>{
-        $("#modal_cobro_cotizacion").modal('show');
-    });
+    document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
   
+    let btnGuardar = document.getElementById('btnGuardar');
+    btnGuardar.addEventListener('click',()=>{
+
+        
+
+    });
+
     document.getElementById('txtPosCodprod').focus();
 
 };
 
+function listener_coddoc(){
+
+    let cmbTipoDocumento = document.getElementById('cmbTipoDocumento')
+    cmbTipoDocumento.addEventListener('change',()=>{
+        get_coddoc(cmbTipoDocumento.value);
+    })
+
+    function get_coddoc(tipo){
+        let container = document.getElementById('cmbCoddoc');
+        container.innerHTML = '';
+
+        axios.post('/tipodocumentos/coddoc',{
+            sucursal:cmbEmpresa.value,
+            tipo:tipo,
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let coddoc = ''
+                data.recordset.map((r)=>{
+                    coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
+                })        
+                container.innerHTML = coddoc;
+                get_correlativo(container.value)
+                .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+                .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})  
+            }else{
+                container.innerHTML = '';
+            }                     
+        }, (error) => {
+            container.innerHTML = '';
+        });
+    };
+
+    let cmbCoddoc = document.getElementById('cmbCoddoc');
+    cmbCoddoc.addEventListener('change',()=>{
+        get_correlativo(cmbCoddoc.value)
+        .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+        .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+    })
+
+    get_coddoc(cmbTipoDocumento.value);
+};
+
+function get_correlativo(coddoc){
+      
+    return new Promise((resolve,reject)=>{
+        axios.post('/tipodocumentos/correlativo',{
+            sucursal:cmbEmpresa.value,
+            coddoc:coddoc,
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let correlativo = '';
+                data.recordset.map((r)=>{
+                    correlativo = r.CORRELATIVO
+                })
+                resolve(correlativo);             
+            }else{
+                reject('0');
+            }                     
+        }, (error) => {
+            reject('0');
+        });
+    })
+
+};
+
+
+
 function listener_teclado(){
     //evitando errores
-    //Mousetrap.bind('f5', function(e) { e.preventDefault(); });
+    Mousetrap.bind('f5', function(e) { e.preventDefault(); });
     Mousetrap.bind('f7', function(e) { e.preventDefault(); });
 
     Mousetrap.bind('f10', function(e) { e.preventDefault(); });
@@ -557,7 +576,9 @@ function listener_teclado(){
 
     Mousetrap.bind('ctrl+right', function() { document.getElementById('btnPosCobro').click() });
     Mousetrap.bind('ctrl+left', function() { document.getElementById('btnPosDocumentoAtras').click() });
+    Mousetrap.bind('ctrl+g', function(e) { e.preventDefault(); document.getElementById('btnGuardar').click() });
     
+
 
     Mousetrap.bind('f2', function() { 
         document.getElementById('txtPosCodprod').value='';
@@ -1068,7 +1089,7 @@ function get_buscar_producto(filtro){
                 let strClassExist = 'text-success';
                 if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
                 str += `
-                <option width="100%"
+                <option class="bg-naranja" width="100%"
                     value="${r.CODPROD} // ${funciones.limpiarTexto(r.DESPROD)} // ${r.CODMEDIDA}">
                     ${r.CODMEDIDA} (${r.EQUIVALE}) P:${funciones.setMoneda(r.PRECIO,'Q')} E: ${r.EXISTENCIA}
                 </option>
@@ -1433,7 +1454,7 @@ function get_tbl_pedido(){
             varTotalVenta = varTotalVenta + Number(rows.TOTALPRECIO);
             varTotalCosto = varTotalCosto + Number(rows.TOTALCOSTO);
             return `
-            <tr class="border-personal border-left-0 border-right-0 border-top-0">
+            <tr class="border-naranja border-left-0 border-right-0 border-top-0">
                 <td class="text-left">
                     ${rows.DESPROD}
                     <br>
@@ -1814,7 +1835,7 @@ function tbl_lista_documentos(){
     }
    
     let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered">
-                        <thead class="bg-personal text-white">
+                        <thead class="bg-naranja text-white">
                             <tr>
                                 <td>Documento</td>
                                 <td>Cliente</td>
@@ -1870,7 +1891,7 @@ function tbl_lista_documentos(){
                                 <b>${funciones.setMoneda(rows.IMPORTE,'Q')}</b>
                             </td>
                             <td>
-                                <button class="btn btn-circle btn-personal btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.NIT}','${funciones.limpiarTexto(rows.NOMCLIE)}','${funciones.limpiarTexto(rows.DIRCLIE)}','${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
+                                <button class="btn btn-circle btn-naranja btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.NIT}','${funciones.limpiarTexto(rows.NOMCLIE)}','${funciones.limpiarTexto(rows.DIRCLIE)}','${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
                                     <i class="fal fa-download"></i>
                                 </button>
                             </td>

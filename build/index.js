@@ -5,7 +5,8 @@ let btnMenu = document.getElementById('btnMenu');
 
 
 btnMenu.addEventListener('click',()=>{
-    $("#modal_menu_principal").modal('show');
+    //$("#modal_menu_principal").modal('show');
+    Navegar.menu();
 })
 
 

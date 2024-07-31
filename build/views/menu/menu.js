@@ -125,6 +125,8 @@ function handle_empresa_change(){
 
 function addListeners(){
 
+    Mousetrap.bind('ctrl+m', function() { document.getElementById('btnMenu').click() });
+
     cmbEmpresa.removeEventListener('change', handle_empresa_change)
     cmbEmpresa.addEventListener('change', handle_empresa_change)
 

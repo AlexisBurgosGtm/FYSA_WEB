@@ -1,10 +1,10 @@
 ﻿
 function get_conf_token(token){
 	//token = empresa que manda la solicitud (puede cambiarse entre empresas)
-	let config = [];
+	//let config = [];
 
 	
-	config = {
+	let config = {
 		user: 'db_a6478c_fsyaweb_admin',
 		password: 'razors1805',
 		server: 'sql5108.site4now.net',
@@ -12,6 +12,14 @@ function get_conf_token(token){
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 	
+
+	let configX = {
+		user: 'iEx',
+		password: 'iEx',
+		server: 'DESKTOP-E0KG096\\SQLEXPRESS',//'DESKTOP-E0KG096\\SQL17',
+		database: 'fysa_online', //'ONNE',
+		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
+	};
 
 	return config;
 	

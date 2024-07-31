@@ -359,10 +359,12 @@ function getView(){
                                             <td>EQ</td>
                                             <td>COSTO</td>
                                             <td>PRECIO</td>
-                                            <td>MAYOREOA</td>
-                                            <td>MAYOREOB</td>
-                                            <td>MAYOREOC</td>
-                                            <td></td>
+                                            <td>PRECIO_A</td>
+                                            <td>PRECIO_B</td>
+                                            <td>PRECIO_C</td>
+                                            <td>PRECIO_D</td>
+                                            <td>PRECIO_E</td>
+                                            <td>PRECIO_F</td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -1487,6 +1489,12 @@ function listeners_precios(){
             txtPreMayoreoA = txtPrePublico
         };
 
+        let txtPreMayoreoB = document.getElementById('txtPreMayoreoB').value || '0';
+        let txtPreMayoreoC = document.getElementById('txtPreMayoreoC').value || '0';
+        let txtPreMayoreoD = document.getElementById('txtPreMayoreoD').value || '0';
+        let txtPreMayoreoE = document.getElementById('txtPreMayoreoE').value || '0';
+        let txtPreMayoreoF = document.getElementById('txtPreMayoreoF').value || '0';
+
         if(txtPreEquivale.toString()=='0'){
             document.getElementById('txtPreEquivale').value='1';
             calcular_costo_medida();
@@ -1499,7 +1507,7 @@ function listeners_precios(){
 
         if(GlobalBolEditando==false){
             //se está creando un nuevo producto
-            insert_temp_precio(codprod,cmbPreMedida.value,txtPreEquivale,'0',txtPreTotalCosto,txtPrePublico,txtPreMayoreoA,txtPreMayoreoA,txtPreMayoreoA)
+            insert_temp_precio(codprod,cmbPreMedida.value,txtPreEquivale,'0',txtPreTotalCosto,txtPrePublico,txtPreMayoreoA,txtPreMayoreoB,txtPreMayoreoC,txtPreMayoreoD,txtPreMayoreoE,txtPreMayoreoF)
             .then(()=>{
     
                 btnPreGuardar.innerHTML = `<i class="fal fa-save"></i>`;
@@ -1605,7 +1613,7 @@ function listeners_precios(){
 
 };
 
-function insert_temp_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc){
+function insert_temp_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,preciod,precioe,preciof){
 
 
     return new Promise((resolve,reject)=>{
@@ -1614,6 +1622,7 @@ function insert_temp_precio(codprod,codmedida,equivale,peso,costo,preciop,precio
             {
                 sucursal:cmbEmpresa.value,
                 token:TOKEN,
+                usuario:GlobalUsuario,
                 codprod:codprod,
                 codmedida:codmedida,
                 equivale:equivale,
@@ -1622,7 +1631,10 @@ function insert_temp_precio(codprod,codmedida,equivale,peso,costo,preciop,precio
                 preciop:preciop,
                 precioa:precioa,
                 preciob:preciob,
-                precioc:precioc
+                precioc:precioc,
+                preciod:preciod,
+                precioe:precioe,
+                preciof:preciof
             })
         .then((response) => {
             if(response.status.toString()=='200'){
@@ -2148,13 +2160,13 @@ function get_tbl_precios(){
                                 <td>${r.CODMEDIDA}</td>
                                 <td>${r.EQUIVALE}</td>
                                 <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
-                                <td>${funciones.setMoneda(r.PRECIOP,'Q')}</td>
-                                <td>${funciones.setMoneda(r.PRECIOA,'Q')}</td>
-                                <td>${funciones.setMoneda(r.PRECIOB,'Q')}</td>
-                                <td>${funciones.setMoneda(r.PRECIOC,'Q')}</td>
-                                <td>
-                                
-                                </td>
+                                <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_A,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_B,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_C,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_D,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_E,'Q')}</td>
+                                <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
                                 <td>
                                     <button class="btn-md btn-circle btn-danger hand shadow" id="${idbtnE}" onclick="delete_temp_precio('${idbtnE}','${r.ID}')">
                                         <i class="fal fa-trash"></i>

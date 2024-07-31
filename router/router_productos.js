@@ -52,13 +52,14 @@ router.post("/insert_temp_precio", async(req,res)=>{
    
     const {token,sucursal,codprod,usuario,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,preciod,precioe,preciof} = req.body;
 
+ 
 
     let qry = `
     INSERT INTO TEMP_PRECIOS 
-    (CODMEDIDA,EQUIVALE,COSTO,
+    (CODPROD,CODMEDIDA,EQUIVALE,COSTO,
     PRECIO,PRECIO_A,PRECIO_B,PRECIO_C,PRECIO_D,PRECIO_E,PRECIO_F,PESO,USUARIO) 
     VALUES 
-    ('${codmedida}',${equivale},${costo},
+    ('${codprod}','${codmedida}',${equivale},${costo},
     ${preciop},${precioa},${preciob},${precioc},${preciod},${precioe},${preciof},${peso},'${usuario}');
     `
     
