@@ -119,7 +119,31 @@ let GF = {
                 reject();
             });
         })     
+    },
+    get_productos_totales:(habilitado)=>{
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/productos/get_cantidad_productos',
+                {
+                    sucursal:cmbEmpresa.value,
+                    token:TOKEN,
+                    habilitado:habilitado
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })     
     }
-
 };
 

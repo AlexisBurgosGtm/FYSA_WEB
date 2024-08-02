@@ -67,7 +67,7 @@ function getView(){
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Total Productos</label>
-                                <h4 class="negrita text-danger" id="lbTotalProductos">000000</h4>
+                                <h4 class="negrita text-danger" id="lbTotalProductos"></h4>
                             </div>
                         </div>
                       
@@ -177,9 +177,12 @@ function getView(){
                                                 <td>EQ</td>
                                                 <td>COSTO</td>
                                                 <td>PÚBLICO</td>
-                                                <td>MAYOREOA</td>
-                                                <td>MAYOREOB</td>
-                                                <td>MAYOREOC</td>
+                                                <td>PRECIO_A</td>
+                                                <td>PRECIO_B</td>
+                                                <td>PRECIO_C</td>
+                                                <td>PRECIO_D</td>
+                                                <td>PRECIO_E</td>
+                                                <td>PRECIO_F</td>
                                                 <td></td>
                                             </tr>
                                         </thead>
@@ -252,9 +255,7 @@ function getView(){
                                             
                                                 <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
                                                 <input type="number" class="form-control" id="txtUxc">
-                                            <br><br>
-                                                <label class="negrita text-naranja">Inventario Mínimo</label>
-                                                <input type="number" class="form-control text-danger" id="txtInvminimo" value=0>
+                                            
                                             <br><br>                                       
                                                 <label class="negrita text-naranja">Tipo Producto</label>
                                                 <select class="form-control" id="cmbTipoProd">
@@ -273,6 +274,9 @@ function getView(){
                                                     <option value="6">ROSADO</option>
                                                     <option value="7">NARANJA</option>
                                                 </select>
+                                            <br><br>
+                                                <label class="negrita text-naranja">Bono</label>
+                                                <input type="number" class="form-control text-danger" id="txtBono" value=0>
                                         </div>
 
                                     </div>
@@ -898,7 +902,7 @@ function listeners_menu_productos(){
             document.getElementById('txtDesprod2').value = '';
             document.getElementById('txtDesprod3').value = '';
             document.getElementById('txtUxc').value = '1';
-            document.getElementById('txtInvminimo').value = '0';
+            document.getElementById('txtBono').value = '0';
             document.getElementById('cmbTipoProd').value = 'P';
             document.getElementById('txtCosto').value = '0';
 
@@ -938,8 +942,8 @@ function listeners_menu_productos(){
                     if(txtUxc.value==''){txtUxc.value='1'};
                     if(txtUxc.value=='0'){txtUxc.value='1'};
                     
-                    let txtInvminimo = document.getElementById('txtInvminimo');
-                    if(txtInvminimo.value==''){txtInvminimo.value='0'};
+                    let txtBono = document.getElementById('txtBono');
+                    if(txtBono.value==''){txtBono.value='0'};
 
                     let cmbTipoProd = document.getElementById('cmbTipoProd');
                     let cmbColor = document.getElementById('cmbColor');
@@ -973,7 +977,7 @@ function listeners_menu_productos(){
                         insert_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
                             cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtInvminimo.value)
+                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono.value)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha creado un nuevo producto');
@@ -1027,8 +1031,8 @@ function listeners_menu_productos(){
                     if(txtUxc.value==''){txtUxc.value='1'};
                     if(txtUxc.value=='0'){txtUxc.value='1'};
                     
-                    let txtInvminimo = document.getElementById('txtInvminimo');
-                    if(txtInvminimo.value==''){txtInvminimo.value='0'};
+                    let txtBono = document.getElementById('txtBono');
+                    if(txtBono.value==''){txtBono.value='0'};
 
                     let cmbTipoProd = document.getElementById('cmbTipoProd');
                     let cmbColor = document.getElementById('cmbColor');
@@ -1051,7 +1055,7 @@ function listeners_menu_productos(){
                         edit_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
                             cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtInvminimo.value)
+                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono.value)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha actualizado el producto');
@@ -1191,14 +1195,14 @@ function listeners_menu_productos(){
                                 document.getElementById('txtDesprod2').value = r.DESPROD2;
                                 document.getElementById('txtDesprod3').value = r.DESPROD3;
                                 document.getElementById('txtUxc').value = r.UXC;
-                                document.getElementById('txtInvminimo').value = r.INVMINIMO;
+                                document.getElementById('txtBono').value = r.BONO;
                                 document.getElementById('cmbTipoProd').value = r.TIPOPROD;
                                 document.getElementById('cmbColor').value = r.NF;
                                 document.getElementById('cmbMarca').value = r.CODMARCA;
                                 document.getElementById('cmbClaseuno').value = r.CODCLAUNO;
                                 document.getElementById('cmbProveedor').value = r.CODCLADOS;
                                 document.getElementById('cmbClasedos').value = r.CODCLATRES;
-                                document.getElementById('txtCosto').value = r.COSTO;
+                                document.getElementById('txtCosto').value = r.COSTO_ULTIMO;
                             })
 
                             document.getElementById('tab-dos').click();
@@ -1217,9 +1221,10 @@ function listeners_menu_productos(){
 
         });
 
-}
+};
 
 function listeners_listado(){
+
     cmbEmpresa.removeEventListener('change', handle_empresa_change)
     cmbEmpresa.addEventListener('change', handle_empresa_change)
 
@@ -1239,7 +1244,10 @@ function listeners_listado(){
         }
     })
 
+    //LISTA DE PRODUCTOS (LOS PRIMEROS 50 NADA MAS)
     get_tbl_productos();
+    //OBTIENE EL TOTAL DE PRODUCTOS
+    
 
 
     // MARCAS ---------------------------
@@ -1453,6 +1461,21 @@ function listeners_precios(){
     document.getElementById('txtPreMayoreoA').addEventListener('input',()=>{
         calcular_utilidad_precios('A');  
     });
+    document.getElementById('txtPreMayoreoB').addEventListener('input',()=>{
+        calcular_utilidad_precios('B');  
+    });
+    document.getElementById('txtPreMayoreoC').addEventListener('input',()=>{
+        calcular_utilidad_precios('C');  
+    });
+    document.getElementById('txtPreMayoreoD').addEventListener('input',()=>{
+        calcular_utilidad_precios('D');  
+    });
+    document.getElementById('txtPreMayoreoE').addEventListener('input',()=>{
+        calcular_utilidad_precios('E');  
+    });
+    document.getElementById('txtPreMayoreoF').addEventListener('input',()=>{
+        calcular_utilidad_precios('F');  
+    });
 
     document.getElementById('txtPrePublico').addEventListener('input',()=>{
         calcular_utilidad_precios('P');  
@@ -1528,7 +1551,7 @@ function listeners_precios(){
 
         }else{
             //se está editando el producto
-            insert_precio(codprod,cmbPreMedida.value,txtPreEquivale,'0',txtPreTotalCosto,txtPrePublico,txtPreMayoreoA,txtPreMayoreoA,txtPreMayoreoA)
+            insert_precio(codprod,cmbPreMedida.value,txtPreEquivale,'0',txtPreTotalCosto,txtPrePublico,txtPreMayoreoA,txtPreMayoreoB,txtPreMayoreoC,txtPreMayoreoD,txtPreMayoreoE,txtPreMayoreoF)
             .then(()=>{
     
                 btnPreGuardar.innerHTML = `<i class="fal fa-save"></i>`;
@@ -1674,6 +1697,11 @@ function calcular_utilidad_precios(tipoprecio){
     let costomedida = document.getElementById('txtPreTotalCosto').value;
     let pre_publico = document.getElementById('txtPrePublico').value || 0;
     let pre_mayoreoa = document.getElementById('txtPreMayoreoA').value || 0;
+    let pre_mayoreob = document.getElementById('txtPreMayoreoB').value || 0;
+    let pre_mayoreoc = document.getElementById('txtPreMayoreoC').value || 0;
+    let pre_mayoreod = document.getElementById('txtPreMayoreoD').value || 0;
+    let pre_mayoreoe = document.getElementById('txtPreMayoreoE').value || 0;
+    let pre_mayoreof = document.getElementById('txtPreMayoreoF').value || 0;
     
     try {
         switch (tipoprecio) {
@@ -1686,16 +1714,34 @@ function calcular_utilidad_precios(tipoprecio){
                 document.getElementById('txtPreMargenMayoreoA').value =   (((Number(pre_mayoreoa) - Number(costomedida)) / Number(pre_mayoreoa)) * 100).toFixed(2);
                 break;
             case 'B':
-                
+                document.getElementById('txtPreUtilidadMayoreoB').value = Number(pre_mayoreob) - Number(costomedida);
+                document.getElementById('txtPreMargenMayoreoB').value =   (((Number(pre_mayoreob) - Number(costomedida)) / Number(pre_mayoreob)) * 100).toFixed(2);
                 break;
             case 'C':
-                
+                document.getElementById('txtPreUtilidadMayoreoC').value = Number(pre_mayoreoc) - Number(costomedida);
+                document.getElementById('txtPreMargenMayoreoC').value =   (((Number(pre_mayoreoc) - Number(costomedida)) / Number(pre_mayoreoc)) * 100).toFixed(2);
+                break;
+            case 'D':
+                document.getElementById('txtPreUtilidadMayoreoD').value = Number(pre_mayoreod) - Number(costomedida);
+                document.getElementById('txtPreMargenMayoreoD').value =   (((Number(pre_mayoreod) - Number(costomedida)) / Number(pre_mayoreod)) * 100).toFixed(2);                   
+                break;
+            case 'E':
+                document.getElementById('txtPreUtilidadMayoreoE').value = Number(pre_mayoreoe) - Number(costomedida);
+                document.getElementById('txtPreMargenMayoreoE').value =   (((Number(pre_mayoreoe) - Number(costomedida)) / Number(pre_mayoreoe)) * 100).toFixed(2);    
+                break;
+            case 'F':
+                document.getElementById('txtPreUtilidadMayoreoF').value = Number(pre_mayoreof) - Number(costomedida);
+                document.getElementById('txtPreMargenMayoreoF').value =   (((Number(pre_mayoreof) - Number(costomedida)) / Number(pre_mayoreof)) * 100).toFixed(2);                    
                 break;
             case 'T':
                 calcular_utilidad_precios('P');
                 calcular_utilidad_precios('A');
                 calcular_utilidad_precios('B');
                 calcular_utilidad_precios('C');
+                calcular_utilidad_precios('D');
+                calcular_utilidad_precios('E');
+                calcular_utilidad_precios('F');
+                
                 break;
         }
     } catch (error) {
@@ -2232,7 +2278,8 @@ function delete_lista_temp_precios(){
         axios.post(GlobalUrlCalls + '/productos/delete_lista_temp_precio',
             {
                 sucursal:cmbEmpresa.value,
-                token:TOKEN
+                token:TOKEN,
+                usuario:GlobalUsuario
             })
         .then((response) => {
             if(response.status.toString()=='200'){
@@ -2323,6 +2370,19 @@ function get_tbl_productos(){
         lbTotalProductos.innerText = '';
     })
 
+
+    GF.get_productos_totales(document.getElementById('cmbTipoLista').value)
+    .then((data)=>{
+        let total = 0;
+        data.recordset.map((r)=>{
+             total = Number(r.CONTEO);
+        })
+        document.getElementById('lbTotalProductos').innerText = total.toString();
+    })
+    .catch(()=>{
+        document.getElementById('lbTotalProductos').innerText = '-----'
+    })
+
 };
 
 
@@ -2334,7 +2394,7 @@ function get_tbl_productos(){
 
 function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
         uxc,costo,codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf,invminimo){
+        lastupdate,tipoprod,exento,nf,bono){
     
 
     return new Promise((resolve,reject)=>{
@@ -2358,7 +2418,7 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
                 tipoprod:tipoprod,
                 exento:exento,
                 nf:nf,
-                invminimo:invminimo
+                bono:bono
             })
         .then((response) => {
             if(response.status.toString()=='200'){
@@ -2384,7 +2444,7 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
 
 function edit_producto(codprod,codprod2,desprod,desprod2,desprod3,
     uxc,costo,codmarca,codclaseuno,codclasedos,codclasetres,
-    lastupdate,tipoprod,exento,nf,invminimo){
+    lastupdate,tipoprod,exento,nf,bono){
 
 
 return new Promise((resolve,reject)=>{
@@ -2408,7 +2468,7 @@ return new Promise((resolve,reject)=>{
             tipoprod:tipoprod,
             exento:exento,
             nf:nf,
-            invminimo:invminimo
+            bono:bono
         })
     .then((response) => {
         if(response.status.toString()=='200'){
@@ -2508,10 +2568,13 @@ function get_tbl_precios_producto(codprod,idcontainer){
                             <td>${r.CODMEDIDA}</td>
                             <td>${r.EQUIVALE}</td>
                             <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
-                            <td>${funciones.setMoneda(r.PRECIOP,'Q')}</td>
-                            <td>${funciones.setMoneda(r.PRECIOA,'Q')}</td>
-                            <td>${funciones.setMoneda(r.PRECIOB,'Q')}</td>
-                            <td>${funciones.setMoneda(r.PRECIOC,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_A,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_B,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_C,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_D,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_E,'Q')}</td>
+                            <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
                             <td>
                                 <button class="btn-md btn-circle btn-danger hand shadow" id="${idbtnE}" onclick="delete_precio('${idbtnE}','${r.ID}','${codprod}')">
                                     <i class="fal fa-trash"></i>
@@ -2535,7 +2598,7 @@ function get_tbl_precios_producto(codprod,idcontainer){
  
 };
 
-function insert_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc){
+function insert_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,preciob,precioc,preciod,precioe,preciof){
 
 
     return new Promise((resolve,reject)=>{
@@ -2544,6 +2607,7 @@ function insert_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,pre
             {
                 sucursal:cmbEmpresa.value,
                 token:TOKEN,
+                usuario:GlobalUsuario,
                 codprod:codprod,
                 codmedida:codmedida,
                 equivale:equivale,
@@ -2553,6 +2617,9 @@ function insert_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,pre
                 precioa:precioa,
                 preciob:preciob,
                 precioc:precioc,
+                preciod:preciod,
+                precioe:precioe,
+                preciof:preciof,
                 lastupdate:funciones.getFecha()
             })
         .then((response) => {

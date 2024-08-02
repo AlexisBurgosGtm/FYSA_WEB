@@ -3,6 +3,55 @@ const express = require('express');
 const router = express.Router();
 
 
+router.post("/insert_producto", async(req,res)=>{
+   
+    const {token,sucursal,codprod,codprod2,
+        desprod,desprod2,desprod3,uxc,costo,
+        codmarca,codclaseuno,codclasedos,codclasetres,
+        lastupdate,tipoprod,exento,nf, bono} = req.body;
+
+    let qry = `
+    INSERT INTO PRODUCTOS (CODPROD,CODPROD2,DESPROD,
+        DESPROD2,DESPROD3,UXC,COSTO_ULTIMO,COSTO_ANTERIOR,
+        CODMARCA,CODCLAUNO,CODCLADOS,CODCLATRES,
+        HABILITADO,EXENTO,
+        NF,TIPOPROD,BONO,LASTUPDATE)
+    SELECT '${codprod}' AS CODPROD,'${codprod2}' AS CODPROD2,
+        '${desprod}' AS DESPROD,'${desprod2}' AS DESPROD2,
+        '${desprod3}' AS DESPROD3,${uxc} AS UXC,    
+        ${costo} AS COSTO_ULTIMO, ${costo} AS COSTO_ANTERIOR,
+        ${codmarca} AS CODMARCA,${codclaseuno} AS CODCLAUNO,
+        ${codclasedos} AS CODCLADOS, ${codclasetres} AS CODCLATRES,
+        'SI' AS HABILITADO, ${exento} AS EXENTO,
+        ${nf} AS NF,'${tipoprod}' AS TIPOPROD,
+        ${bono} AS BONO,'${lastupdate}' AS LASTUPDATE;
+    INSERT INTO PRECIOS 
+        (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
+        PRECIO_D, PRECIO_E, PRECIO_F, HABILITADO, PESO, LASTUPDATE)
+    SELECT '${codprod}' AS CODPROD, CODMEDIDA, 
+        EQUIVALE, COSTO, 
+        PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
+        PRECIO_D, PRECIO_E, PRECIO_F, 'SI' AS HABILITADO,
+        PESO, '${lastupdate}' AS LASTUPDATE
+    FROM TEMP_PRECIOS;
+    INSERT INTO INVSALDO (EMPNIT, CODPROD,
+        ENTRADAS, SALIDAS,
+        EXISTENCIA, FISICO,
+        CODBODEGA, NOLOTE,
+        MINIMO, MAXIMO) SELECT EMPNIT, '${codprod}' AS CODPROD,
+	    0 AS ENTRADAS, 0 AS SALIDAS,
+	    0 AS EXISTENCIA, 0 AS FISICO,
+	    1 AS CODBODEGA, '' AS NOLOTE,
+	    0 AS MINIMO, 0 AS MAXIMO
+    FROM EMPRESAS; 
+    `
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
 
 router.post("/delete_lista_temp_precio", async(req,res)=>{
    
@@ -41,8 +90,10 @@ router.post("/lista_precios_temp", async(req,res)=>{
     PRECIO_C, PRECIO_D, PRECIO_E, PRECIO_F, PESO
         FROM 
     TEMP_PRECIOS 
-    WHERE USUARIO='${usuario}';
+    ;
     `
+
+    //WHERE USUARIO='${usuario}'
 
     execute.QueryToken(res,qry,token);
      
@@ -77,7 +128,7 @@ router.post("/verify_codprod", async(req,res)=>{
     let qry = `
         SELECT CODPROD, DESPROD 
             FROM PRODUCTOS 
-            WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
+            WHERE CODPROD='${codprod}';
     `
     
   
@@ -85,48 +136,13 @@ router.post("/verify_codprod", async(req,res)=>{
      
 });
 
-router.post("/insert_producto", async(req,res)=>{
-   
-    const {token,sucursal,codprod,codprod2,
-        desprod,desprod2,desprod3,uxc,costo,
-        codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf,invminimo} = req.body;
-
-    let qry = `
-    INSERT INTO PRODUCTOS (EMPNIT,CODPROD,CODPROD2,DESPROD,
-        DESPROD2,DESPROD3,UXC,CODMEDIDACOMPRA,COSTO,
-        CODMARCA,CODCLAUNO,CODCLADOS,CODCLATRES,
-        HABILITADO,VENCIMIENTO,INVMINIMO,EXENTO,
-        NF,TIPOPROD,EXISTENCIA,LASTUPDATE)
-    VALUES ('${sucursal}','${codprod}','${codprod2}',
-    '${desprod}','${desprod2}','${desprod3}',${uxc},
-    'UNIDAD',${costo},${codmarca},${codclaseuno},${codclasedos},
-    ${codclasetres},'SI','2000-01-01',${invminimo},${exento},
-    ${nf},'${tipoprod}',0,'${lastupdate}');
-    INSERT INTO INVSALDO 
-        (EMPNIT,CODPROD,ANIO,MES,SALDOINICIAL,ENTRADAS,SALIDAS,SALDO)
-        VALUES
-        ('${sucursal}','${codprod}',0,0,0,0,0,0);
-    INSERT INTO PRECIOS 
-        (EMPNIT,CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO,UTILIDAD,
-        PORCUTILIDAD,HABILITADO,MAYOREOA,MAYOREOB,MAYOREOC,PESO,LASTUPDATE)
-    SELECT '${sucursal}' AS EMPNIT,'${codprod}' AS CODPROD, CODMEDIDA,
-        EQUIVALE,COSTO,PRECIO,UTILIDAD,
-        MARGEN AS PORCUTILIDAD,'SI' AS HABILITADO,MAYOREOA,MAYOREOB,MAYOREOC,
-        PESO,'${lastupdate}' AS LASTUPDATE 
-    FROM TEMP_PRECIOS WHERE EMPNIT='${sucursal}';
-    `
-    
-    execute.QueryToken(res,qry,token);
-     
-});
 
 router.post("/edit_producto", async(req,res)=>{
-   
+
     const {token,sucursal,codprod,codprod2,
         desprod,desprod2,desprod3,uxc,costo,
         codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf,invminimo} = req.body;
+        lastupdate,tipoprod,exento,nf, bono} = req.body;
 
     let qry = `
     UPDATE PRODUCTOS SET 
@@ -135,19 +151,21 @@ router.post("/edit_producto", async(req,res)=>{
         DESPROD2='${desprod2}',
         DESPROD3='${desprod3}',
         UXC=${uxc},
-        COSTO=${costo},
+        COSTO_ULTIMO=${costo},
         CODMARCA=${codmarca},
         CODCLAUNO=${codclaseuno},
         CODCLADOS=${codclasedos},
         CODCLATRES=${codclasetres},
-        INVMINIMO=${invminimo},
         EXENTO=${exento},
         NF=${nf},
+        BONO=${bono},
         TIPOPROD='${tipoprod}',
         LASTUPDATE='${lastupdate}'
-    WHERE EMPNIT='${sucursal}' AND CODPROD='${codprod}';
+    WHERE CODPROD='${codprod}';
     `
     
+    console.log(qry)
+
     execute.QueryToken(res,qry,token);
      
 });
@@ -221,10 +239,10 @@ router.post("/insert_precio", async(req,res)=>{
 
     let qry = `
     INSERT INTO PRECIOS 
-    (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO,PRECIO_A,PRECIO_B,PRECIO_C,PRECIO_D,PRECIO_E,PRECIO_F,PESO,HABILITADO,LASTUPDATE) 
+    (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO,PRECIO_A,PRECIO_B,PRECIO_C,PRECIO_D,PRECIO_E,PRECIO_F,HABILITADO,PESO,LASTUPDATE) 
     VALUES 
     ('${codprod}','${codmedida}',${equivale},${costo},${preciop},${precioa},${preciob},
-    ${precioc},${preciod},${precioe},${preciof},${peso},'SI','${lastupdate}');
+    ${precioc},${preciod},${precioe},${preciof},'SI',${peso},'${lastupdate}');
     `
    
     execute.QueryToken(res,qry,token);
@@ -246,7 +264,6 @@ router.post("/listado", async(req,res)=>{
             PRODUCTOS.CODMARCA, MARCAS.DESMARCA, 
             PRODUCTOS.TIPOPROD, 
             ISNULL(PRODUCTOS.LASTUPDATE,'2020-01-01') AS LASTUPDATE, 
-            PRODUCTOS.EXISTENCIA,
             PRODUCTOS.HABILITADO
         FROM PRODUCTOS LEFT OUTER JOIN
         MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
@@ -256,6 +273,21 @@ router.post("/listado", async(req,res)=>{
             (PRODUCTOS.DESPROD LIKE '%${filtro}%') 
             AND (PRODUCTOS.HABILITADO='${habilitado}')
         ORDER BY PRODUCTOS.DESPROD
+    `
+  
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
+router.post("/get_cantidad_productos", async(req,res)=>{
+   
+    const { token, sucursal,  habilitado } = req.body;
+
+    let qry = `
+        SELECT  COUNT(CODPROD) AS CONTEO
+            FROM PRODUCTOS
+        WHERE (HABILITADO = '${habilitado}')
     `
   
     execute.QueryToken(res,qry,token);
