@@ -265,14 +265,8 @@ function getView(){
                                             <br><br>
                                                 <label class="negrita text-naranja">Color Alerta</label>
                                                 <select class="form-control" id="cmbColor">
-                                                    <option value="0">NINGUNO</option>
-                                                    <option value="1">AMARILLO</option>
-                                                    <option value="2">VERDE</option>
-                                                    <option value="3">AZUL</option>
-                                                    <option value="4">CAFES</option>
-                                                    <option value="5">MORADO</option>
-                                                    <option value="6">ROSADO</option>
-                                                    <option value="7">NARANJA</option>
+                                                    
+                                                 
                                                 </select>
                                             <br><br>
                                                 <label class="negrita text-naranja">Bono</label>
@@ -875,6 +869,14 @@ function getView(){
 };
 
 function addListeners(){
+
+    let strColores = '';
+    tbl_colores.map((r)=>{
+        strColores +=`
+        <option style='color:${r.COLOR}' value="${r.NF}">${r.NOMBRE}</option>
+        `
+    })
+    document.getElementById('cmbColor').innerHTML = strColores;
 
     get_combos_producto();
 

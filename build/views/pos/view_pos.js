@@ -61,23 +61,44 @@ function getView(){
 
                 <div class="col-12">
 
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select class="form-control col-4" id="cmbTipoPrecio">
-                            </select>
-                            <input type="text" list="lista_productos" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
-                                <i class="fal fa-search"></i>
-                            </button>
-                            <datalist width="100%" id="lista_productos" class="col-12">
-                        </div>
-                    </div>
-                   
-                </datalist>
+                                   
+               
                 <hr class="solid">
                 
                    <div class="row">
-                        <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            
+                            <div class="card card-rounded shadow border-naranja col-12 p-2">
+                                <div class="card-body"> 
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <select class="form-control col-4" id="cmbTipoPrecio">
+                                            </select>
+                                            <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
+                                                <i class="fal fa-search"></i>
+                                            </button>
+                                        
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-responsive  table-hover col-12" id="tblProductos">
+                                        <thead class="bg-naranja text-white">
+                                            <tr>
+                                                <td>PRODUCTO</td>
+                                                <td>MEDIDA</td>
+                                                <td>PRECIO</td>
+                                                <td>TIPO</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataProductos"></tbody>
+                                    </table>
+
+                                </div>
+                            </div>    
+
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                             <div class="card card-rounded shadow border-naranja col-12 p-2">
                                 <div class="card-body">
                                     <div class="row">
@@ -99,14 +120,83 @@ function getView(){
                                         <tbody id="tblPosPedido"></tbody>
                                     </table>
                                 </div>
-                            </div>      
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="row">
+
+
+            </div>
+
+            <button class="btn btn-warning btn-xl btn-bottom-l btn-circle shadow hand" id="btnListadoDocumentos">
+                <i class="fal fa-folder"></i>  
+            </button>
+            
+            <button class="btn btn-verde btn-xl btn-bottom-r btn-circle shadow hand" id="btnPosCobro">
+                <i class="fal fa-arrow-right"></i>
+            </button>
+            `
+        },
+        BACKUP_pedido:()=>{
+            return `
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select class="form-control col-4" id="cmbTipoPrecio">
+                            </select>
+                            <input type="text" list="lista_productos" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
+                                <i class="fal fa-search"></i>
+                            </button>
+                            <datalist width="100%" id="lista_productos" class="col-12">
+                            </datalist>
+                        </div>
+                    </div>
+                   
+              
+                <hr class="solid">
+                
+                   <div class="row">
+                        <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                            
+                            <div class="card card-rounded shadow border-naranja col-12 p-2">
+                                <div class="card-body"> 
+                                    
+
+                                </div>
+                            </div>    
+
                         </div>
                         <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
                             <div class="card card-rounded shadow border-naranja col-12 p-2">
-                                <div class="card-body"> 
-                                    <b class="text-naranja">Contenedor de la gráfica</b>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b class="text-naranja">Productos agregados a la Factura</b>
+                                        </div>
+                                    </div>
+                                    <table class="table table-responsive  table-hover col-12">
+                                        <thead class="bg-verde text-white">
+                                            <tr>
+                                                <td>PRODUCTO</td>
+                                                <td>CANTIDAD</td>
+                                                <td>PRECIO</td>
+                                                <td>SUBTOTAL</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblPosPedido"></tbody>
+                                    </table>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
 
@@ -478,7 +568,12 @@ function addListeners(){
     listener_coddoc();
 
     document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
-  
+    document.getElementById('cmbTipoPrecio').addEventListener('change',()=>{
+
+        GlobalTipoPrecio = document.getElementById('cmbTipoPrecio').value;
+
+    })
+
     let btnGuardar = document.getElementById('btnGuardar');
     btnGuardar.addEventListener('click',()=>{
 
@@ -615,6 +710,7 @@ function listener_teclado(){
 function listener_vista_pedido(){
 
 
+    /*
     const opts = document.getElementById('lista_productos').childNodes;
     const dinput = document.getElementById('txtPosCodprod');
     let eventSource = null;
@@ -629,7 +725,7 @@ function listener_vista_pedido(){
             get_producto(value);
         }
     });
-
+    */
    
 
     let txtPosCodprod = document.getElementById('txtPosCodprod');
@@ -1063,8 +1159,8 @@ function CalcularTotalPrecioEditar(){
 
 function get_buscar_producto(filtro){
 
-    let container = document.getElementById('lista_productos');
-    container.innerHTML = ''; //GlobalLoader
+    let container = document.getElementById('tblDataProductos');
+    container.innerHTML = GlobalLoader;
 
     document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-sync fa-spin"></i>';
     document.getElementById('btnBuscarProd').disabled=true;
@@ -1076,7 +1172,8 @@ function get_buscar_producto(filtro){
     axios.post('/pos/productos_filtro', {
         sucursal: cmbEmpresa.value,
         token:TOKEN,
-        filtro:filtro
+        filtro:filtro,
+        tipoprecio:GlobalTipoPrecio
     })
     .then((response) => {        
         if(response=='error'){
@@ -1085,14 +1182,18 @@ function get_buscar_producto(filtro){
         }else{
             const data = response.data.recordset;
             data.map((r)=>{
-                if(Number(i)==0){}else{idf=""};
-                let strClassExist = 'text-success';
-                if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
                 str += `
-                <option class="bg-naranja" width="100%"
-                    value="${r.CODPROD} // ${funciones.limpiarTexto(r.DESPROD)} // ${r.CODMEDIDA}">
-                    ${r.CODMEDIDA} (${r.EQUIVALE}) P:${funciones.setMoneda(r.PRECIO,'Q')} E: ${r.EXISTENCIA}
-                </option>
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}')">
+                        <td>${r.DESPROD}
+                            <br>
+                            <small class="negrita text-danger">Cód:${r.CODPROD}</small>
+                            <br>
+                            <small>M: ${r.DESMARCA}</small>
+                        </td>
+                        <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
+                        <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                        <td>${r.TIPOPROD}</td>
+                    </tr>
                 `
             })
             container.innerHTML = str;
@@ -1109,7 +1210,17 @@ function get_buscar_producto(filtro){
         document.getElementById('btnBuscarProd').disabled=false;
     });
 
-
+/*
+if(Number(i)==0){}else{idf=""};
+                let strClassExist = 'text-success';
+                if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
+                str += `V
+                <option class="bg-naranja" width="100%"
+                    value="${r.CODPROD} // ${funciones.limpiarTexto(r.DESPROD)} // ${r.CODMEDIDA}">
+                    ${r.CODMEDIDA} (${r.EQUIVALE}) P:${funciones.setMoneda(r.PRECIO,'Q')} E: ${r.EXISTENCIA}
+                </option>
+                `
+*/
 
 };
 
@@ -1293,7 +1404,7 @@ function get_tbl_productos_clasificacion(codigo){
 
 };
 
-function get_producto(producto){
+function BACKUP_get_producto(producto){
 
     $("#modal_cantidad").modal('show');
  
@@ -1352,6 +1463,46 @@ function get_producto(producto){
 
     
     
+};
+
+function get_producto(codprod,desprod,codmedida,equivale,costo,precio){
+
+            $("#modal_cantidad").modal('show');
+ 
+   
+            let container = document.getElementById('container_precio');
+            container.innerHTML = GlobalLoader;
+
+            document.getElementById('txtMCCantidad').value = '';
+            document.getElementById('txtMCPrecio').value = 0;
+            document.getElementById('btnMCGuardar').disabled = true;
+
+            CalcularTotalPrecio();
+
+            Selected_codprod = codprod;
+            Selected_desprod = desprod;
+            Selected_codmedida = codmedida;
+            Selected_equivale = Number(equivale);
+            Selected_costo = Number(costo);
+            Selected_precio = Number(precio);
+
+            document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
+
+            document.getElementById('txtMCCantidad').value = '';
+            document.getElementById('txtMCPrecio').value = precio;
+
+            CalcularTotalPrecio();
+
+            document.getElementById('txtPosCodprod').value = '';
+
+            
+            container.innerHTML = '';
+
+            document.getElementById('btnMCGuardar').disabled = false;
+
+            document.getElementById('txtMCCantidad').focus();
+   
+
 };
 
 function get_datos_precio(codprod,codmedida){
