@@ -21,6 +21,7 @@ var router_ordenes = require('./router/router_ordenes');
 var router_equipos = require('./router/router_equipos');
 var router_clientes = require('./router/router_clientes');
 var router_tipodocumentos = require('./router/router_tipodocumentos');
+var router_cajas = require('./router/router_cajas');
 
 
 var http = require('http').Server(app);
@@ -157,6 +158,7 @@ app.get("/despacho_finalizado",function(req,res){
 app.use('/general', router_general);
 app.use('/empleados', router_empleados);
 app.use('/productos', router_productos);
+app.use('/cajas', router_cajas);
 app.use('/pos', router_pos);
 app.use('/reportes', router_reportes);
 app.use('/despacho', router_despacho);

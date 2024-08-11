@@ -870,13 +870,17 @@ function getView(){
 
 function addListeners(){
 
-    let strColores = '';
-    tbl_colores.map((r)=>{
-        strColores +=`
-        <option style='color:${r.COLOR}' value="${r.NF}">${r.NOMBRE}</option>
-        `
+    GF.get_data_color()
+    .then((data)=>{
+        let strColores = '';
+        data.recordset.map((r)=>{
+            strColores +=`
+            <option style='color:${r.COLOR}' value="${r.NF}">${r.NOMBRE}</option>
+            `
+        })
+        document.getElementById('cmbColor').innerHTML = strColores;
     })
-    document.getElementById('cmbColor').innerHTML = strColores;
+    
 
     get_combos_producto();
 
@@ -1783,6 +1787,7 @@ function get_combo_marcas(){
         });
 
 };
+
 function get_lista_marcas(){
 
     let container = document.getElementById('tblDataProdMarcas');
@@ -1817,6 +1822,7 @@ function get_lista_marcas(){
     });
 
 };
+
 function insert_marca(codmarca,desmarca){
   
     return new Promise((resolve,reject)=>{
@@ -1877,6 +1883,7 @@ function get_combo_fabricantes(){
         container.innerHTML = `<option value='SN'>No se cargó los fabricantes</option>`;
     });
 };
+
 function get_lista_fabricantes(){
 
     let container = document.getElementById('tblDataProdClaseuno');
@@ -1972,6 +1979,7 @@ function get_combo_proveedores(){
         container.innerHTML = `<option value='SN'>No se cargó los proveedores</option>`;
     });
 };
+
 function get_lista_proveedores(){
 
     let container = document.getElementById('tblDataProdProv');
@@ -2006,6 +2014,7 @@ function get_lista_proveedores(){
     });
 
 };
+
 function insert_proveedor(codigo,descripcion){
   
     return new Promise((resolve,reject)=>{
@@ -2038,8 +2047,6 @@ function insert_proveedor(codigo,descripcion){
         });
     })   
 };
-
-
 
 function get_combo_clasedos(){
     let container = document.getElementById('cmbClasedos');

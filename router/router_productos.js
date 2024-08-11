@@ -164,7 +164,7 @@ router.post("/edit_producto", async(req,res)=>{
     WHERE CODPROD='${codprod}';
     `
     
-    console.log(qry)
+  
 
     execute.QueryToken(res,qry,token);
      

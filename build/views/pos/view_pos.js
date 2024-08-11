@@ -141,82 +141,6 @@ function getView(){
             </button>
             `
         },
-        BACKUP_pedido:()=>{
-            return `
-            <div class="row">
-
-                <div class="col-12">
-
-                    <div class="form-group">
-                        <div class="input-group">
-                            <select class="form-control col-4" id="cmbTipoPrecio">
-                            </select>
-                            <input type="text" list="lista_productos" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
-                                <i class="fal fa-search"></i>
-                            </button>
-                            <datalist width="100%" id="lista_productos" class="col-12">
-                            </datalist>
-                        </div>
-                    </div>
-                   
-              
-                <hr class="solid">
-                
-                   <div class="row">
-                        <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                            
-                            <div class="card card-rounded shadow border-naranja col-12 p-2">
-                                <div class="card-body"> 
-                                    
-
-                                </div>
-                            </div>    
-
-                        </div>
-                        <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
-                            <div class="card card-rounded shadow border-naranja col-12 p-2">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <b class="text-naranja">Productos agregados a la Factura</b>
-                                        </div>
-                                    </div>
-                                    <table class="table table-responsive  table-hover col-12">
-                                        <thead class="bg-verde text-white">
-                                            <tr>
-                                                <td>PRODUCTO</td>
-                                                <td>CANTIDAD</td>
-                                                <td>PRECIO</td>
-                                                <td>SUBTOTAL</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblPosPedido"></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            
-            <div class="row">
-
-
-            </div>
-
-            <button class="btn btn-warning btn-xl btn-bottom-l btn-circle shadow hand" id="btnListadoDocumentos">
-                <i class="fal fa-folder"></i>  
-            </button>
-            
-            <button class="btn btn-verde btn-xl btn-bottom-r btn-circle shadow hand" id="btnPosCobro">
-                <i class="fal fa-arrow-right"></i>
-            </button>
-            `
-        },
         modal_cantidad:()=>{
             return `
             <div class="modal" id="modal_cantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -536,6 +460,10 @@ function addListeners(){
 
     funciones.slideAnimationTabs();
 
+    //REINICIA EL HANDLE DE LA EMPRESA
+    cmbEmpresa.removeEventListener('change', handle_empresa_change)
+    cmbEmpresa.addEventListener('change', handle_empresa_change)
+
 
 
     // LISTENER DE LA VENTANA DE PEDIDOS
@@ -555,15 +483,13 @@ function addListeners(){
     document.getElementById('txtFecha').value = funciones.getFecha();
     
    
-
-    //CARGA CODDOC DEFAULT
-    //let cmbCoddoc = document.getElementById('cmbCoddoc');
-    //let cmbCoddocCot = document.getElementById('cmbCoddocCot');
-    
-   
     
     //carga el código vendedor
     get_vendedores();
+
+
+    //carga las cajas
+    get_cajas();
     
     listener_coddoc();
 
@@ -583,6 +509,13 @@ function addListeners(){
 
     document.getElementById('txtPosCodprod').focus();
 
+};
+
+function handle_empresa_change(){
+  
+    get_cajas();
+    get_vendedores();
+    listener_coddoc();
 };
 
 function listener_coddoc(){
@@ -1032,7 +965,25 @@ function get_vendedores(){
         funciones.AvisoError('No se cargaron los vendedores');
         document.getElementById('cmbVendedor').innerHTML ='<option value="1">SIN VENDEDOR</option>';
     })
-}
+};
+
+function get_cajas(){
+
+    GF.get_data_cajas()
+    .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+            str += `<option value="${r.CODCAJA}">${r.DESCAJA}</option>`
+        });
+        document.getElementById('cmbCaja').innerHTML = str;
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se cargaron las cajas');
+        document.getElementById('cmbCaja').innerHTML ='<option value="1">SIN CAJA</option>';
+    })
+
+};
+
 
 function tbl_clientes(filtro){
    
@@ -1184,7 +1135,7 @@ function get_buscar_producto(filtro){
             data.map((r)=>{
                 str += `
                     <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}')">
-                        <td>${r.DESPROD}
+                        <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
                             <br>
                             <small class="negrita text-danger">Cód:${r.CODPROD}</small>
                             <br>
@@ -1221,66 +1172,6 @@ if(Number(i)==0){}else{idf=""};
                 </option>
                 `
 */
-
-};
-
-function BACKUP_get_buscar_producto(filtro){
-
-    let container = document.getElementById('tblPosProductosCategoria');
-    container.innerHTML = GlobalLoader;
-
-    let str = '';
-
-    let idf = 'first-element'; let i =0;
-
-    axios.post('/pos/productos_filtro', {
-        sucursal: cmbEmpresa.value,
-        token:TOKEN,
-        filtro:filtro
-    })
-    .then((response) => {        
-        if(response=='error'){
-            funciones.AvisoError('Error en la solicitud');
-            container.innerHTML = 'No day datos....';
-        }else{
-            const data = response.data.recordset;
-            data.map((r)=>{
-                if(Number(i)==0){}else{idf=""};
-                let strClassExist = 'text-success';
-                if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
-                str += `
-                <tr id="${idf}" class="hand border-secondary border-top-0 border-left-0 border-right-0 border-bottom-secondary" 
-                onclick="get_producto('${r.CODPROD}','${funciones.limpiarTexto(r.DESPROD)}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}')">
-                    <td>
-                        ${funciones.limpiarTexto(r.DESPROD)}
-                        <br>
-                        <small>Código: <b class="text-danger">${r.CODPROD}</b></small>
-                        <br>
-                        <small>Marca: <b class="text-secondary">${r.DESMARCA}</b></small>
-                    </td>
-                    <td>
-                        ${r.CODMEDIDA} 
-                        <br>
-                        <small>Equivale: <b class="text-danger">${r.EQUIVALE}</b></small>
-                    </td>
-                    <td>
-                        <b class="h4">${funciones.setMoneda(r.PRECIO ||0,'Q')}</b>
-                    </td>
-                    <td>
-                        <b class="${strClassExist}">${r.EXISTENCIA}</b>
-                    </td>
-                </tr>
-                `
-            })
-            container.innerHTML = str;
-            getMoveTable();
-        }
-    }, (error) => {
-        funciones.AvisoError('Error en la solicitud');
-        container.innerHTML = 'No day datos....';
-    });
-
-
 
 };
 
@@ -1404,66 +1295,6 @@ function get_tbl_productos_clasificacion(codigo){
 
 };
 
-function BACKUP_get_producto(producto){
-
-    $("#modal_cantidad").modal('show');
- 
-    const datos_producto = producto.split(" // ");
-   
-    
-    let codprod = datos_producto[0].replace("'","");
-    let desprod = datos_producto[1].replace("'","");
-    let codmedida = datos_producto[2].replace("'","");
-
-    let container = document.getElementById('container_precio');
-    container.innerHTML = GlobalLoader;
-
-    document.getElementById('txtMCCantidad').value = '';
-    document.getElementById('txtMCPrecio').value = 0;
-    document.getElementById('btnMCGuardar').disabled = true;
-
-    CalcularTotalPrecio();
-
-    get_datos_precio(codprod,codmedida)
-    .then((data)=>{
-        let datos = data.recordset;
-
-            let equivale = Number(datos[0].EQUIVALE);
-            let costo = Number(datos[0].COSTO);
-            let precio = Number(datos[0].PRECIO);
-
-            Selected_codprod = codprod;
-            Selected_desprod = desprod;
-            Selected_codmedida = codmedida;
-            Selected_equivale = Number(equivale);
-            Selected_costo = Number(costo);
-            Selected_precio = Number(precio);
-
-            document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
-
-            document.getElementById('txtMCCantidad').value = '';
-            document.getElementById('txtMCPrecio').value = precio;
-
-            CalcularTotalPrecio();
-
-            document.getElementById('txtPosCodprod').value = '';
-
-            
-            container.innerHTML = '';
-
-            document.getElementById('btnMCGuardar').disabled = false;
-
-            document.getElementById('txtMCCantidad').focus();
-    })
-    .catch(()=>{
-        container.innerHTML = '';
-        document.getElementById('btnMCGuardar').disabled = false;
-        funciones.AvisoError('No se pudo obtener los datos del producto')
-    })
-
-    
-    
-};
 
 function get_producto(codprod,desprod,codmedida,equivale,costo,precio){
 
@@ -1531,28 +1362,6 @@ function get_datos_precio(codprod,codmedida){
 };
 
 
-function BACKUP_get_producto(codprod,desprod,codmedida,equivale,costo,precio){
-
-    $("#modal_cantidad").modal('show');
-
-    
-    Selected_codprod = codprod;
-    Selected_desprod = desprod;
-    Selected_codmedida = codmedida;
-    Selected_equivale = Number(equivale);
-    Selected_costo = Number(costo);
-    Selected_precio = Number(precio);
-
-    document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
-
-    document.getElementById('txtMCCantidad').value = '';
-    document.getElementById('txtMCPrecio').value = precio;
-
-    CalcularTotalPrecio();
-
-    document.getElementById('txtMCCantidad').focus();
-    
-};
 
 
 function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad){

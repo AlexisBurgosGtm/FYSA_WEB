@@ -120,6 +120,54 @@ let GF = {
             });
         })     
     },
+    get_data_cajas:()=>{
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/cajas/listado',
+                {
+                    sucursal:cmbEmpresa.value,
+                    token:TOKEN
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })     
+    },
+    get_data_color:()=>{
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/pos/listado_colores',
+                {
+                    sucursal:cmbEmpresa.value,
+                    token:TOKEN
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })     
+    },
     get_productos_totales:(habilitado)=>{
         return new Promise((resolve,reject)=>{
     

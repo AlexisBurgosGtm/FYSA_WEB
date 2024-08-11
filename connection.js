@@ -4,16 +4,16 @@ function get_conf_token(token){
 	//let config = [];
 
 	
-	let configx = {
-		user: 'db_a6478c_fsyaweb_admin',
+	let config = {
+		user: 'db_a6478c_fsya_admin',
 		password: 'razors1805',
-		server: 'sql5108.site4now.net',
-		database: 'db_a6478c_fsyaweb',
+		server: 'sql5112.site4now.net',
+		database: 'db_a6478c_fsya',
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 	
 
-	let config = {
+	let configx = {
 		user: 'iEx',
 		password: 'iEx',
 		server: 'DESKTOP-E0KG096\\SQLEXPRESS',//'DESKTOP-E0KG096\\SQL17',
