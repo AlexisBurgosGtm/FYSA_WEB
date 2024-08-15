@@ -192,6 +192,33 @@ let GF = {
                 reject();
             });
         })     
-    }
+    },
+    get_data_documentos:(tipo,mes,anio)=>{
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/documentos/listado_documentos',
+                {
+                    sucursal:cmbEmpresa.value,
+                    token:TOKEN,
+                    tipo:tipo,
+                    anio:anio,
+                    mes:mes
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })     
+    },
 };
 

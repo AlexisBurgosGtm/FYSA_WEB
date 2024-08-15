@@ -1,4 +1,7 @@
-let empresas = [{empnit:"FSYA000",nombre:"BODEGA FARMACIA SALUD Y AHORRO"}];
+let empresas = [{empnit:"FSYA000",nombre:"BODEGA FARMACIA SALUD Y AHORRO"},
+    {empnit:"FSYA001",nombre:"FARMACIA ZONA 5"},
+    {empnit:"FSYA002",nombre:"FARMACIA CENMA"}
+];
 // 
 
 function get_empresas(){
@@ -23,23 +26,31 @@ let tipo_precios =[
             ];
 
 
-            let tbl_colores =[
-                {NF:0,NOMBRE:"SIN COLOR",COLOR:"#FFFFFF"},
-                {NF:1,NOMBRE:"AMARILLO",COLOR:"#FFFF00"},
-                {NF:2,NOMBRE:"VERDE",COLOR:"#008000"},
-                {NF:3,NOMBRE:"AZUL",COLOR:"#0000FF"},
-                {NF:4,NOMBRE:"CAFES",COLOR:"#800000"},
-                {NF:5,NOMBRE:"MORADO",COLOR:"#800080"},
-                {NF:6,NOMBRE:"ROSADO",COLOR:"#FF00FF"},
-                {NF:7,NOMBRE:"NARANJA",COLOR:"#FF4500"}
-            ];
-
-
 
 function get_tipo_precios(){
 
     let str = '' //"<option value=''>Seleccione una sucursal</option>";
     tipo_precios.map((r)=>{
+        str += `<option value='${r.tipo}'>${r.nombre}</option>`
+    });
+    return str;
+}
+
+
+
+
+let tipo_documentos =[
+    {tipo:"FAC",nombre:"FACTURA ENVIO NORMAL"},
+    {tipo:"FEF",nombre:"FACTURA ELECTRONICA FEL (CONTADO SAT)"},  
+    {tipo:"COM",nombre:"COMPRAS (IVA)"},
+    {tipo:"COP",nombre:"COMPRAS (PEQUEÑO CONTRIBUYENTE)"},
+    {tipo:"COR",nombre:"CORTE DE CAJA"}
+];
+
+function get_tipo_documentos(){
+
+    let str = '';
+    tipo_documentos.map((r)=>{
         str += `<option value='${r.tipo}'>${r.nombre}</option>`
     });
     return str;

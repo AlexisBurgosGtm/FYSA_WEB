@@ -37,15 +37,27 @@ let GlobalSelected_Desprod = '';
 let GlobalSelected_Costo = 0;
 let GlobalSelected_Status = '';
 
+let Selected_exento =0; 
+let Selected_tipoprod = '';
+let Selected_existencia = 0;
 
 let GlobalSelectedCodclie = 0;
 let GlobalSelectedNoOrden = 0;
 let GlobalSelectedCodEquipo = 0;
+let GlobalConfigIVA = 1.12;
+
+let GlobalCodBodega  = 0;
 
 
 
 
 
-
-
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
 

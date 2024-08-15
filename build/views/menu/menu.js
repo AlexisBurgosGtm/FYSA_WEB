@@ -76,9 +76,9 @@ function getView(){
                 </div>
             </div>
             <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="">
+            <div class="card card-rounded col-12 border-naranja hand" onclick="Menu.documentos()">
                 <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Opción 1</h5>
+                    <h5 class="text-verde-claro negrita">Archivo/Documentos</h5>
                 </div>
             </div>
             <br>
@@ -97,18 +97,9 @@ function getView(){
         },
         datos:()=>{
             return `
-            <table class="table table-responsive">
-                <thead class="bg-verde-claro">
-                    <tr>
-                        <td>PRODUCTO</td>
-                        <td>DATO 1</td>
-                        <td>DATO 2</td>
-                        <td>DATO 3</td>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="col-12" id="container_grafica">
+
+            </div>
             `;
         }
     }
@@ -118,7 +109,7 @@ function getView(){
 };
 
 function handle_empresa_change(){
-    //get_rpt_fechas();
+    get_grafica();
     //get_rpt_fechas_compras();
     //get_rpt_productos();
 };
@@ -131,6 +122,7 @@ function addListeners(){
     cmbEmpresa.addEventListener('change', handle_empresa_change)
 
 
+    get_grafica();
   
  
    
@@ -144,4 +136,139 @@ function initView(){
 };
 
 
+
+function get_grafica(){
+
+    getDataEmpresaFechas()
+    .then((data)=>{
+        getLineChartFechasEmpresa(data)
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se cargó los datos de la gráfica')
+    })
+
+
+}
+
+
+function getDataEmpresaFechas(){
+    return new Promise((resolve, reject)=>{
+        
+        let data = {
+            sucursal:cmbEmpresa.value,
+            anio:2024,
+            mes:8,
+            tipo:'FAC'
+        };
+
+        axios.post(`/bi/empresa_ventas_fechas`, data)
+        .then(res => {
+            const datos = res.data.recordset;   
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+    })
+};
+
+function getLineChartFechasEmpresa(data){
+   
+    let container = document.getElementById('container_grafica');
+    container.innerHTML = '';
+    container.innerHTML = '<canvas id="myChart1" width="100" height="40"></canvas>';
+  
+    let label = []; let valor = []; let empresas = []; let bgColor = [];
+    let total = 0;
+    data.map((r)=>{
+        total = total + Number(r.IMPORTE);
+    });
+   
+    
+    let NomEmpresa = '';
+    data.map((r)=>{
+            label.push(funciones.convertDateNormal(r.FECHA));
+            empresas.push(r.NOMBRE);
+            NomEmpresa = r.NOMBRE;
+            valor.push(Number(r.IMPORTE.toFixed(2)));
+            bgColor.push(getRandomColor())
+    })
+    
+
+    
+    /*
+       labels: label,
+            datasets: [
+                {
+                    label:"Ventas",
+                    data:valor,
+                    backgroundColor:bgColor
+                },
+                {
+                    label:"Ventas2",
+                    data:valor,
+                    backgroundColor:bgColor
+                }
+            ]
+    */
+
+
+    var ctx = document.getElementById('myChart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        plugins: [ChartDataLabels],
+        type: 'line',
+        data: {
+            labels: label,
+            datasets: [
+                {
+                    label:NomEmpresa,
+                    data:valor,
+                    backgroundColor:bgColor
+                }
+            ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Ventas por Fecha. Total: ' + funciones.setMoneda(total,'Q'),
+              font: {size: 30}
+            },
+            // Change options for ALL labels of THIS CHART
+            datalabels: {
+                anchor:'end',
+                align:'end',
+                listeners: {
+                  click: function(context) {
+                    // Receives `click` events only for labels of the first dataset.
+                    // The clicked label index is available in `context.dataIndex`.
+                    console.log(context);
+                  }
+                },
+                formatter: function(value) {
+                  return funciones.setMoneda(value,'Q');
+                  // eq. return ['line1', 'line2', value]
+                },
+                color: function(context) {
+                  return context.dataset.backgroundColor;
+                },
+                borderColor: 'white',
+                borderRadius: 25,
+                borderWidth: 0,
+                font: {
+                  weight: 'bold'
+                }
+            }
+          }
+        }
+    });
+
+
+
+};
 

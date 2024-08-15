@@ -1,4 +1,4 @@
-const DbName = "posdb_r1";
+const DbName = "posdb_r2";
 
 var tblDocumentos = {
     name: 'documentos',
@@ -129,8 +129,7 @@ var tblTempventasPos = {
         EXISTENCIA:{dataType: "number"},
         CODBODEGA:{dataType: "string"},
         NOLOTE:{dataType: "string"},
-        CODLISTA:{dataType: "string"},
-        FLETE:{dataType: "number"}
+        TIPOPROD:{dataType: "string"}
     }
 };
 

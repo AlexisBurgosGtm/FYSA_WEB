@@ -72,8 +72,7 @@ function getView(){
                                 <div class="card-body"> 
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <select class="form-control col-4" id="cmbTipoPrecio">
-                                            </select>
+                                           
                                             <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
                                             <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
                                                 <i class="fal fa-search"></i>
@@ -89,6 +88,7 @@ function getView(){
                                                 <td>MEDIDA</td>
                                                 <td>PRECIO</td>
                                                 <td>TIPO</td>
+                                                <td>EXISTENCIA</td>
                                             </tr>
                                         </thead>
                                         <tbody id="tblDataProductos"></tbody>
@@ -321,7 +321,7 @@ function getView(){
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <button class="btn btn-xl btn-verde hand shadow col-12 form-control" id="btnGuardar">
+                                    <button class="btn btn-xl btn-verde hand shadow col-12 form-control" id="btnGuardarFactura">
                                         <i class="fal fa-save"></i> Guardar (ctrl+g)
                                     </button>
                                 </div>
@@ -493,16 +493,24 @@ function addListeners(){
     
     listener_coddoc();
 
-    document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
+   
     document.getElementById('cmbTipoPrecio').addEventListener('change',()=>{
 
         GlobalTipoPrecio = document.getElementById('cmbTipoPrecio').value;
 
     })
 
-    let btnGuardar = document.getElementById('btnGuardar');
-    btnGuardar.addEventListener('click',()=>{
+    let btnGuardarFactura = document.getElementById('btnGuardarFactura');
+    btnGuardarFactura.addEventListener('click',()=>{
 
+        funciones.Confirmacion("¿Está seguro que desea Guardar esta Venta?")
+        .then((value)=>{
+            if(value==true){
+
+                finalizar_pedido()
+               
+            }
+        })
         
 
     });
@@ -591,6 +599,7 @@ function get_correlativo(coddoc){
 
 
 
+
 function listener_teclado(){
     //evitando errores
     Mousetrap.bind('f5', function(e) { e.preventDefault(); });
@@ -604,7 +613,7 @@ function listener_teclado(){
 
     Mousetrap.bind('ctrl+right', function() { document.getElementById('btnPosCobro').click() });
     Mousetrap.bind('ctrl+left', function() { document.getElementById('btnPosDocumentoAtras').click() });
-    Mousetrap.bind('ctrl+g', function(e) { e.preventDefault(); document.getElementById('btnGuardar').click() });
+    Mousetrap.bind('ctrl+g', function(e) { e.preventDefault(); document.getElementById('btnGuardarFactura').click() });
     
 
 
@@ -642,23 +651,6 @@ function listener_teclado(){
 
 function listener_vista_pedido(){
 
-
-    /*
-    const opts = document.getElementById('lista_productos').childNodes;
-    const dinput = document.getElementById('txtPosCodprod');
-    let eventSource = null;
-    let value = '';
-
-    dinput.addEventListener('keydown', (e) => {
-    eventSource = e.key ? 'input' : 'list';
-    });
-    dinput.addEventListener('input', (e) => {
-        value = e.target.value;
-        if (eventSource === 'list') {
-            get_producto(value);
-        }
-    });
-    */
    
 
     let txtPosCodprod = document.getElementById('txtPosCodprod');
@@ -671,6 +663,11 @@ function listener_vista_pedido(){
         if(filtro==''){return;}
 
         if (e.code === 'Enter') { 
+            document.getElementById('btnBuscarProd').click();
+            //get_buscar_producto(filtro);
+        };
+
+        if (e.code === 13) { 
             document.getElementById('btnBuscarProd').click();
             //get_buscar_producto(filtro);
         };
@@ -711,7 +708,7 @@ function listener_vista_pedido(){
         };
 
 
-        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad)
+        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia)
         .then(()=>{
             
             $("#modal_cantidad").modal('hide');
@@ -945,7 +942,7 @@ function listener_listado_documentos(){
 
 };
 
-function initView(){
+function initView(){                                                                                                                                             
    
     getView();
     addListeners();
@@ -1133,8 +1130,13 @@ function get_buscar_producto(filtro){
         }else{
             const data = response.data.recordset;
             data.map((r)=>{
+                
+                let strClassExistencia = '';
+                let existencia = Number(r.EXISTENCIA);
+                if(existencia<=0){strClassExistencia='bg-danger text-white'};
+
                 str += `
-                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}')">
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}')">
                         <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
                             <br>
                             <small class="negrita text-danger">Cód:${r.CODPROD}</small>
@@ -1144,6 +1146,7 @@ function get_buscar_producto(filtro){
                         <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
                         <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
                         <td>${r.TIPOPROD}</td>
+                        <td class="${strClassExistencia}">${r.EXISTENCIA}</td>
                     </tr>
                 `
             })
@@ -1161,17 +1164,7 @@ function get_buscar_producto(filtro){
         document.getElementById('btnBuscarProd').disabled=false;
     });
 
-/*
-if(Number(i)==0){}else{idf=""};
-                let strClassExist = 'text-success';
-                if(Number(r.EXISTENCIA)<0){strClassExist="text-danger"};
-                str += `V
-                <option class="bg-naranja" width="100%"
-                    value="${r.CODPROD} // ${funciones.limpiarTexto(r.DESPROD)} // ${r.CODMEDIDA}">
-                    ${r.CODMEDIDA} (${r.EQUIVALE}) P:${funciones.setMoneda(r.PRECIO,'Q')} E: ${r.EXISTENCIA}
-                </option>
-                `
-*/
+
 
 };
 
@@ -1239,9 +1232,6 @@ function getMoveTable(){
                 
                 console.log(start.onclick());
 
-
-                //get_producto(codprod,desprod,codmedida,equivale,costo,precio)
-                
             }
         };
 
@@ -1296,7 +1286,7 @@ function get_tbl_productos_clasificacion(codigo){
 };
 
 
-function get_producto(codprod,desprod,codmedida,equivale,costo,precio){
+function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,exento,existencia){
 
             $("#modal_cantidad").modal('show');
  
@@ -1316,6 +1306,9 @@ function get_producto(codprod,desprod,codmedida,equivale,costo,precio){
             Selected_equivale = Number(equivale);
             Selected_costo = Number(costo);
             Selected_precio = Number(precio);
+            Selected_tipoprod = tipoprod;
+            Selected_exento = Number(exento);
+            Selected_existencia = Number(existencia);
 
             document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
 
@@ -1364,7 +1357,7 @@ function get_datos_precio(codprod,codmedida){
 
 
 
-function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad){
+function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia){
     
     let datos = 
         {
@@ -1380,7 +1373,11 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
             PRECIO:Number(precio),
             CANTIDAD:Number(cantidad),
             TOTALUNIDADES:Number(cantidad * equivale),
-            TOTALPRECIO:Number(precio)*Number(cantidad)
+            TOTALPRECIO:Number(precio)*Number(cantidad),
+            EXENTO:Number(exento),
+            TIPOPROD:tipoprod,
+            TIPOPRECIO:tipoprecio,
+            EXISTENCIA:Number(existencia)
         };
 
     
@@ -1431,7 +1428,7 @@ function get_tbl_pedido(){
                 <td class="negrita">${funciones.setMoneda(rows.PRECIO,'Q')}</td>
                 <td class="negrita text-danger h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
                 <td>
-                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}')">
+                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}')">
                         <i class="fal fa-edit"></i>
                     </button>
                 </td> 
@@ -1459,7 +1456,7 @@ function get_tbl_pedido(){
 
 };
 
-function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio){
+function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia){
 
     $("#modal_editar_cantidad").modal('show');
 
@@ -1470,6 +1467,9 @@ function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,p
     Selected_equivale = Number(equivale);
     Selected_costo = Number(costo);
     Selected_precio = Number(precio);
+    Selected_tipoprod = tipoprod;
+    Selected_exento = Number(exento);
+    Selected_existencia = Number(existencia);
 
     document.getElementById('lbCantidadDesprodE').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
 
@@ -1543,220 +1543,129 @@ function get_correlativo_coddoc(coddoc){
 
 
 
-function finalizar_pedido(tipo){
+function finalizar_pedido(){
 
-            let codcliente = document.getElementById('txtPosCobroNitclie').value || ''; //GlobalSelectedCodCliente;
-            if(codcliente==''){
-                funciones.AvisoError('Seleccione un cliente');
-                return;
-            }
+    
+    let codcliente = document.getElementById('txtPosCobroNitclie').value || ''; //GlobalSelectedCodCliente;
+    if(codcliente==''){
+        funciones.AvisoError('Seleccione un cliente');
+        return;
+    };
 
-            let nit = document.getElementById('txtPosCobroNit').value || 'CF';
-            let ClienteNombre = document.getElementById('txtPosCobroNombre').value;
-            GlobalSelectedNomCliente = ClienteNombre;
-            let dirclie = document.getElementById('txtPosCobroDireccion').value; // CAMPO DIR_ENTREGA
-            GlobalSelectedDirCliente = dirclie;
-            let obs = 'SN'; //document.getElementById('cmbEntregaTipoDoc').value; 
-            let direntrega = "SN"; //document.getElementById('txtEntregaDireccion').value; //CAMPO MATSOLI
-            let codbodega = GlobalCodBodega;
-            let cmbTipoEntrega = ''; //document.getElementById('cmbEntregaConcre').value; //campo TRANSPORTE
-            
-            let txtFecha = new Date(document.getElementById('txtFecha').value);
-            let anio = txtFecha.getFullYear();
-            let mes = txtFecha.getUTCMonth()+1;
-            let d = txtFecha.getUTCDate() 
-            let fecha = anio + '-' + mes + '-' + d; // CAMPO DOC_FECHA
-            let dia = d;
+    let nit = document.getElementById('txtPosCobroNit').value || 'CF';
+    let ClienteNombre = document.getElementById('txtPosCobroNombre').value;
+    GlobalSelectedNomCliente = ClienteNombre;
+    let dirclie = document.getElementById('txtPosCobroDireccion').value;
+    GlobalSelectedDirCliente = dirclie;
+    let obs = 'SN';  
+    let direntrega = "SN"; 
+    let codbodega = GlobalCodBodega;
+    let cmbTipoEntrega = ''; 
+    
+    let txtFecha = new Date(document.getElementById('txtFecha').value);
+    let anio = txtFecha.getFullYear();
+    let mes = txtFecha.getUTCMonth()+1;
+    let dia = txtFecha.getUTCDate() 
+    let fecha = funciones.devuelveFecha('txtFecha'); //funciones.getFecha() //anio + '-' + mes + '-' + d; 
+    
+    let hora = funciones.getHora();
 
-            let hora = funciones.getHora();
-        
-            let fe = txtFecha;// new Date(document.getElementById('txtEntregaFecha').value);
-            let ae = fe.getFullYear();
-            let me = fe.getUTCMonth()+1;
-            let de = fe.getUTCDate() 
-            let fechaentrega = ae + '-' + me + '-' + de;  // CAMPO DOC_FECHAENT
+    let coddoc = document.getElementById('cmbCoddoc').value;
+    let correlativoDoc = document.getElementById('txtCorrelativo').value;
 
-            let coddoc = ''; let correlativoDoc = '';
-            if(tipo=='PED'){
-                coddoc = document.getElementById('cmbCoddoc').value;
-                correlativoDoc = document.getElementById('txtCorrelativo').value;
-            };
-            if(tipo=='COT'){
-                coddoc = document.getElementById('cmbCoddocCot').value;
-                correlativoDoc = document.getElementById('txtCorrelativoCot').value;
-            };
-            
-            let cmbVendedor = document.getElementById('cmbVendedor');
+    let cmbCaja = document.getElementById('cmbCaja');
+    let cmbVendedor = document.getElementById('cmbVendedor');
 
-            let latdoc = '0';
-            let longdoc = '0';
+    let latdoc = '0';
+    let longdoc = '0';
 
-            let tipo_pago = 'CON'; 
-            let tipo_doc = '';
-            let entrega_contacto = document.getElementById('txtPosCobroNombre').value;
-            let entrega_telefono = ''; //document.getElementById('txtEntregaTelefono').value;
-            let entrega_direccion = ''; //document.getElementById('txtEntregaDireccion').value;
-            let entrega_referencia = ''; //document.getElementById('txtEntregaReferencia').value;
-            let entrega_lat = '0';
-            let entrega_long = '0';
-            
-            get_tbl_pedido();
+    let tipo_pago = 'CON'; 
+    let tipo_doc = '';
+
+    let entrega_contacto = ClienteNombre;
+    let entrega_telefono = ''; 
+    let entrega_direccion = ''; 
+    let entrega_referencia = ''; 
+    let entrega_lat = '0';
+    let entrega_long = '0';
+
+    let btnGuardarFactura = document.getElementById('btnGuardarFactura');
+    
+    get_tbl_pedido();
 
         //VERIFICACIONES
-        if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
-         
+    if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
+    
+    btnGuardarFactura.disabled = true;
+    btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-        //BLOQUEANDO EL BOTÓN
-        if(tipo=='PED'){
-            document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1 fa-spin"></i>';
-            document.getElementById('btnGuardarPedido').disabled = true;      
-        };
-        if(tipo=='COT'){
-            document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1 fa-spin"></i>';
-            document.getElementById('btnGuardarCotizacion').disabled = true;
-        };
-        //BLOQUEANDO EL BOTÓN
-        
-            classTipoDocumentos.getCorrelativoDocumento(tipo,coddoc)
-                .then((correlativo)=>{
-                    correlativoDoc = correlativo;
-
-                    funciones.Confirmacion('¿Está seguro que desea Crear este Documento?')
-                    .then((value)=>{
-                        if(value==true){    
-                            gettempDocproductos_pos(GlobalUsuario)
-                            .then((response)=>{
-                                axios.post('/pos/insertventa', {
-                                    jsondocproductos:JSON.stringify(response),
-                                    codsucursal:cmbEmpresa.value,
-                                    empnit: GlobalEmpnit,
-                                    coddoc:coddoc,
-                                    correl: correlativoDoc,
-                                    anio:anio,
-                                    mes:mes,
-                                    dia:dia,
-                                    fecha:fecha,
-                                    fechaentrega:fechaentrega,
-                                    formaentrega:cmbTipoEntrega,
-                                    codbodega:codbodega,
-                                    codcliente: codcliente,
-                                    nomclie:ClienteNombre,
-                                    totalcosto:GlobalTotalCostoDocumento,
-                                    totalprecio:GlobalTotalDocumento,
-                                    nitclie:nit,
-                                    dirclie:dirclie,
-                                    obs:entrega_referencia,
-                                    direntrega:direntrega,
-                                    usuario:GlobalUsuario,
-                                    codven:cmbVendedor.value,
-                                    lat:latdoc,
-                                    long:longdoc,
-                                    hora:hora,
-                                    tipo_pago:tipo_pago,
-                                    tipo_doc:tipo_doc,
-                                    entrega_contacto:entrega_contacto,
-                                    entrega_telefono:entrega_telefono,
-                                    entrega_direccion:entrega_direccion,
-                                    entrega_referencia:entrega_referencia,
-                                    entrega_lat:entrega_lat,
-                                    entrega_long:entrega_long,
-                                    domicilio:GlobalSelectedDomicilio
-                                })
-                                .then(async(response) => {
-                                    const data = response.data;
-                                    console.log(response);
-                                    if (data=='error'){
-
-                                            funciones.AvisoError('No se pudo guardar');
-                                            //DESBLOQUEANDO EL BOTÓN
-                                            if(tipo=='PED'){
-                                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                                document.getElementById('btnGuardarPedido').disabled = false;      
-                                            };
-                                            if(tipo=='COT'){
-                                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                                            };
-                                            //DESBLOQUEANDO EL BOTÓN
-                                    }else{
-                                            //DESBLOQUEANDO EL BOTÓN
-                                            if(tipo=='PED'){
-                                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                                document.getElementById('btnGuardarPedido').disabled = false;
-                                                socket.emit('nuevo_pedido',`Nuevo pedido a nombre de ${ClienteNombre} por monto de ${funciones.setMoneda(GlobalTotalDocumento,'Q')}`);      
-                                            };
-                                            if(tipo=='COT'){
-                                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                                            };
-                                            //DESBLOQUEANDO EL BOTÓN
-                                        
-
-                                            funciones.Aviso('Generado Exitosamente !!!')
-                                       
-                                            deleteTempVenta_pos(GlobalUsuario);
-
-                                            fcnNuevoPedido();
-                                    }
-                                }, (error) => {
-                                    console.log(error);
-                                    funciones.AvisoError('No se pudo guardar');
-                                    //DESBLOQUEANDO EL BOTÓN
-                                    if(tipo=='PED'){
-                                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                        document.getElementById('btnGuardarPedido').disabled = false;      
-                                    };
-                                    if(tipo=='COT'){
-                                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                                    };
-                                    //DESBLOQUEANDO EL BOTÓN    
-                                });        
-
-                            })
-                            .catch((error)=>{
-                                    funciones.AvisoError('No se pudo guardar');
-                                    //DESBLOQUEANDO EL BOTÓN
-                                    if(tipo=='PED'){
-                                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                        document.getElementById('btnGuardarPedido').disabled = false;      
-                                    };
-                                    if(tipo=='COT'){
-                                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                                    };
-                                    //DESBLOQUEANDO EL BOTÓN    
-                            })
-                        }else{
-                            //DESBLOQUEANDO EL BOTÓN
-                            if(tipo=='PED'){
-                                document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                                document.getElementById('btnGuardarPedido').disabled = false;      
-                            };
-                            if(tipo=='COT'){
-                                document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                                document.getElementById('btnGuardarCotizacion').disabled = false;
-                            };
-                            //DESBLOQUEANDO EL BOTÓN            
-                        }
-                    })
-
-                })
-                .catch(()=>{
+        gettempDocproductos_pos(GlobalUsuario)
+        .then((response)=>{
+            axios.post('/pos/insertventa', {
+                jsondocproductos:JSON.stringify(response),
+                sucursal:cmbEmpresa.value,
+                coddoc:coddoc,
+                correlativo: correlativoDoc,
+                anio:anio,
+                mes:mes,
+                fecha:fecha,
+                fechaentrega:fecha,
+                formaentrega:cmbTipoEntrega,
+                codbodega:codbodega,
+                codcaja:cmbCaja.value,
+                codcliente: codcliente, //x
+                nomclie:ClienteNombre,
+                totalcosto:GlobalTotalCostoDocumento,
+                totalprecio:GlobalTotalDocumento,
+                nitclie:nit,
+                dirclie:dirclie,
+                obs:entrega_referencia,
+                direntrega:direntrega,
+                usuario:GlobalUsuario,
+                codven:cmbVendedor.value,
+                lat:latdoc,
+                long:longdoc,
+                hora:hora,
+                tipo_pago:tipo_pago,
+                tipo_doc:tipo_doc,
+                entrega_contacto:entrega_contacto,
+                entrega_telefono:entrega_telefono,
+                entrega_direccion:entrega_direccion,
+                entrega_referencia:entrega_referencia,
+                entrega_lat:entrega_lat,
+                entrega_long:entrega_long,
+                iva:GlobalConfigIVA
+            })
+            .then((response) => {
+                const data = response.data;
+                if (data=='error'){
                     funciones.AvisoError('No se pudo guardar');
-                    //DESBLOQUEANDO EL BOTÓN
-                    if(tipo=='PED'){
-                        document.getElementById('btnGuardarPedido').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Pedido (f8)';
-                        document.getElementById('btnGuardarPedido').disabled = false;      
-                    };
-                    if(tipo=='COT'){
-                        document.getElementById('btnGuardarCotizacion').innerHTML = '<i class="fal fa-save mr-1"></i> Crear Cotización (f9)';
-                        document.getElementById('btnGuardarCotizacion').disabled = false;
-                    };
-                    //DESBLOQUEANDO EL BOTÓN
-                })
+                    btnGuardarFactura.disabled = false;
+                    btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+                }else{
+                    funciones.Aviso('Generado Exitosamente !!!')
+                    btnGuardarFactura.disabled = false;
+                    btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
 
+                    deleteTempVenta_pos(GlobalUsuario);
 
+                    fcnNuevoPedido();
+                }
+            }, (error) => {
+                console.log(error);
+                funciones.AvisoError('No se pudo guardar');
+                btnGuardarFactura.disabled = false;
+                btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+            });        
+        })
+        .catch((error)=>{
+            console.log(error);
+            funciones.AvisoError('No se pudo guardar');
+            btnGuardarFactura.disabled = false;
+            btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+        })
+
+            
 };
 
 
@@ -1765,13 +1674,20 @@ function fcnNuevoPedido(){
   
     
         document.getElementById('txtPosCobroNit').value = 'CF';
-        document.getElementById('txtPosCobroNitclie').value = 'CF';
+        document.getElementById('txtPosCobroNitclie').value = 0;
         document.getElementById('txtPosCobroNombre').value = 'CONSUMIDOR FINAL';
         document.getElementById('txtPosCobroDireccion').value = 'CIUDAD';
        
         document.getElementById('btnPosDocumentoAtras').click();
-        get_tbl_pedido();    
+        get_tbl_pedido();
+
+
+        let cmbCoddoc = document.getElementById('cmbCoddoc');
+        get_correlativo(cmbCoddoc.value)
+        .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+        .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
     
+
 };
 
 
