@@ -63,36 +63,7 @@ function getView(){
         },
         menu_lateral:()=>{
             return `
-            <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="Menu.pos()">
-                <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Punto de Venta</h5>
-                </div>
-            </div>
-            <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="Menu.productos()">
-                <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Productos y Precios</h5>
-                </div>
-            </div>
-            <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="Menu.documentos()">
-                <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Archivo/Documentos</h5>
-                </div>
-            </div>
-            <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="">
-                <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Opción 2</h5>
-                </div>
-            </div>
-            <br>
-            <div class="card card-rounded col-12 border-naranja hand" onclick="">
-                <div class="card-body">
-                    <h5 class="text-verde-claro negrita">Opción 3</h5>
-                </div>
-            </div>
+        
             `;
         },
         datos:()=>{
@@ -144,7 +115,7 @@ function get_grafica(){
         getLineChartFechasEmpresa(data)
     })
     .catch(()=>{
-        funciones.AvisoError('No se cargó los datos de la gráfica')
+        //funciones.AvisoError('No se cargó los datos de la gráfica')
     })
 
 

@@ -3,7 +3,18 @@ let Menu = {
         if(Number(GlobalNivelUsuario)==0){return false;}
         return true;
     },
+    inicio_admin:()=>{         
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/menu/menu.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
     productos:()=>{
+        
         if(Menu.verify()==true){
             funciones.loadScript('../views/productos/view_productos.js','root')
             .then(async()=>{

@@ -269,6 +269,12 @@ function getView(){
                                                  
                                                 </select>
                                             <br><br>
+                                                <label class="negrita text-naranja">Exento</label>
+                                                <select class="form-control" id="cmbExento">
+                                                    <option value="0">PAGA IVA (NO EXENTO)</option>
+                                                    <option value="1">EXENTO (NO PAGA IVA)</option>
+                                                </select>
+                                            <br><br>
                                                 <label class="negrita text-naranja">Bono</label>
                                                 <input type="number" class="form-control text-danger" id="txtBono" value=0>
                                         </div>
@@ -959,7 +965,7 @@ function listeners_menu_productos(){
                     let cmbClasedos = document.getElementById('cmbClasedos');
                     let txtCosto = document.getElementById('txtCosto');
                     let lastupdate = funciones.getFecha();
-                    let exento = 0;
+                    let exento = document.getElementById('cmbExento').value;
 
 
                     btnGuardarProducto.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
@@ -1048,7 +1054,7 @@ function listeners_menu_productos(){
                     let cmbClasedos = document.getElementById('cmbClasedos');
                     let txtCosto = document.getElementById('txtCosto');
                     let lastupdate = funciones.getFecha();
-                    let exento = 0;
+                    let exento = document.getElementById('cmbExento').value;
 
 
                     btnGuardarProductoEditar.innerHTML = `<i class="fal fa-save fa-spin"></i>`;

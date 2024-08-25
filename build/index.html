@@ -1,24 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- 
+Template Name:  SmartAdmin Responsive WebApp - Template build with Twitter Bootstrap 4
+Version: 4.0.0
+Author: Sunnyat Ahmmed
+Website: http://gootbootstrap.com
+Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
+License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
+-->
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>
-           FSYA ONLINE
+            FSYA ONLINE
         </title>
         <meta name="description" content="Blank">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-        <!-- Call App Mode on ios de+vices -->
+        <!-- Call App Mode on ios devices -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <!-- Remove Tap Highlight on Windows Phone IE -->
         <meta name="msapplication-tap-highlight" content="no">
-        
-        <meta name="google" content="notranslate" />
 
-        <!--meta API NOTIFICATION TRIGGER -->
-        <meta http-equiv="origin-trial" content="AoXc696Tyzx1VEktyG/8XWPQy/CkjgHlk7LyHMUw0lq9q2sptFhhDxXboCDXJ8sEj51y6N/nMU0nti3oyb8FlgQAAACAeyJvcmlnaW4iOiJodHRwczovL21lcmNhZG9zZWZlY3Rpdm9zLmhlcm9rdWFwcC5jb206NDQzIiwiZmVhdHVyZSI6Ik5vdGlmaWNhdGlvblRyaWdnZXJzIiwiZXhwaXJ5IjoxNTk1OTgwNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
-
-        <!-- base css -->
         <link rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
         <link rel="stylesheet" media="screen, print" href="css/app.bundle.css">
         <!-- Place favicon.ico in the root directory -->
@@ -38,14 +40,13 @@
         <link rel="manifest" href="manifest.json">
 
     </head>
-    <body class="mod-bg-2 nav-function-top header-function-fixed nav-function-fixed"><!--mod-disable-animation-->
-       
+    <body class="mod-bg-1 ">
         <!-- DOC: script to save and load page settings -->
         <script>
             /**
              *	This script should be placed right after the body tag for fast execution 
-            *	Note: the script is written in pure javascript and does not depend on thirdparty library
-            **/
+             *	Note: the script is written in pure javascript and does not depend on thirdparty library
+             **/
             'use strict';
 
             var classHolder = document.getElementsByTagName("BODY")[0],
@@ -100,34 +101,170 @@
             }
 
         </script>
-        
         <!-- BEGIN Page Wrapper -->
         <div class="page-wrapper">
             <div class="page-inner">
                 <!-- BEGIN Left Aside -->
-                
+                <aside class="page-sidebar">
+                    <!-- BEGIN PRIMARY NAVIGATION -->
+                    <nav id="js-primary-nav" class="primary-nav" role="navigation"> 
+                        <ul id="js-nav-menu" class="nav-menu">
+                            
+                            <li>
+                                <a href="#" title="Application Intel" data-filter-tags="application intel"  onclick="Menu.inicio_admin()">
+                                    <i class="fal fa-home"></i>
+                                    <span class="nav-link-text" data-i18n="nav.application_intel">INICIO</span>
+                                </a>
+                            </li>
+                            
+                            <!-- OPERACIONES -->
+                            <li>
+                                <a href="#" title="Application Intel" data-filter-tags="application intel">
+                                    <i class="fal fa-info-circle"></i>
+                                    <span class="nav-link-text" data-i18n="nav.application_intel">OPERACIONES</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.pos()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">PUNTO DE VENTA</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.corte_caja()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_privacy">CORTE DE CAJA</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Marketing Dashboard" data-filter-tags="application intel marketing dashboard"  onclick="Menu.compras()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_marketing_dashboard">COMPRAS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.nota_credito()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">NOTAS DE CRÉDITO CLIENTES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.nota_credito_proveedores()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_privacy">NOTAS DE CRÉDITO PROVEEDORES</span>
+                                        </a>
+                                    </li>
+                                    
+                                    
+                                </ul>
+                            </li>
+                            <!-- ARCHIVO -->
+                            <li>
+                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                                    <i class="fal fa-cog"></i>
+                                    <span class="nav-link-text" data-i18n="nav.theme_settings">ARCHIVO</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.documentos()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">DOCUMENTOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.reportes()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">REPORTES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.documentos_eliminados()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">DOCUMENTOS ELIMINADOS</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <!-- INVENTARIOS -->
+                            <li>
+                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                                    <i class="fal fa-box"></i>
+                                    <span class="nav-link-text" data-i18n="nav.theme_settings">INVENTARIOS</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.productos()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">PRODUCTOS Y PRECIOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.entradas()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">ENTRADAS INVENTARIO</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.salidas()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">SALIDAS INVENTARIO</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                        <div class="filter-message js-filter-message bg-success-600"></div>
+                    </nav>
+                    <!-- END PRIMARY NAVIGATION -->
+                    <!-- NAV FOOTER -->
+                    <div class="nav-footer shadow-top">
+                        <a href="#" onclick="return false;" data-action="toggle" data-class="nav-function-minify" class="hidden-md-down">
+                            <i class="ni ni-chevron-right"></i>
+                            <i class="ni ni-chevron-right"></i>
+                        </a>
+                      
+                    </div> <!-- END NAV FOOTER -->
+                </aside>
                 <!-- END Left Aside -->
                 <div class="page-content-wrapper">
-                  
-                    
+                    <!-- BEGIN Page Header -->
+                    <header class="page-header" role="banner">
+                        <!-- we need this logo when user switches to nav-function-top -->
+                     
+                        <!-- DOC: nav menu layout change shortcut -->
+                        <div class="hidden-md-down dropdown-icon-menu position-relative">
+                            <a href="#" class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
+                                <i class="ni ni-menu"></i>
+                            </a>
+                           
+                        </div>
+                        <!-- DOC: mobile button appears during mobile width -->
+                        
+                        <div class="ml-auto d-flex">
+                        
+                            <!-- app settings -->
+                            <div class="hidden-md-down">
+                                <a href="#" class="header-icon" data-toggle="modal" data-target=".js-modal-settings">
+                                    <i class="fal fa-cog"></i>
+                                </a>
+                            </div>
+                           
+                           
+                        </div>
+                    </header>
                     <!-- END Page Header -->
                     <!-- BEGIN Page Content -->
                     <!-- the #js-page-content id is needed for some plugins to initialize -->
                     <main id="js-page-content" role="main" class="page-content">
+
                         <div id="root">
 
                         </div>
+
                         
-                    </main> 
+
+                    </main>
 
                         <button class="btn btn-circle btn-bottom-middle btn-xl btn-outline-naranja hand shadow" id="btnMenu">
                             <img src="./favicon.png" width="40px" height    ="40px">
                         </button>
-
+                        
                     <!-- this overlay is activated only when mobile menu is triggered -->
                     <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div> <!-- END Page Content -->
                     <!-- BEGIN Page Footer -->
-                    <footer class="page-footer foot bg-naranja text-white" role="contentinfo">
+                    <footer class="page-footer" role="contentinfo">
                         <div class="d-flex align-items-center flex-1 text-white bg-naranja">
                             <select class="form-control negrita text-naranja" id="cmbEmpresa"></select>
                             
@@ -144,13 +281,33 @@
             </div>
         </div>
         <!-- END Page Wrapper -->
-        
+        <!-- BEGIN Quick Menu -->
+        <nav class="shortcut-menu hidden-sm-down">
+            <input type="checkbox" class="menu-open" name="menu-open" id="menu_open" />
+            <label for="menu_open" class="menu-open-button ">
+                <span class="app-shortcut-icon d-block"></span>
+            </label>
+            <a href="#" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="Scroll Top">
+                <i class="fal fa-arrow-up"></i>
+            </a>
+            <a href="page_login-alt.html" class="menu-item btn" data-toggle="tooltip" data-placement="left" title="Logout">
+                <i class="fal fa-sign-out"></i>
+            </a>
+            <a href="#" class="menu-item btn" data-action="app-fullscreen" data-toggle="tooltip" data-placement="left" title="Full Screen">
+                <i class="fal fa-expand"></i>
+            </a>
+            <a href="#" class="menu-item btn" data-action="app-print" data-toggle="tooltip" data-placement="left" title="Print page">
+                <i class="fal fa-print"></i>
+            </a>
+        </nav>
+        <!-- END Quick Menu -->
+      
 
-        <!--  -->
+        <!-- BEGIN Page Settings -->
         <div class="modal fade js-modal-settings modal-backdrop-transparent" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-right modal-md">
                 <div class="modal-content">
-                    <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
+                    <div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center w-100">
                         <h4 class="m-0 text-center color-white">
                             Layout Settings
                             <small class="mb-0 opacity-80">User Interface Settings</small>
@@ -328,182 +485,13 @@
                                 <a href="#" class="btn btn-danger fw-500" data-action="factory-reset">Factory Reset</a>
                             </div>
                         </div>
+
                         <span id="saving"></span>
                     </div>
                 </div>
             </div>
         </div> <!-- END Page Settings -->
-             
-        <!-- -->
-        <div class="modal fade js-modal-settings modal-backdrop-transparent  modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_menu_principal">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content">
-                    <div class="dropdown-header d-flex justify-content-center align-items-center w-100">
-                        <h4 class="m-0 text-center negrita text-naranja" id="">
-                            Opciones del Usuario
-                        </h4>
-                    </div>
-                    <div class="modal-body p-2">
-                        <div class="card card-rounded shadow p-2">
-                            <div class="card-body">
-                                <table class="table table-responsive table-bordered">
-                                    <thead class="bg-naranja text-white negrita">
-                                        <tr>
-                                            <td>Mantenimientos</td>
-                                            <td>Operaciones</td>
-                                            <td>Órdenes</td>
-                                            <td>Archivo</td>
-                                            <td>Inventarios</td>
-                                            <td>Parámetros</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-naranja hand border-naranja">
-                                        <tr>
-                                            <td>Clientes</td>
-                                            <td onclick="Navegar.pos()">Punto de Venta (POS)</td>
-                                            <td>Orden de Soporte</td>
-                                            <td>Documentos</td>
-                                            <td onclick="Navegar.mantenimientos_productos()">Productos y Precios</td>
-                                            <td>Configuraciones</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                               </table>
-                            </div>
-                        </div>
-                       
-                          
-                        
-                        
-                    </div>
-                    <div class="modal-footer text-center">
-                        <button class="btn btn-circle btn-xl btn-secondary hand shadow" data-dismiss="modal">
-                            <i class="fal fa-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- DESCARGAS -->
-        <div class="modal fade js-modal-settings card modal-backdrop-transparent border-top-rounded border-bottom-rounded" tabindex="-1" role="dialog" aria-hidden="true" id="modalSync">
-            <div class="modal-dialog modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="dropdown-header d-flex justify-content-center align-items-center w-100">
-                        <img src="./favicon.png" width="40" height="40">
-                        <h3 class="m-0 text-center color-secondary">
-                            Descarga de Catálogos
-                        </h3>
-                       
-                    </div>
-                    <div class="modal-body p-4">
-                        
-                            <div class="row">
-                                
-                                <div class="col-6">
-                                    <button class="btn btn-outline-success shadow btn-xl" id="btnDownloadProductos3">
-                                        <i class="fal fa-shopping-cart"></i>
-                                        Bajar <br>
-                                        Productos
-                                    </button>
-                                </div>                                           
-                                <div class="col-6">
-                                    <button class="btn btn-outline-info shadow btn-xl" style="width: 50; height: 50;" id="btnDownloadClientes3">
-                                        <i class="fal fa-user"></i>
-                                        Bajar  <br>
-                                        Clientes
-                                    </button>
-                                </div>
-                            </div>
-
-                        
-                                    
-                        <br><br><br>
-                        
-                        <span id="saving"></span>
-                    </div>
-                    <div class="moda-footer">
-                        <button class="btn btn-outline-secondary btn-xl col-12" data-dismiss="modal">
-                            <i class="fal fa-check"></i>
-                            Aceptar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-      
-      
-
-        <!-- WAIT FORM -->
-        <div class="modal fade js-modal-settings modal-backdrop-transparent shadow" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-hidden="true" id="modalWait">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content card-rounded">
-                    <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
-                        <img width="30" height="30" src="./favicon.png">
-                        <h3 class="m-0 text-center color-white">
-                            Cargando datos...
-                            <small class="mb-0 opacity-80">Espere por favor</small>
-                        </h3>
-                        
-                    </div>
-                    <div class="modal-body p-0 bg-secondary text-white">
-                        <div class="" id="rootWait">
-                                                                                   
-                            
-                        </div>
-                        <div class="text-center">
-                            <div class="spinner-border text-danger" role="status"><span class="sr-only">Loading...</span></div>
-                        </div>
-                        
-                        <span id="saving"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" id="btnCerrarModalWait">
-                            Cerrar Ventana
-                        </button>
-                    </div>
-                 
-                </div>
-            </div>
-        </div>
-     
-
-          <!-- MODAL ERRORES -->
-        <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modalErrores">
-            <div class="modal-dialog modal-dialog-right modal-lg">
-                <div class="modal-content">
-                    <div class="dropdown-header bg-danger d-flex justify-content-center align-items-center w-100">
-                        <h4 class="m-0 text-center color-white" id="">
-                            Detalle de Errores
-                        </h4>
-                        
-                        
-                        <button type="button" class="close text-white position-absolute pos-top pos-right p-2 m-1 mr-2" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                        </button>
-                    </div>
-                    <div class="modal-body p-2">
-                        <div class="" id="rootErrores">
-                                                        
-                            
-                            
-                        </div>
-                        <span id="saving"></span>
-                    </div>
-                    <div class="modal-footer">
-
-                        <button class="btn btn-sm btn-danger position-absolute pos-bottom pos-right " data-dismiss="modal" id=""><<- Regresar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-      
+        
 
         <script src="js/vendors.bundle.js"></script>
         <script src="js/app.bundle.js"></script>
@@ -546,8 +534,7 @@
         
         <script src="./index.js"></script>
        
-        
-    </body>
 
-    
+
+    </body>
 </html>

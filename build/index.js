@@ -1,5 +1,5 @@
 ﻿
-let versionapp = "Modif: 10.08.2024"
+let versionapp = "Modif: 08.2024"
 
 let btnMenu = document.getElementById('btnMenu');
 document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
