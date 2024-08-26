@@ -10,11 +10,20 @@ function getView(){
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active fixed" id="uno" role="tabpanel" aria-labelledby="receta-tab">
                             <div class="row">
+                                <div class="card border-naranja card-rounded shadow col-12">
+                                    <div class="card-body p-2">
+
+                                        ${view.datos()}
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3">
-                                    ${view.menu_lateral()}
+                                    
                                 </div>
                                 <div class="col-sm-12 col-md-9 col-xl-9 col-lg-9">
-                                    ${view.datos()}  
+                                      
                                 </div>
                             </div>
                         </div>

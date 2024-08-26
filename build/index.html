@@ -105,13 +105,13 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <div class="page-wrapper">
             <div class="page-inner">
                 <!-- BEGIN Left Aside -->
-                <aside class="page-sidebar  bg-naranja">
+                <aside class="page-sidebar">
                     <!-- BEGIN PRIMARY NAVIGATION -->
                     <nav id="js-primary-nav" class="primary-nav" role="navigation"> 
                         <ul id="js-nav-menu" class="nav-menu">
                             
                             <li>
-                                <a href="#" title="Application Intel" data-filter-tags="application intel"  onclick="Menu.inicio_admin()">
+                                <a href="#"  class="text-naranja"  data-filter-tags="application intel"  onclick="Menu.inicio_admin()">
                                     <i class="fal fa-home"></i>
                                     <span class="nav-link-text" data-i18n="nav.application_intel">INICIO</span>
                                 </a>
@@ -204,8 +204,39 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                 </ul>
                             </li>
                             
+                              <!-- MANTENIMIENTOS -->
+                              <li>
+                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                                    <i class="fal fa-expand"></i>
+                                    <span class="nav-link-text" data-i18n="nav.theme_settings">MANTENIMIENTOS</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.clientes()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">CLIENTES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.proveedores()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">PROVEEDORES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.marcas()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">MARCAS</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.medidas()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">MEDIDAS</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
                         </ul>
-                        <div class="filter-message js-filter-message bg-success-600"></div>
+                    
                     </nav>
                     <!-- END PRIMARY NAVIGATION -->
                     <!-- NAV FOOTER -->

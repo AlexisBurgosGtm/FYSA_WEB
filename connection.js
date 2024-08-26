@@ -16,8 +16,8 @@ function get_conf_token(token){
 	let configx = {
 		user: 'iEx',
 		password: 'iEx',
-		server: 'DESKTOP-E0KG096\\SQLEXPRESS',//'DESKTOP-E0KG096\\SQL17',
-		database: 'fysa_online', //'ONNE',
+		server: 'ONNE_DEV\\SQL22',//'DESKTOP-E0KG096\\SQL17',
+		database: 'fsya', //'ONNE',
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 

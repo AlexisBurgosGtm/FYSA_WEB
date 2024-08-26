@@ -15,13 +15,13 @@ let Navegar = {
     login:()=>{
         funciones.loadScript('../views/login/view_login.js','root')
         .then(async()=>{
-            btnMenu.style = "visibility:hidden";
+            //btnMenu.style = "visibility:hidden";
             initView();
         })
     },
     menu:()=>{
         if(Number(GlobalNivelUsuario)==0){return;}
-        btnMenu.style = "visibility:visible";   
+        //btnMenu.style = "visibility:visible";   
         funciones.loadScript('../views/menu/menu.js','root')
         .then(async()=>{
             initView();

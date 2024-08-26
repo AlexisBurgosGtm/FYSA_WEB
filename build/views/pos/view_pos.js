@@ -358,11 +358,7 @@ function getView(){
                             
                             </div>
 
-                            <div class="form-group">
-                                <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
-                                <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
-                            </div>
-
+                        
                             <div class="form-group">
                                 <label class="negrita text-naranja">CLIENTE</label>
                                 <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNombre">
@@ -372,6 +368,12 @@ function getView(){
                                 <label class="negrita text-naranja">DIRECCIÓN</label>
                                 <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroDireccion">
                             </div>
+
+                                <div class="form-group hidden">
+                                <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
+                                <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
+                            </div>
+
 
                         </div>
                     </div>
