@@ -31,8 +31,7 @@ router.post("/insertventa", async(req,res)=>{
     
     let qry = qryDocumentos + qryDocproductos + qryTipodocumentos;
 
-    console.log(qry);
-
+    
     execute.QueryToken(res,qry,token);
      
 });
@@ -130,7 +129,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
             '${fecha}' AS VENCIMIENTO,
             'NO' AS ENTREGADO, 
             ${iva} POR_IVA,
-            '' AS TIPO_VENTA,
+            '${tipo_doc}' AS TIPO_VENTA,
             '${jsondocproductos}' AS JSONDOCPRODUCTOS;
         `
 
@@ -176,7 +175,8 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
             LASTUPDATE,
             TOTALUNIDADES_DEVUELTAS,
             POR_IVA,
-            EXISTENCIA
+            EXISTENCIA,
+            BONO
             )
         SELECT 
             '${sucursal}' AS EMPNIT,
@@ -209,7 +209,8 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
             '${fecha}' AS LASTUPDATE,
             0 AS TOTALUNIDADES_DEVUELTAS,
             ${iva} AS POR_IVA,
-            ${r.EXISTENCIA} AS EXISTENCIA;
+            ${r.EXISTENCIA} AS EXISTENCIA,
+            ${r.BONO} AS BONO;
         `
 
     })
@@ -227,7 +228,7 @@ router.post("/listado_colores", async(req,res)=>{
 
     let qry = `SELECT NF, NOMBRE, COLOR, DESCRIPCION FROM COLORES`
     
-    console.log(qry);
+ 
 
     execute.QueryToken(res,qry,token);
      
@@ -243,7 +244,7 @@ router.post("/productos_filtro", async(req,res)=>{
                     MARCAS.DESMARCA, PRODUCTOS.TIPOPROD, 
                     PRECIOS.CODMEDIDA, PRECIOS.EQUIVALE, PRECIOS.COSTO, 
                     PRECIOS.${tipoprecio} AS PRECIO, INVSALDO.EMPNIT, INVSALDO.EXISTENCIA, 
-                    COLORES.COLOR, PRODUCTOS.EXENTO
+                    COLORES.COLOR, PRODUCTOS.EXENTO, (ISNULL(PRODUCTOS.BONO,0) * PRECIOS.EQUIVALE) AS BONO
                     FROM PRODUCTOS LEFT OUTER JOIN
                          COLORES ON PRODUCTOS.NF = COLORES.NF LEFT OUTER JOIN
                          INVSALDO ON PRODUCTOS.CODPROD = INVSALDO.CODPROD LEFT OUTER JOIN
@@ -269,7 +270,24 @@ router.post("/productos_precio", async(req,res)=>{
                 AND CODPROD='${codprod}' 
                 AND CODMEDIDA='${codmedida}';`
     
-    console.log(qry);
+   
+    execute.QueryToken(res,qry,token);
+     
+});
+
+router.post("/lista_documentos", async(req,res)=>{
+   
+    const { token, sucursal, tipo, fecha } = req.body;
+
+    let qry = `SELECT        DOCUMENTOS.EMPNIT, TIPODOCUMENTOS.TIPODOC, DOCUMENTOS.FECHA, DOCUMENTOS.CODDOC, DOCUMENTOS.CORRELATIVO, DOCUMENTOS.HORA, DOCUMENTOS.CODCLIENTE, DOCUMENTOS.DOC_NIT, 
+                         DOCUMENTOS.DOC_NOMCLIE AS NOMCLIE, DOCUMENTOS.DOC_DIRCLIE AS DIRCLIE, 
+                         DOCUMENTOS.STATUS AS ST, ISNULL(DOCUMENTOS.FEL_UUDI,'') AS FEL_UUDI, DOCUMENTOS.ENTREGADO, DOCUMENTOS.TOTALVENTA, 
+                         DOCUMENTOS.TOTALDESCUENTO, DOCUMENTOS.TOTALPRECIO
+FROM            DOCUMENTOS LEFT OUTER JOIN
+                         TIPODOCUMENTOS ON DOCUMENTOS.CODDOC = TIPODOCUMENTOS.CODDOC AND DOCUMENTOS.EMPNIT = TIPODOCUMENTOS.EMPNIT
+WHERE        (DOCUMENTOS.EMPNIT = '${sucursal}') AND (DOCUMENTOS.FECHA = '${fecha}') AND (TIPODOCUMENTOS.TIPODOC = '${tipo}')`
+    
+   console.log(qry)
 
     execute.QueryToken(res,qry,token);
      

@@ -220,5 +220,33 @@ let GF = {
             });
         })     
     },
+    get_anulacion_documento:(coddoc,correlativo,status)=>{
+        return new Promise((resolve,reject)=>{
+    
+            let strcall = ''
+            if(status=='A'){strcall='/documentos/desanular_documento'}else{strcall='/documentos/anular_documento'}
+            axios.post(GlobalUrlCalls + strcall,
+                {
+                    sucursal:cmbEmpresa.value,
+                    token:TOKEN,
+                    coddoc:coddoc,
+                    correlativo:correlativo
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })     
+    },
 };
 

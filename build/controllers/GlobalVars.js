@@ -1,3 +1,4 @@
+let map; //mapa de leaflet
 
 
 let GlobalUrlCalls = '';
@@ -40,6 +41,7 @@ let GlobalSelected_Status = '';
 let Selected_exento =0; 
 let Selected_tipoprod = '';
 let Selected_existencia = 0;
+let Selected_bono = 0;
 
 let GlobalSelectedCodclie = 0;
 let GlobalSelectedNoOrden = 0;

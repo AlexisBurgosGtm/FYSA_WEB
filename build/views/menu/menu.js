@@ -9,21 +9,19 @@ function getView(){
                 <div class="col-12 p-0 bg-white">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active fixed" id="uno" role="tabpanel" aria-labelledby="receta-tab">
+                            
                             <div class="row">
-                                <div class="card border-naranja card-rounded shadow col-12">
-                                    <div class="card-body p-2">
-
-                                        ${view.datos()}
-
-                                    </div>
+                                <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
+                                    ${view.mapa()}    
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-3 col-xl-3 col-lg-3">
+                                <div class="col-sm-12 col-md-6 col-xl-6 col-lg-6">
                                     
-                                </div>
-                                <div class="col-sm-12 col-md-9 col-xl-9 col-lg-9">
-                                      
+                                    <div class="card border-naranja card-rounded shadow col-12">
+                                        <div class="card-body p-2">
+                                            ${view.datos()}
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -70,9 +68,11 @@ function getView(){
             </div>
             `;
         },
-        menu_lateral:()=>{
+        mapa:()=>{
             return `
-        
+            <div class="card shadow card-rounded" id="mapContenedor">
+            </div>
+                
             `;
         },
         datos:()=>{
@@ -90,6 +90,11 @@ function getView(){
 
 function handle_empresa_change(){
     get_grafica();
+
+    funciones.ObtenerUbicacion()
+    .then((coords)=>{
+        rpt_mapa_empresas('mapContenedor',coords.latitude.toString(),coords.longitude.toString());
+    })
     //get_rpt_fechas_compras();
     //get_rpt_productos();
 };
@@ -103,7 +108,13 @@ function addListeners(){
 
 
     get_grafica();
-  
+   
+    funciones.ObtenerUbicacion()
+    .then((coords)=>{
+        
+        rpt_mapa_empresas('mapContenedor',coords.latitude.toString(),coords.longitude.toString());
+    })
+    
  
    
 };
@@ -130,6 +141,80 @@ function get_grafica(){
 
 }
 
+
+function get_data_mapa(){
+    return new Promise((resolve, reject)=>{
+        
+        let data = {
+            sucursal:cmbEmpresa.value,
+            anio:2024,
+            mes:8
+        };
+
+        axios.post(`/bi/rpt_mapa`, data)
+        .then(res => {
+            const datos = res.data.recordset;   
+            resolve(datos);
+        })
+        .catch(()=>{
+            reject();
+        })
+
+    })
+};
+
+
+function rpt_mapa_empresas(idContenedor,lt,lg){
+
+    let container = document.getElementById(idContenedor);
+    container.innerHTML = GlobalLoader;
+    
+    container.innerHTML = `<div class="mapcontainer" id="mapcontainer"></div>`;
+
+    funciones.Lmap(lt, lg);
+ 
+
+    get_data_mapa()
+    .then((datos) => {
+
+        const data = datos;
+  
+        data.map((r)=>{
+          
+                L.marker([r.LATITUD, r.LONGITUD])
+                .addTo(map)
+                .bindPopup(`${r.NOMBRE} <br><small>Vendido: ${funciones.setMoneda(r.TOTALPRECIO,'Q')}</small>`, {closeOnClick: false, autoClose: false})   
+                .on('click', function(e){
+                    console.log(e);
+                    //getMenuCliente(rows.CODIGO,rows.NOMCLIE,rows.DIRCLIE,rows.TELEFONO,rows.LAT,rows.LONG,rows.NIT);
+                })
+                .openPopup();;
+            
+                
+        })
+
+
+        //RE-AJUSTA EL MAPA A LA PANTALLA
+        setTimeout(function () {
+            //console.log('timer mapa 1')
+            try {
+                map.invalidateSize();    
+            } catch (error) {
+                
+            }
+        }, 500);
+
+
+    }, (error) => {
+        funciones.AvisoError('Error en la solicitud');
+        container.innerHTML = '';
+    })
+    .catch((error)=>{
+        console.log('Error al cargar mapa..')
+        console.log(error);
+    })
+       
+};
 
 function getDataEmpresaFechas(){
     return new Promise((resolve, reject)=>{

@@ -2,12 +2,10 @@ var socket = io();
 
 
 
-socket.on('nuevo_pedido', function(tipo,msn){
+socket.on('notificacion', function(tipo,msn){
   
       try {
-          if(GlobalSelectedForm=='SUPERVISOR'){
-              funciones.Aviso(`Nuevo pedido: Vendedor: ${tipo} ${msn}`);
-          }
+         funciones.showToast(msn);
           
       } catch (error) {
         console.log('Previo: ' +  error);

@@ -13,7 +13,7 @@ function get_conf_token(token){
 	};
 	
 
-	let configx = {
+	let configX = {
 		user: 'iEx',
 		password: 'iEx',
 		server: 'ONNE_DEV\\SQL22',//'DESKTOP-E0KG096\\SQL17',

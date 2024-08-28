@@ -129,7 +129,8 @@ var tblTempventasPos = {
         EXISTENCIA:{dataType: "number"},
         CODBODEGA:{dataType: "string"},
         NOLOTE:{dataType: "string"},
-        TIPOPROD:{dataType: "string"}
+        TIPOPROD:{dataType: "string"},
+        BONO:{dataType: "number"},
     }
 };
 

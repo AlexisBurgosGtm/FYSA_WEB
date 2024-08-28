@@ -27,7 +27,7 @@ function getView(){
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_documentos() }
+                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() }
                         </div> 
                         <div class="tab-pane fade" id="precios" role="tabpanel" aria-labelledby="clientes-tab">
                           
@@ -61,15 +61,16 @@ function getView(){
 
                 <div class="col-12">
 
-                                   
+                                  
                
                 <hr class="solid">
                 
                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            
+                      
+                        <div class="col-12">
                             <div class="card card-rounded shadow border-naranja col-12 p-2">
-                                <div class="card-body"> 
+                                <div class="card-body">
+                                    
                                     <div class="form-group">
                                         <div class="input-group">
                                            
@@ -77,39 +78,21 @@ function getView(){
                                             <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
                                                 <i class="fal fa-search"></i>
                                             </button>
-                                        
+                                                                                    
                                         </div>
                                     </div>
 
-                                    <table class="table table-responsive  table-hover col-12" id="tblProductos">
-                                        <thead class="bg-naranja text-white">
-                                            <tr>
-                                                <td>PRODUCTO</td>
-                                                <td>MEDIDA</td>
-                                                <td>PRECIO</td>
-                                                <td>TIPO</td>
-                                                <td>EXISTENCIA</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblDataProductos"></tbody>
-                                    </table>
-
-                                </div>
-                            </div>    
-
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="card card-rounded shadow border-naranja col-12 p-2">
-                                <div class="card-body">
                                     <div class="row">
+
                                         <div class="col-12">
                                             <b class="text-naranja">Productos agregados a la Factura</b>
                                         </div>
                                     </div>
-                                    <table class="table table-responsive  table-hover col-12">
+                                    <table class="table table-responsive  table-hover col-12 h-full">
                                         <thead class="bg-verde text-white">
                                             <tr>
                                                 <td>PRODUCTO</td>
+                                                <td>MEDIDA</td>
                                                 <td>CANTIDAD</td>
                                                 <td>PRECIO</td>
                                                 <td>SUBTOTAL</td>
@@ -140,6 +123,46 @@ function getView(){
                 <i class="fal fa-arrow-right"></i>
             </button>
             `
+        },
+        modal_lista_precios:()=>{
+            return `
+            <div class="modal modal-with-scroll" id="modal_lista_precios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+            
+                        <div class="modal-body p-4">
+                            <label class="modal-title text-naranja h3" id="">Buscar producto</label>
+
+                                    <table class="table table-responsive  table-hover table-bordered h-full" id="tblProductos">
+                                        <thead class="bg-naranja text-white">
+                                            <tr>
+                                                <td>MARCA</td>
+                                                <td>PRODUCTO</td>
+                                                <td>MEDIDA</td>
+                                                <td>PRECIO</td>
+                                                <td>EXISTENCIA</td>
+                                                <td>BONO</td>
+                                                <td>TIPO</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataProductos"></tbody>
+                                    </table>
+
+                            <br>
+
+                            <div class="row">
+                                    <div class="text-left">
+                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
+                                            <i class="fal fa-arrow-left"></i>
+                                        </button>                                
+                                    </div>
+        
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
         },
         modal_cantidad:()=>{
             return `
@@ -265,6 +288,26 @@ function getView(){
                         <div class="card-body">
 
                             <div class="row">
+                                <div class="form-group">
+                                    <label class="text-secondary">Tipo de Documento</label>
+                                    <select class="form-control col-12" id="cmbTipoDocumento">
+                                        <option value="FAC">FACTURA NORMAL</option>
+                                        <option value="FEL">FACTURA ELECTRONICA</option>
+                                        <option value="COT">COTIZACIÓN</option>
+                                    </select>   
+                                </div>
+                                <div class="form-group text-left">
+                                    <label class="text-secondary">Serie Documento</label>
+                                    <div class="input-group">
+                                        <select class="form-control col-12" id="cmbCoddoc">
+                                        </select>
+                                        <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
+                                    </div>    
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group text-left">
                                         <label class="text-secondary">Caja</label>
@@ -280,6 +323,24 @@ function getView(){
                                         <select class="form-control col-12" id="cmbVendedor">
                                         </select>   
                                     </div>
+
+                                    <div class="">
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="mostrador" checked>
+                                            <label class="form-check-label negrita text-naranja" for="inlineRadio1">Mostrador </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="domicilio">
+                                            <label class="form-check-label negrita text-naranja" for="inlineRadio2">Domicilio </label>
+                                        </div>
+                                         <div class="form-check form-check-inline">
+                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="callcenter">
+                                            <label class="form-check-label negrita text-naranja" for="inlineRadio3">Call Center</label>
+                                        </div>
+
+                                    </div>
+
                                 </div>    
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group text-right">
@@ -287,57 +348,20 @@ function getView(){
                                         <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
                                     </div>
                                 </div>
-
-                                  
                             </div>  
-
-                            <br>
-
-                            <div class="row">
-                          
-
-                                <div class="form-group text-left">
-                                    <label class="text-secondary">Tipo de Documento</label>
-                                    <select class="form-control col-12" id="cmbTipoDocumento">
-                                        <option value="FAC">FACTURA NORMAL</option>
-                                        <option value="FEL">FACTURA ELECTRONICA</option>
-                                        <option value="COT">COTIZACIÓN</option>
-                                    </select>   
-                                </div>
-                            </div>
-
-                            
-                            <br>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group text-left">
-                                        <label class="text-secondary">Serie Documento</label>
-                                        <div class="input-group">
-                                            <select class="form-control col-12" id="cmbCoddoc">
-                                            </select>
-                                            <input type="number" id="txtCorrelativo" class="form-control" value=0>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <button class="btn btn-xl btn-verde hand shadow col-12 form-control" id="btnGuardarFactura">
-                                        <i class="fal fa-save"></i> Guardar (ctrl+g)
-                                    </button>
-                                </div>
-                            </div>
-                            
-                      
                             
                         </div>
                     </div>
-                    <hr>
-                 
+                
                 </div>
             </div>
 
             <button class="btn btn-secondary btn-xl btn-bottom-l btn-circle shadow hand" id="btnPosDocumentoAtras">
                 <i class="fal fa-arrow-left"></i>
+            </button>
+
+            <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow" id="btnGuardarFactura">
+                <i class="fal fa-save"></i>
             </button>
             `
         },
@@ -433,8 +457,9 @@ function getView(){
                                         <div class="input-group">
                                             <input type="date" class="negrita form-control" id="txtFechaDoc">
                                             <select class="form-control negrita" id="cmbTipoDoc">
-                                                <option value="PED">PEDIDOS</option>
-                                                <option value="COT">COTIZACIONES</option>
+                                                <option value="FAC">FACTURAS NORMALES</option>
+                                                <option value="FEF">FACTURAS IVA (CONTADO)</option>
+                                                <option value="FEC">FACTURAS CAMBIARIAS IVA (CREDITO)</option>
                                             </select>
                                         </div>
                                         
@@ -504,6 +529,8 @@ function addListeners(){
 
     let btnGuardarFactura = document.getElementById('btnGuardarFactura');
     btnGuardarFactura.addEventListener('click',()=>{
+
+       
 
         funciones.Confirmacion("¿Está seguro que desea Guardar esta Venta?")
         .then((value)=>{
@@ -653,7 +680,9 @@ function listener_teclado(){
 
 function listener_vista_pedido(){
 
-   
+
+    document.getElementById('txtFechaDoc').value = funciones.getFecha();
+
 
     let txtPosCodprod = document.getElementById('txtPosCodprod');
     txtPosCodprod.addEventListener('keyup',(e)=>{
@@ -710,7 +739,7 @@ function listener_vista_pedido(){
         };
 
 
-        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia)
+        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia,Selected_bono)
         .then(()=>{
             
             $("#modal_cantidad").modal('hide');
@@ -1109,6 +1138,8 @@ function CalcularTotalPrecioEditar(){
 
 function get_buscar_producto(filtro){
 
+    $("#modal_lista_precios").modal('show');
+
     let container = document.getElementById('tblDataProductos');
     container.innerHTML = GlobalLoader;
 
@@ -1138,17 +1169,17 @@ function get_buscar_producto(filtro){
                 if(existencia<=0){strClassExistencia='bg-danger text-white'};
 
                 str += `
-                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}')">
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}','${r.BONO}')">
+                        <td>${r.DESMARCA}</td>
                         <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
                             <br>
                             <small class="negrita text-danger">Cód:${r.CODPROD}</small>
-                            <br>
-                            <small>M: ${r.DESMARCA}</small>
                         </td>
                         <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
                         <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
-                        <td>${r.TIPOPROD}</td>
                         <td class="${strClassExistencia}">${r.EXISTENCIA}</td>
+                        <td>${funciones.setMoneda(r.BONO,'Q')}</td>
+                        <td>${r.TIPOPROD}</td>
                     </tr>
                 `
             })
@@ -1288,8 +1319,10 @@ function get_tbl_productos_clasificacion(codigo){
 };
 
 
-function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,exento,existencia){
+function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,exento,existencia,bono){
 
+            $("#modal_lista_precios").modal('hide');
+            
             $("#modal_cantidad").modal('show');
  
    
@@ -1299,6 +1332,7 @@ function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,e
             document.getElementById('txtMCCantidad').value = '';
             document.getElementById('txtMCPrecio').value = 0;
             document.getElementById('btnMCGuardar').disabled = true;
+
 
             CalcularTotalPrecio();
 
@@ -1311,11 +1345,13 @@ function get_producto(codprod,desprod,codmedida,equivale,costo,precio,tipoprod,e
             Selected_tipoprod = tipoprod;
             Selected_exento = Number(exento);
             Selected_existencia = Number(existencia);
+            Selected_bono = Number(bono);
 
             document.getElementById('lbCantidadDesprod').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
 
             document.getElementById('txtMCCantidad').value = '';
             document.getElementById('txtMCPrecio').value = precio;
+            //document.getElementById('txtMCBono').value = precio;
 
             CalcularTotalPrecio();
 
@@ -1359,7 +1395,7 @@ function get_datos_precio(codprod,codmedida){
 
 
 
-function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia){
+function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia,bono){
     
     let datos = 
         {
@@ -1379,7 +1415,8 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
             EXENTO:Number(exento),
             TIPOPROD:tipoprod,
             TIPOPRECIO:tipoprecio,
-            EXISTENCIA:Number(existencia)
+            EXISTENCIA:Number(existencia),
+            BONO:Number(bono)
         };
 
     
@@ -1424,8 +1461,10 @@ function get_tbl_pedido(){
                     </div>
                 </td>
                 <td>
+                    ${rows.CODMEDIDA} (eq: ${rows.EQUIVALE})
+                </td>
+                <td>
                     <b class="text-info" style="font-size:140%">${rows.CANTIDAD}</b>
-                    <br><small>${rows.CODMEDIDA} (eq: ${rows.EQUIVALE})</small>
                 </td>
                 <td class="negrita">${funciones.setMoneda(rows.PRECIO,'Q')}</td>
                 <td class="negrita text-danger h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
@@ -1458,7 +1497,7 @@ function get_tbl_pedido(){
 
 };
 
-function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia){
+function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia,bono){
 
     $("#modal_editar_cantidad").modal('show');
 
@@ -1472,6 +1511,7 @@ function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,p
     Selected_tipoprod = tipoprod;
     Selected_exento = Number(exento);
     Selected_existencia = Number(existencia);
+    Selected_bono = Number(bono)
 
     document.getElementById('lbCantidadDesprodE').innerText = `${desprod} (${codmedida} - Eq: ${equivale})`;
 
@@ -1583,6 +1623,14 @@ function finalizar_pedido(){
 
     let tipo_pago = 'CON'; 
     let tipo_doc = '';
+    
+    let var_mostrador = document.getElementById('inlineRadio1').checked.toString();
+    let var_domicilio = document.getElementById('inlineRadio2').checked.toString();
+    let var_callcenter = document.getElementById('inlineRadio3').checked.toString();
+    if(var_mostrador=="true"){tipo_doc='MOSTRADOR'};
+    if(var_domicilio=="true"){tipo_doc='DOMICILIO'};
+    if(var_callcenter=="true"){tipo_doc='CALLCENTER'};
+
 
     let entrega_contacto = ClienteNombre;
     let entrega_telefono = ''; 
@@ -1674,7 +1722,8 @@ function finalizar_pedido(){
 
 function fcnNuevoPedido(){
   
-    
+        document.getElementById('inlineRadio1').checked = true;
+
         document.getElementById('txtPosCobroNit').value = 'CF';
         document.getElementById('txtPosCobroNitclie').value = 0;
         document.getElementById('txtPosCobroNombre').value = 'CONSUMIDOR FINAL';
@@ -1705,19 +1754,18 @@ function tbl_lista_documentos(){
     container.innerHTML = GlobalLoader;
     
 
-    let coddoc = '';
-    if(tipo=='PED'){
-        coddoc = document.getElementById('cmbCoddoc').value;
-    }else{
-        coddoc = document.getElementById('cmbCoddocCot').value;
-    }
+    let coddoc = document.getElementById('cmbCoddoc').value;
+  
    
-    let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered">
+    let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered h-full">
                         <thead class="bg-naranja text-white">
                             <tr>
-                                <td>Documento</td>
-                                <td>Cliente</td>
-                                <td>Importe</td>
+                                <td>DOCUMENTO</td>
+                                <td>CLIENTE</td>
+                                <td>IMPORTE</td>
+                                <td>ST</td>
+                                <td>CERTIFICACION</td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -1727,7 +1775,7 @@ function tbl_lista_documentos(){
     let strdata = '';
     let totalpedidos = 0;
     
-    axios.post('/pos/lista_documentos_tipo', {
+    axios.post('/pos/lista_documentos', {
         sucursal: cmbEmpresa.value,
         tipo:tipo,
         fecha:fecha,
@@ -1737,40 +1785,27 @@ function tbl_lista_documentos(){
         const data = response.data.recordset;
         let total =0;
         data.map((rows)=>{
-                let idBtn = `btnEliminar${rows.CODDOC + '-' + rows.CORRELATIVO}`;
+                let strClassAnulado = ''; if(rows.ST.toString()=='A'){strClassAnulado='text-danger'};
                 let idBtnDownload = `btnDownload${rows.CODDOC + '-' + rows.CORRELATIVO}`
-                total = total + Number(rows.IMPORTE);
+                let idBtnAnular = `btnAnular${rows.CODDOC + '-' + rows.CORRELATIVO}`
+                total = total + Number(rows.TOTALPRECIO);
                 totalpedidos = totalpedidos + 1;
                 strdata = strdata + `<tr>
                             <td>
                                 <b class="text-danger">${rows.CODDOC + '-' + rows.CORRELATIVO}</b>
                             </td>
+                            <td>${rows.NOMCLIE}</td>
+                            <td class="${strClassAnulado}"><b>${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</b></td>
+                            <td class="negrita ${strClassAnulado}">${rows.ST}</td>
+                            <td>${rows.FEL_UUDI}</td>
                             <td>
-                                    ${rows.NOMCLIE}
-                                <br>
-                                    <small class="text-secondary">${rows.DIRCLIE + ', ' + rows.DESMUNI}</small>
-                                
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button class="btn btn-outline-info btn-sm"
-                                            onclick="cargarPedidoEdicion('${rows.CODCLIE}','${rows.NIT}','${rows.NOMCLIE}','${rows.DIRCLIE}','${rows.CODDOC}','${rows.CORRELATIVO}')">
-                                            <i class="fal fa-edit"></i> Editar
-                                        </button>    
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-outline-danger btn-sm" id='${idBtn}'
-                                            onclick="fcn_delete_pedido('${rows.CODDOC}','${rows.CORRELATIVO}','${rows.ST}','${idBtn}');">
-                                            <i class="fal fa-trash"></i> Eliminar
-                                        </button>    
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <b>${funciones.setMoneda(rows.IMPORTE,'Q')}</b>
-                            </td>
-                            <td>
-                                <button class="btn btn-circle btn-naranja btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.NIT}','${funciones.limpiarTexto(rows.NOMCLIE)}','${funciones.limpiarTexto(rows.DIRCLIE)}','${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
+                                <button class="btn btn-circle btn-verde btn-md hand shadow" id="${idBtnDownload}" onclick="get_pdf('${rows.CODDOC}','${rows.CORRELATIVO}','${idBtnDownload}')">
                                     <i class="fal fa-download"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-circle btn-danger btn-md hand shadow" id="${idBtnAnular}" onclick="anular_factura('${rows.CODDOC}','${rows.CORRELATIVO}','${rows.ST}','${idBtnAnular}')">
+                                    <i class="fal fa-sync"></i>
                                 </button>
                             </td>
                         </tr>`
@@ -1786,10 +1821,9 @@ function tbl_lista_documentos(){
 
 };
 
-function get_pdf(nit,cliente,direccion,coddoc, correlativo, idbtn){
+function get_pdf(coddoc, correlativo, idbtn){
 
     let btn = document.getElementById(idbtn);
-    let tipo = document.getElementById('cmbTipoDoc').value;
     
     btn.innerHTML = '<i class="fal fa-download fa-spin"></i>';
     btn.disabled = true;
@@ -1797,11 +1831,7 @@ function get_pdf(nit,cliente,direccion,coddoc, correlativo, idbtn){
     axios.post('/pdf',{
         sucursal:cmbEmpresa.value,
         coddoc:coddoc,
-        correlativo:correlativo,
-        nit:nit,
-        cliente:cliente,
-        direccion:direccion,
-        tipodoc:tipo
+        correlativo:correlativo
      })
      .then((response) => {
         let base = response.data;
@@ -1909,92 +1939,35 @@ function loadDetallePedido(coddoc,correlativo){
     
 };
 
-function anular_pedido(coddoc,correlativo){
-    return new Promise((resolve,reject)=>{
-        axios.post('/ventas/anular_pedido', {
-            sucursal:cmbEmpresa.value,
-            coddoc: coddoc,
-            correlativo: correlativo
-        })
-        .then((response) => {
-            
-            const data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve();             
-            }else{
-                reject();
-            }
-          
-        }, (error) => {
-            //funciones.AvisoError('Error en la solicitud');
-            reject();
-        });
-    })
-    
-};
 
-
-function fcn_delete_pedido(coddoc,correlativo,st,idBtn){
-   
-    let btn = document.getElementById(idBtn);
-
-    $("#modal_lista_documentos").modal('hide');
-
-
-        funciones.Confirmacion('¿Está seguro que desea Eliminar este Pedido?')
-        .then((value)=>{
-            if(value==true){
-
-                
-                funciones.solicitarClave()
-                    .then((clave)=>{
-                        if(clave==GlobalPassUsuario){
-
-                            btn.disabled = true;
-                            btn.innerHTML = '<i class="fal fa-trash fa-spin"></i>';
-
-                                delete_pedido(cmbEmpresa.value,coddoc,correlativo)
-                                .then(()=>{
-                                    funciones.Aviso('Pedido Eliminado Exitosamente!!')
-                                    tbl_lista_documentos();
-                                })
-                                .catch(()=>{
-                                    btn.disabled = false;
-                                    btn.innerHTML = '<i class="fal fa-trash"></i> Eliminar';
-                                    funciones.AvisoError('No se pudo eliminar');
-                                })
-                            
-                        }else{
-                            funciones.AvisoError('Clave incorrecta')
-                        }
-                    }
-                )        
-            }
-        });
-
- 
-};
-
-function delete_pedido (sucursal,coddoc,correlativo){
-    return new Promise((resolve,reject)=>{
-        axios.post('/ventas/deletepedidovendedor',{
-           sucursal:sucursal,
-           coddoc:coddoc,
-           correlativo:correlativo
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve(data);             
-            }else{
-                reject();
-            }                     
-        }, (error) => {
-            reject();
-        });
-    })
-}
 
 //---------------------------
 //editar pedido
 //---------------------------
+
+
+
+//OPCIONES DEL DOCUMENTO
+function anular_factura(coddoc,correlativo,status,idbtn){
+
+
+    funciones.Confirmacion("¿Está seguro que desea ANULAR/DESANULAR este documento?")
+    
+    .then((value)=>{
+        if(value==true){
+
+            GF.get_anulacion_documento(coddoc,correlativo,status)
+            .then(()=>{
+                funciones.Aviso('Documento anulado exitosamente!!');
+                socket.emit('ANULACION',`Se ha anulado el documento: ${coddoc}-${correlativo} en la sede ${cmbEmpresa.value}`);
+                tbl_lista_documentos();
+            })
+            .catch(()=>{
+                funciones.AvisoError('No se pudo anular')
+            })
+
+        }
+    })
+   
+
+}

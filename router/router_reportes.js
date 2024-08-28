@@ -4,6 +4,14 @@ const router = express.Router();
 
 
 
+
+
+
+
+
+
+
+
 router.post("/rpt_ventas_fechas_compras", async(req,res)=>{
 
     const {token,sucursal,anio,mes} = req.body;

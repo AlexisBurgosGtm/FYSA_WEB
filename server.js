@@ -185,8 +185,8 @@ app.use("*",function(req,res){
 // SOCKET HANDLER
 io.on('connection', function(socket){
   
-      socket.on('nuevo_pedido', (tipo,msn)=>{
-        io.emit('nuevo_pedido', tipo, msn);
+      socket.on('notificacion', (tipo,msn)=>{
+        io.emit('notificacion', tipo, msn);
       });
 
       socket.on('nueva_cotizacion', (tipo,msn)=>{

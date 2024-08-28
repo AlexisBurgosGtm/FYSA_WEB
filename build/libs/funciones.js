@@ -978,18 +978,61 @@ let funciones = {
         }
       
     },
-    ObtenerUbicacion: async(idlat,idlong)=>{
-        let lat = document.getElementById(idlat);
-        let long = document.getElementById(idlong);
+    ObtenerUbicacion: ()=>{
+        let lat = ''; let long='';
+        return new Promise((resolve, reject)=>{
+            try {
+              navigator.geolocation.getCurrentPosition(function (location) {
+                  lat = location.coords.latitude.toString();
+                  long = location.coords.longitude.toString();
+                  resolve(location.coords)
+              })
+            } catch (error) {
+                reject();
+            }  
+        })
         
-        try {
-            navigator.geolocation.getCurrentPosition(function (location) {
-                lat.innerText = location.coords.latitude.toString();
-                long.innerText = location.coords.longitude.toString();
-            })
-        } catch (error) {
-            funciones.AvisoError(error.toString());
-        }
+    },
+    Lmap: (lat,long)=>{
+      //INICIALIZACION DEL MAPA 
+
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        osm = L.tileLayer(osmUrl, {center: [lat, long],maxZoom: 20, attribution: osmAttrib});    
+        map = L.map('mapcontainer').setView([lat, long], 7).addLayer(osm);
+  
+        var userIcon = L.icon({
+          iconUrl: '../img/userIcon.png',
+          shadowUrl: '../img/marker-shadow.png',
+      
+          iconSize:     [30, 45], // size of the icon
+          shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        })
+        
+    
+    },
+    XLmap: (lat,long)=>{
+      //INICIALIZACION DEL MAPA            
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        osm = L.tileLayer(osmUrl, {center: [lat, long],maxZoom: 20, attribution: osmAttrib});    
+        map = L.map('mapcontainer').setView([lat, long], 7).addLayer(osm);
+  
+        var userIcon = L.icon({
+          iconUrl: '../img/userIcon.png',
+          shadowUrl: '../img/marker-shadow.png',
+      
+          iconSize:     [30, 45], // size of the icon
+          shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        })
+        console.log('carga del mapa...')
+    
     },
     ComboSemana :(letnum)=>{
       let str = '';
@@ -1311,47 +1354,6 @@ let funciones = {
           let str = atob(base64string)
           resolve(str);
       })
-    },
-    getCorrelativo_isc:(correlativo)=>{
-      let numdoc = '';
-  
-      switch (correlativo.toString().length) {
-          case 1:
-              numdoc = '         ' + correlativo;
-          break;
-          case 2:
-              numdoc = '        ' + correlativo;
-          break;
-          case 3:
-              numdoc = '       ' + correlativo;
-          break;
-          case 4:
-              numdoc = '      ' + correlativo;
-              break;
-          case 5:
-              numdoc = '     ' + correlativo;
-              break;
-          case 6:
-              numdoc = '    ' + correlativo;
-              break;
-          case 7:
-              numdoc = '   ' + correlativo;
-              break;
-          case 8:
-              numdoc = '  ' + correlativo;
-          break;
-          case 9:
-              numdoc = ' ' + correlativo;
-          break;
-          case 10:
-              numdoc = correlativo;
-          break;
-          default:
-              break;
-      };
-  
-      return numdoc;
-  
     }
 };
 

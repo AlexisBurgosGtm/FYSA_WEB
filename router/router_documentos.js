@@ -3,6 +3,29 @@ const express = require('express');
 const router = express.Router();
 
 
+router.post("/anular_documento", async(req,res)=>{
+   
+    const { token, sucursal, coddoc,correlativo} = req.body;
+
+    let qry = `UPDATE DOCUMENTOS SET STATUS='A' 
+    WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}' AND CORRELATIVO=${correlativo};`
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
+router.post("/desanular_documento", async(req,res)=>{
+   
+    const { token, sucursal, coddoc,correlativo} = req.body;
+
+    let qry = `UPDATE DOCUMENTOS SET STATUS='O' 
+    WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}' AND CORRELATIVO=${correlativo};`
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
 
 router.post("/listado_documentos", async(req,res)=>{
    
@@ -21,6 +44,7 @@ router.post("/listado_documentos", async(req,res)=>{
     execute.QueryToken(res,qry,token);
      
 });
+
 
 
 
