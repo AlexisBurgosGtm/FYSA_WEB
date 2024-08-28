@@ -1,4 +1,4 @@
-const DbName = "posdb_r2";
+const DbName = "posdb_r3";
 
 var tblDocumentos = {
     name: 'documentos',
