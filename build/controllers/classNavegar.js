@@ -13,7 +13,8 @@ let Navegar = {
         })
     },
     login:()=>{
-        funciones.loadScript('../views/login/view_login.js','root')
+    
+        funciones.loadScript('../views/general_login/view_login.js','root')
         .then(async()=>{
             //btnMenu.style = "visibility:hidden";
             initView();

@@ -222,6 +222,7 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
 
 };
 
+
 router.post("/listado_colores", async(req,res)=>{
    
     const { token, sucursal} = req.body;
@@ -292,6 +293,7 @@ WHERE        (DOCUMENTOS.EMPNIT = '${sucursal}') AND (DOCUMENTOS.FECHA = '${fech
     execute.QueryToken(res,qry,token);
      
 });
+
 
 
 

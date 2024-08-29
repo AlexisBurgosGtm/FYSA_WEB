@@ -31,6 +31,19 @@ let GlobalLoader = `
                 </div>
                 `
                
+function get_button_loader(texto){
+    let str = '';
+
+    str = `${texto}<div>
+                <div class="spinner-grow text-naranja" role="status"><span class="sr-only">Loading...</span></div>
+                <div class="spinner-grow text-naranja" role="status"><span class="sr-only">Loading...</span></div>
+                <div class="spinner-grow text-naranja" role="status"><span class="sr-only">Loading...</span></div>
+            </div>`
+
+
+    return str;
+
+}
 
 // VARIABLES
 let GlobalSelected_Codprod = '';

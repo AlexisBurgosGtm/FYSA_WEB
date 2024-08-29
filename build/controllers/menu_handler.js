@@ -16,7 +16,7 @@ let Menu = {
     productos:()=>{
         
         if(Menu.verify()==true){
-            funciones.loadScript('../views/productos/view_productos.js','root')
+            funciones.loadScript('../views/compras_productos/view_productos.js','root')
             .then(async()=>{
                 initView();
             })
@@ -27,7 +27,7 @@ let Menu = {
     },
     pos:()=>{
         if(Menu.verify()==true){
-            funciones.loadScript('../views/pos/view_pos.js','root')
+            funciones.loadScript('../views/ventas_pos/view_pos.js','root')
             .then(async()=>{
                 initView();
             })
@@ -37,7 +37,17 @@ let Menu = {
     },
     documentos:()=>{
         if(Menu.verify()==true){
-            funciones.loadScript('../views/documentos/view_documentos.js','root')
+            funciones.loadScript('../views/archivo_documentos/view_documentos.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
+    mantenimiento_generales:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/mant_clasificaciones_generales/view_mant_generales.js','root')
             .then(async()=>{
                 initView();
             })

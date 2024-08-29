@@ -1174,7 +1174,7 @@ let funciones = {
     },
     limpiarTexto: (texto) =>{
       var ignorarMayMin = true;
-      var reemplazarCon = " pulg";
+      var reemplazarCon = "";
       var reemplazarQue = '"';
       reemplazarQue = reemplazarQue.replace(/[\\^$.|?*+()[{]/g, "\\$&"),
       reemplazarCon = reemplazarCon.replace(/\$(?=[$&`"'\d])/g, "$$$$"),

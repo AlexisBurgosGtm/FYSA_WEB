@@ -111,6 +111,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     <nav id="js-primary-nav" class="primary-nav" role="navigation"> 
                         <ul id="js-nav-menu" class="nav-menu">
                             
+                            <!-- HOME -->
                             <li>
                                 <a href="#"  class="text-naranja"  data-filter-tags="application intel"  onclick="Menu.inicio_admin()">
                                     <i class="fal fa-home"></i>
@@ -118,11 +119,11 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                 </a>
                             </li>
                             
-                            <!-- OPERACIONES -->
+                            <!-- PUNTO DE VENTA -->
                             <li>
                                 <a href="#" title="Application Intel" data-filter-tags="application intel">
-                                    <i class="fal fa-info-circle"></i>
-                                    <span class="nav-link-text" data-i18n="nav.application_intel">OPERACIONES</span>
+                                    <i class="fal fa-shopping-cart"></i>
+                                    <span class="nav-link-text" data-i18n="nav.application_intel">PUNTO DE VENTA</span>
                                 </a>
                                 <ul>
                                     <li>
@@ -135,16 +136,54 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">CORTE DE CAJA</span>
                                         </a>
                                     </li>
+                                    
+                                    <li>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.nota_credito()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">NOTAS DE CRÉDITO CLIENTES</span>
+                                        </a>
+                                    </li>                                   
+                                    
+                                </ul>
+                            </li>
+
+                            <!-- COMPRAS -->
+                            <li>
+                                <a href="#" title="Application Intel" data-filter-tags="application intel">
+                                    <i class="fal fa-warehouse"></i>
+                                    <span class="nav-link-text" data-i18n="nav.application_intel">COMPRAS</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.precios()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE PRECIOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.minmax()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">MINIMOS Y MÁXIMOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.cotizacion_proveedores()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">COTIZACIÓN A PROVEEDORES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.requisiciones()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_privacy">REQUISICIONES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.orden_compra()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_privacy">ORDEN DE COMPRA</span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="#" title="Marketing Dashboard" data-filter-tags="application intel marketing dashboard"  onclick="Menu.compras()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_marketing_dashboard">COMPRAS</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.nota_credito()">
-                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">NOTAS DE CRÉDITO CLIENTES</span>
-                                        </a>
-                                    </li>
+                                 
                                     <li>
                                         <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.nota_credito_proveedores()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">NOTAS DE CRÉDITO PROVEEDORES</span>
@@ -154,31 +193,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     
                                 </ul>
                             </li>
-                            <!-- ARCHIVO -->
-                            <li>
-                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                                    <i class="fal fa-cog"></i>
-                                    <span class="nav-link-text" data-i18n="nav.theme_settings">ARCHIVO</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.documentos()">
-                                            <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">DOCUMENTOS</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.reportes()">
-                                            <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">REPORTES</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.documentos_eliminados()">
-                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">DOCUMENTOS ELIMINADOS</span>
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
-                            </li>
+
                             <!-- INVENTARIOS -->
                             <li>
                                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
@@ -204,7 +219,33 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     
                                 </ul>
                             </li>
-                            
+
+                            <!-- ARCHIVO -->
+                            <li>
+                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                                    <i class="fal fa-folder-open"></i>
+                                    <span class="nav-link-text" data-i18n="nav.theme_settings">ARCHIVO</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.documentos()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">DOCUMENTOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.reportes()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">REPORTES</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.documentos_eliminados()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">DOCUMENTOS ELIMINADOS</span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+        
                             <!-- MANTENIMIENTOS -->
                             <li>
                                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
@@ -212,6 +253,12 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     <span class="nav-link-text" data-i18n="nav.theme_settings">MANTENIMIENTOS</span>
                                 </a>
                                 <ul>
+                                    <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.mantenimiento_generales()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">CLASIFICACIONES GENERALES</span>
+                                        </a>
+                                    </li>
+                                    
                                     <li>
                                         <a href="#" title="How it works" data-filter-tags="theme settings how it works"  onclick="Menu.clientes()">
                                             <span class="nav-link-text" data-i18n="nav.theme_settings_how_it_works">CLIENTES</span>
@@ -233,7 +280,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">MEDIDAS</span>
                                         </a>
                                     </li>
-                                    
+                                   
                                 </ul>
                             </li>
 
@@ -290,7 +337,12 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                            
                         </div>
                         <!-- DOC: mobile button appears during mobile width -->
-                        
+                        <div class="hidden-lg-up">
+                            <a href="#" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
+                                <i class="ni ni-menu"></i>
+                            </a>
+                        </div>
+
                         <div class="ml-auto d-flex">
                         
                             <!-- app settings -->

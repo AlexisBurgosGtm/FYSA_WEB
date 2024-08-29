@@ -1,5 +1,15 @@
 var socket = io();
 
+socket.on('MODO_SAT', function(clave){
+  try {
+      //Navegar.login();
+     
+      funciones.showToast('Modo Sat activado')
+      location.reload();
+  } catch (error) {
+    
+  }
+});
 
 
 socket.on('notificacion', function(tipo,msn){
@@ -12,6 +22,7 @@ socket.on('notificacion', function(tipo,msn){
       }
       
 });
+
 
 
 socket.on('nueva_cotizacion', function(tipo,msn){
@@ -59,3 +70,5 @@ socket.on('fin_despacho', (empnit,coddoc,correlativo)=>{
 
 
 });
+
+

@@ -61,6 +61,9 @@ function getView(){
                         </div>
                         <div class="col-9">
                             <h5 class="negrita">Datos del menú principal</h5>
+                            <button class="btn btn-circle btn-danger hand shadow btn-xl" onclick="GF.modo_sat()">
+                                <i class="fal fa-sync"></i>
+                            </button>
                         </div>
                     </div>
                     

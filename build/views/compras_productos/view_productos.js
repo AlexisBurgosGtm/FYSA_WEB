@@ -92,6 +92,7 @@ function getView(){
                                 <td>COSTO ANTERIOR</td>
                                 <td>MARCA</td>
                                 <td>TIPO</td>
+                                <td>IPs</td>
                                 <td>ACT</td>
                             </tr>
                         </thead>
@@ -274,9 +275,7 @@ function getView(){
                                                     <option value="0">PAGA IVA (NO EXENTO)</option>
                                                     <option value="1">EXENTO (NO PAGA IVA)</option>
                                                 </select>
-                                            <br><br>
-                                                <label class="negrita text-naranja">Bono</label>
-                                                <input type="number" class="form-control text-danger" id="txtBono" value=0>
+                                        
                                         </div>
 
                                     </div>
@@ -340,7 +339,7 @@ function getView(){
             <div class="row">
                 <div class="col-12">
                         <div class="card card-rounded col-12 border-naranja">
-                            <div class="card-body p-4" style="font-size:80%"> 
+                            <div class="card-body p-4"> 
 
                                 <h5 class="negrita text-danger">Gestión de Precios</h5>
                                 <br>
@@ -914,7 +913,7 @@ function listeners_menu_productos(){
             document.getElementById('txtDesprod2').value = '';
             document.getElementById('txtDesprod3').value = '';
             document.getElementById('txtUxc').value = '1';
-            document.getElementById('txtBono').value = '0';
+            //document.getElementById('txtBono').value = '0';
             document.getElementById('cmbTipoProd').value = 'P';
             document.getElementById('txtCosto').value = '0';
 
@@ -954,8 +953,8 @@ function listeners_menu_productos(){
                     if(txtUxc.value==''){txtUxc.value='1'};
                     if(txtUxc.value=='0'){txtUxc.value='1'};
                     
-                    let txtBono = document.getElementById('txtBono');
-                    if(txtBono.value==''){txtBono.value='0'};
+                    let txtBono = 0 //document.getElementById('txtBono');
+                    //if(txtBono.value==''){txtBono.value='0'};
 
                     let cmbTipoProd = document.getElementById('cmbTipoProd');
                     let cmbColor = document.getElementById('cmbColor');
@@ -989,7 +988,7 @@ function listeners_menu_productos(){
                         insert_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
                             cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono.value)
+                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha creado un nuevo producto');
@@ -1043,8 +1042,8 @@ function listeners_menu_productos(){
                     if(txtUxc.value==''){txtUxc.value='1'};
                     if(txtUxc.value=='0'){txtUxc.value='1'};
                     
-                    let txtBono = document.getElementById('txtBono');
-                    if(txtBono.value==''){txtBono.value='0'};
+                    let txtBono = 0 //document.getElementById('txtBono');
+                    //if(txtBono.value==''){txtBono.value='0'};
 
                     let cmbTipoProd = document.getElementById('cmbTipoProd');
                     let cmbColor = document.getElementById('cmbColor');
@@ -1067,7 +1066,7 @@ function listeners_menu_productos(){
                         edit_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
                             cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono.value)
+                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha actualizado el producto');
@@ -1207,7 +1206,7 @@ function listeners_menu_productos(){
                                 document.getElementById('txtDesprod2').value = r.DESPROD2;
                                 document.getElementById('txtDesprod3').value = r.DESPROD3;
                                 document.getElementById('txtUxc').value = r.UXC;
-                                document.getElementById('txtBono').value = r.BONO;
+                                //document.getElementById('txtBono').value = r.BONO;
                                 document.getElementById('cmbTipoProd').value = r.TIPOPROD;
                                 document.getElementById('cmbColor').value = r.NF;
                                 document.getElementById('cmbMarca').value = r.CODMARCA;
@@ -2145,6 +2144,7 @@ function get_lista_medidas(){
     });
 
 };
+
 function insert_medida(codigo,descripcion){
   
     return new Promise((resolve,reject)=>{
@@ -2372,6 +2372,7 @@ function get_tbl_productos(){
                      <td>${funciones.setMoneda(r.COSTO_ANTERIOR,'Q')}</td>
                     <td>${r.DESMARCA}</td>
                     <td>${r.TIPOPROD}</td>
+                    <td>${funciones.setMoneda(r.BONO,'Q')}</td>
                     <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 </tr>
             `

@@ -24,6 +24,7 @@ var router_tipodocumentos = require('./router/router_tipodocumentos');
 var router_cajas = require('./router/router_cajas');
 var router_documentos = require('./router/router_documentos');
 var router_bi = require('./router/router_bi')
+var router_clasificaciones = require('./router/router_clasificaciones')
 
 
 var http = require('http').Server(app);
@@ -168,6 +169,7 @@ app.use('/clientes', router_clientes);
 app.use('/tipodocumentos', router_tipodocumentos);
 app.use('/documentos', router_documentos);
 app.use('/bi', router_bi);
+app.use('/clasificaciones', router_clasificaciones);
 
 
 
@@ -184,6 +186,12 @@ app.use("*",function(req,res){
 
 // SOCKET HANDLER
 io.on('connection', function(socket){
+
+      socket.on('MODO_SAT', (clave)=>{
+        execute.Query_system(`UPDATE SYSTEM_CONFIG SET ACTIVO='SI' WHERE CODIGO='MODO_SAT';`);
+        io.emit('MODO_SAT', clave);
+
+      });
   
       socket.on('notificacion', (tipo,msn)=>{
         io.emit('notificacion', tipo, msn);

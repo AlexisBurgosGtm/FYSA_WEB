@@ -141,7 +141,7 @@ function getView(){
                                                 <td>MEDIDA</td>
                                                 <td>PRECIO</td>
                                                 <td>EXISTENCIA</td>
-                                                <td>BONO</td>
+                                                <td>IPs</td>
                                                 <td>TIPO</td>
                                             </tr>
                                         </thead>
@@ -328,15 +328,15 @@ function getView(){
                                         
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="mostrador" checked>
-                                            <label class="form-check-label negrita text-naranja" for="inlineRadio1">Mostrador </label>
+                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio1">Mostrador  </label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="domicilio">
-                                            <label class="form-check-label negrita text-naranja" for="inlineRadio2">Domicilio </label>
+                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio2">Domicilio  </label>
                                         </div>
                                          <div class="form-check form-check-inline">
                                             <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="callcenter">
-                                            <label class="form-check-label negrita text-naranja" for="inlineRadio3">Call Center</label>
+                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio3">Call Center</label>
                                         </div>
 
                                     </div>
@@ -393,10 +393,25 @@ function getView(){
                                 <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroDireccion">
                             </div>
 
-                                <div class="form-group hidden">
+                            <div class="form-group">
+                                <label class="negrita text-naranja">TELÉFONO/S</label>
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroTelefono">
+                            </div>
+
+                            <div class="text-right">
+                                <button class="btn btn-verde hand text-white" id="btnNuevoCliente">
+                                    <i class="fal fa-plus"></i> Crear Nuevo cliente
+                                </button>
+                            </div>
+
+                            <div class="form-group hidden">
                                 <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
                                 <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
                             </div>
+
+                          
+
+                                       
 
 
                         </div>
@@ -431,6 +446,7 @@ function getView(){
                                         <tr>
                                             <td>NIT / CÓDIGO</td>
                                             <td>CLIENTE</td>
+                                            <td>TELÉFONO</td>
                                             <td>SALDO</td>
                                         </tr>
                                     </thead>
@@ -475,7 +491,7 @@ function getView(){
                     </div>
                 </div>
             </div>`
-        },
+        }
     }
 
     root.innerHTML = view.body();
@@ -625,8 +641,6 @@ function get_correlativo(coddoc){
     })
 
 };
-
-
 
 
 function listener_teclado(){
@@ -917,44 +931,61 @@ function listener_vista_cobro(){
     });
 
     document.getElementById('btnBuscarClie').addEventListener('click',(e)=>{  
-        tbl_clientes(document.getElementById('txtBuscarClie').value||'');
+        let filtro = document.getElementById('txtBuscarClie').value || '';
+        tbl_clientes(filtro);
     });
 
 
+    let btnNuevoCliente = document.getElementById('btnNuevoCliente');
+    btnNuevoCliente.addEventListener('click',()=>{
+
+            let nit = document.getElementById('txtPosCobroNit').value || 'CF';
+            let nombre = document.getElementById('txtPosCobroNombre').value || 'SN';
+            let direccion = document.getElementById('txtPosCobroDireccion').value || 'CIUDAD';
+            let telefono = document.getElementById('txtPosCobroTelefono').value || '';
+
+            if(nombre=='SN'){
+                funciones.AvisoError('Nombre de cliente no es válido');
+                return;
+            }
+
+            funciones.Confirmacion('¿Está seguro que desea crear este nuevo cliente?')
+            .then((value)=>{
+                if(value==true){
+                    btnNuevoCliente.disabled = true;
+                    btnNuevoCliente.innerHTML = get_button_loader('Creando cliente nuevo')
+
+                    insert_cliente(nit,nombre,direccion, telefono)
+                    .then((data)=>{
+
+                        let codcli = ''
+                        data.recordset.map((r)=>{
+                            codcli = r.Current_Identity.toString();
+                        })
+                        document.getElementById('txtPosCobroNitclie').value = codcli;
+
+                        funciones.Aviso('Cliente creado exitosamente!!');
+                        btnNuevoCliente.disabled = false;
+                        btnNuevoCliente.innerHTML = `<i class="fal fa-plus"></i> Crear Nuevo cliente`;
+                    })
+                    .catch(()=>{
+                        funciones.AvisoError('No se pudo crear el cliente nuevo');
+                        btnNuevoCliente.disabled = false;
+                        btnNuevoCliente.innerHTML = `<i class="fal fa-plus"></i> Crear Nuevo cliente`;
+                    })
+        
+                }
+            })
+   
 
 
-};
-
-function insert_new_cliente(nitclie,nit,nombre,direccion){
-
-    return new Promise((resolve,reject)=>{
-        axios.post('/clientes/clientes_nuevo',{
-            fecha:funciones.getFecha(),
-            codven: document.getElementById('cmbVendedor').value,
-            empnit: cmbEmpresa.value,
-            nitclie: nit,
-            nomclie: nombre,
-            dirclie: direccion,
-            coddepto: '011',
-            codmunicipio: '156',
-            telclie: '',
-            emailclie: 'SN',
-            lat: '0',
-            long: '0'
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                resolve(data);             
-            }else{
-                reject();
-            }                     
-        }, (error) => {
-            reject();
-        });
     })
 
+
+
 };
+
+
 
 function listener_listado_documentos(){
 
@@ -1027,7 +1058,8 @@ function tbl_clientes(filtro){
 
     let str = '';
 
-    axios.post('/pos/buscar_cliente', {
+    axios.post('/clientes/buscar_cliente', {
+        token:TOKEN,
         sucursal: cmbEmpresa.value,
         filtro:filtro
     })
@@ -1039,15 +1071,16 @@ function tbl_clientes(filtro){
             const data = response.data.recordset;
             data.map((r)=>{
                 str += `
-                <tr class="hand" onclick="get_datos_cliente('${r.NITCLIE}','${r.NIT}','${r.NOMCLIE}','${r.DIRCLIE}')">    
+                <tr class="hand" onclick="get_datos_cliente('${r.CODCLIENTE}','${r.NIT}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}')">    
                     <td>
-                        ${r.NIT} / ${r.NITCLIE}
+                        ${r.NIT} / ${r.CODCLIENTE}
                     </td>
                     <td>
-                        ${r.NOMCLIE}
+                        ${r.NOMBRE}
                         <br>
-                        <small>${r.DIRCLIE}</small>
+                        <small>${r.DIRECCION}</small>
                     </td>
+                     <td>${r.TELEFONO}</td>
                     <td>${funciones.setMoneda(r.SALDO,'Q')}</td>
                 </tr>
                 `
@@ -1060,6 +1093,36 @@ function tbl_clientes(filtro){
     });
 
 
+
+};
+
+function insert_cliente(nit,nombre,direccion,telefono){
+
+    return new Promise((resolve,reject)=>{
+        axios.post('/clientes/insert_cliente',{
+            fecha:funciones.getFecha(),
+            sucursal: cmbEmpresa.value,
+            nit: nit,
+            nombre: nombre,
+            direccion: direccion,
+            coddepto: '1',
+            codmunicipio: '1',
+            telefono: telefono,
+            email: 'SN',
+            lat: '0',
+            long: '0'
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                resolve(data);             
+            }else{
+                reject();
+            }                     
+        }, (error) => {
+            reject();
+        });
+    })
 
 };
 
@@ -1105,7 +1168,7 @@ function fcn_buscar_cliente(nit){
 
 };
 
-function get_datos_cliente(nitclie,nit,nomclie,dirclie){
+function get_datos_cliente(nitclie,nit,nomclie,dirclie,telefono){
 
     $("#modal_lista_clientes").modal('hide');
 
@@ -1113,6 +1176,7 @@ function get_datos_cliente(nitclie,nit,nomclie,dirclie){
     document.getElementById('txtPosCobroNitclie').value = nitclie;
     document.getElementById('txtPosCobroNombre').value = nomclie;
     document.getElementById('txtPosCobroDireccion').value = dirclie;
+    document.getElementById('txtPosCobroTelefono').value = telefono;
     
 
 };
@@ -1732,7 +1796,6 @@ function fcnNuevoPedido(){
         document.getElementById('btnPosDocumentoAtras').click();
         get_tbl_pedido();
 
-
         let cmbCoddoc = document.getElementById('cmbCoddoc');
         get_correlativo(cmbCoddoc.value)
         .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
@@ -1760,6 +1823,7 @@ function tbl_lista_documentos(){
     let tableheader = `<table class="table table-responsive table-hover table-striped table-bordered h-full">
                         <thead class="bg-naranja text-white">
                             <tr>
+                                <td>HORA</td>
                                 <td>DOCUMENTO</td>
                                 <td>CLIENTE</td>
                                 <td>IMPORTE</td>
@@ -1790,7 +1854,9 @@ function tbl_lista_documentos(){
                 let idBtnAnular = `btnAnular${rows.CODDOC + '-' + rows.CORRELATIVO}`
                 total = total + Number(rows.TOTALPRECIO);
                 totalpedidos = totalpedidos + 1;
-                strdata = strdata + `<tr>
+                strdata = strdata + `
+                        <tr>
+                            <td>${rows.HORA}</td>
                             <td>
                                 <b class="text-danger">${rows.CODDOC + '-' + rows.CORRELATIVO}</b>
                             </td>
@@ -1970,4 +2036,4 @@ function anular_factura(coddoc,correlativo,status,idbtn){
     })
    
 
-}
+};

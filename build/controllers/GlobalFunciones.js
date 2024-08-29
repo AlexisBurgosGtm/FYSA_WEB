@@ -1,4 +1,7 @@
 let GF = {
+    modo_sat:()=>{
+        socket.emit('MODO_SAT')
+    },
     print_orden_soporte:(noorden)=>{
         return new Promise((resolve,reject)=>{
 
@@ -247,6 +250,27 @@ let GF = {
                 reject();
             });
         })     
+    },
+    get_clasificaciones_listado:(tipo)=>{
+        return new Promise((resolve,reject)=>{
+
+            axios.post(GlobalUrlCalls + '/clasificaciones/listado', {token:TOKEN,tipo:tipo})
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        }) 
+    
     },
 };
 

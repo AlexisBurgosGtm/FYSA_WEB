@@ -1,9 +1,10 @@
 ﻿
+
 function get_conf_token(token){
+
 	//token = empresa que manda la solicitud (puede cambiarse entre empresas)
 	//let config = [];
 
-	
 	let config = {
 		user: 'db_a6478c_fsya_admin',
 		password: 'razors1805',
@@ -12,12 +13,11 @@ function get_conf_token(token){
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 	
-
-	let configX = {
+	let configx = {
 		user: 'iEx',
 		password: 'iEx',
-		server: 'ONNE_DEV\\SQL22',//'DESKTOP-E0KG096\\SQL17',
-		database: 'fsya', //'ONNE',
+		server: 'ONNE_DEV\\SQL22',
+		database: 'fsya',
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 
@@ -25,13 +25,7 @@ function get_conf_token(token){
 	
 }
 
-const configHost = {
-	user: 'db_a6478c_onneweb_admin',
-	password: 'razors1805',
-	server: 'sql5092.site4now.net',
-	database: 'db_a6478c_onneweb',
-	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-};
+
 
 const sql = require('mssql');
 
@@ -76,6 +70,34 @@ let execute = {
 					res.send('error')
 				}else{
 					res.send(result);
+				}					
+			})
+			sql.close();  
+		  })
+		  pool1.on('error', err => {
+			  console.log('error sql = ' + err);
+			  sql.close();
+			  res.send('error');
+		  })
+		} catch (error) {
+			console.log(error);
+		  res.send('error')   
+		  sql.close();
+		}
+	},
+	Query_system : (sqlqry,token)=>{	
+		
+		let config = get_conf_token(token);
+
+		try {
+		  const pool1 = new sql.ConnectionPool(config, err => {
+			new sql.Request(pool1)
+			.query(sqlqry, (err, result) => {
+				if(err){
+					console.log(err.message);
+					
+				}else{
+					//res.send(result);
 				}					
 			})
 			sql.close();  
