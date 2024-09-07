@@ -1064,7 +1064,7 @@ function tbl_clientes(filtro){
         filtro:filtro
     })
     .then((response) => {        
-        if(response=='error'){
+        if(response.data=='error'){
             funciones.AvisoError('Error en la solicitud');
             container.innerHTML = 'No day datos....';
         }else{
