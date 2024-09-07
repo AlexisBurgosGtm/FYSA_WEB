@@ -244,6 +244,47 @@ function getView(){
                                      
                             </div>                   
                         </div>
+                        
+                        <br>
+
+                        <div class="card card-rounded col-12 border-naranja">
+                            <div class="card-body p-4"> 
+
+                                <h5 class="negrita text-danger">Gestión de Precios</h5>
+                                <br>
+                                <label class="negrita text-naranja">Costo Unitario</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control text-danger col-3 negrita" id="txtCosto">
+                                    <button class="btn btn-success hand hidden" id="">
+                                        <i class="fal fa-plus"></i>
+                                    </button>
+                                    <button class="btn btn-success hand" id="btnNuevoPrecio">
+                                        <i class="fal fa-plus"></i> Nuevo Precio
+                                    </button>
+                                </div>
+                                <br>
+
+                                <table class="table table-responsive h-full">
+                                    <thead class="bg-secondary text-white">
+                                        <tr>
+                                            <td>CODMEDIDA</td>
+                                            <td>EQ</td>
+                                            <td>COSTO</td>
+                                            <td>PRECIO</td>
+                                            <td>PRECIO_A</td>
+                                            <td>PRECIO_B</td>
+                                            <td>PRECIO_C</td>
+                                            <td>PRECIO_D</td>
+                                            <td>PRECIO_E</td>
+                                            <td>PRECIO_F</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblDataPrecios"></tbody>
+                                </table>
+
+                            </div>
+                        </div>
                 </div>
                 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -251,35 +292,7 @@ function getView(){
                             <div class="card-body p-4" style="font-size:80%">
 
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                        <div class="row">
-                                            
-                                                <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
-                                                <input type="number" class="form-control" id="txtUxc">
-                                            
-                                            <br><br>                                       
-                                                <label class="negrita text-naranja">Tipo Producto</label>
-                                                <select class="form-control" id="cmbTipoProd">
-                                                    <option value="P">BIEN</option>
-                                                    <option value="S">SERVICIO</option>
-                                                </select>
-                                            <br><br>
-                                                <label class="negrita text-naranja">Color Alerta</label>
-                                                <select class="form-control" id="cmbColor">
-                                                    
-                                                 
-                                                </select>
-                                            <br><br>
-                                                <label class="negrita text-naranja">Exento</label>
-                                                <select class="form-control" id="cmbExento">
-                                                    <option value="0">PAGA IVA (NO EXENTO)</option>
-                                                    <option value="1">EXENTO (NO PAGA IVA)</option>
-                                                </select>
-                                        
-                                        </div>
-
-                                    </div>
-
+                                                                        
                                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                         
 
@@ -327,6 +340,38 @@ function getView(){
                                         
                                         <br>
                                     </div>
+
+                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                        <div class="row">
+                                            
+                                                <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
+                                                <input type="number" class="form-control" id="txtUxc">
+                                            
+                                            <br><br>                                       
+                                                <label class="negrita text-naranja">Tipo Contable</label>
+                                                <select class="form-control" id="cmbTipoProd">
+                                                    <option value="P">BIEN</option>
+                                                    <option value="S">SERVICIO</option>
+                                                </select>
+                                            <br><br>
+                                                <label class="negrita text-naranja">Color Alerta</label>
+                                                <select class="form-control" id="cmbColor">
+                                                    
+                                                 
+                                                </select>
+                                            <br><br>
+                                                <label class="negrita text-naranja">Exento</label>
+                                                <select class="form-control" id="cmbExento">
+                                                    <option value="0">PAGA IVA (NO EXENTO)</option>
+                                                    <option value="1">EXENTO (NO PAGA IVA)</option>
+                                                </select>
+                                        
+                                        </div>
+
+                                    </div>
+
+
+
                                 </div>
 
                             </div>
@@ -336,49 +381,7 @@ function getView(){
             
             <br>
 
-            <div class="row">
-                <div class="col-12">
-                        <div class="card card-rounded col-12 border-naranja">
-                            <div class="card-body p-4"> 
-
-                                <h5 class="negrita text-danger">Gestión de Precios</h5>
-                                <br>
-                                <label class="negrita text-naranja">Costo Unitario</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control text-danger col-3 negrita" id="txtCosto">
-                                    <button class="btn btn-success hand hidden" id="">
-                                        <i class="fal fa-plus"></i>
-                                    </button>
-                                    <button class="btn btn-success hand" id="btnNuevoPrecio">
-                                        <i class="fal fa-plus"></i> Nuevo Precio
-                                    </button>
-                                </div>
-                                <br>
-
-                                <table class="table table-responsive h-full">
-                                    <thead class="bg-secondary text-white">
-                                        <tr>
-                                            <td>CODMEDIDA</td>
-                                            <td>EQ</td>
-                                            <td>COSTO</td>
-                                            <td>PRECIO</td>
-                                            <td>PRECIO_A</td>
-                                            <td>PRECIO_B</td>
-                                            <td>PRECIO_C</td>
-                                            <td>PRECIO_D</td>
-                                            <td>PRECIO_E</td>
-                                            <td>PRECIO_F</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblDataPrecios"></tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                </div>
-
-            </div>
+         
 
 
             <button class="btn btn-secondary btn-bottom-l btn-xl btn-circle hand shadow" id="btnAtrasTabDos">
@@ -869,23 +872,26 @@ function getView(){
         },
     }
     
+
     root.innerHTML = view.body();
 
 };
 
 function addListeners(){
 
+    
     GF.get_data_color()
     .then((data)=>{
         let strColores = '';
         data.recordset.map((r)=>{
             strColores +=`
-            <option style='color:${r.COLOR}' value="${r.NF}">${r.NOMBRE}</option>
+            <option style='color:${r.COLOR}' value="${r.NF}">(${r.NOMBRE}) ${r.DESCRIPCION}</option>
             `
         })
         document.getElementById('cmbColor').innerHTML = strColores;
     })
     
+
 
     get_combos_producto();
 
