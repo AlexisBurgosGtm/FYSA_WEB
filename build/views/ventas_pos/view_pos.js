@@ -4,10 +4,10 @@ function getView(){
         body:()=>{
             return `
                 <div class="row">
-                    <div class="col-2 text-left">
-                            <img src="./favicon.png" width="50px" height="50px">
+                    <div class="col-1 text-left">
+                            <img src="./favicon.png" width="80px" height="80px">
                     </div>
-                    <div class="card bg-naranja card-rounded shadow col-10 p-2">
+                    <div class="card bg-naranja card-rounded shadow col-11 p-2">
                         
                             <div class="row">
                                 <div class="col-4 text-left">   
@@ -17,7 +17,9 @@ function getView(){
                                     <label class="text-white negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <h1 class="text-white negrita" id="lbTotalVenta">Q 0.00</h1>
+                                    <h2 class="text-white negrita" id="lbTotalVenta">Q 0.00</h2>
+                                    <h2 class="text-verde-claro negrita" id="lbTotalDescuento">Q 0.00</h2>
+                                    <h1 class="text-white negrita" id="lbTotalVentaDescuento">Q 0.00</h1>
                                 </div>
                             </div>
                         
@@ -196,6 +198,18 @@ function getView(){
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecio" disabled>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuento">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioDescuento" disabled>
+                                    </div>
+
+
                                 </div>            
                             </div>
                                 
@@ -251,6 +265,19 @@ function getView(){
                                         <label class="negrita text-secondary">Subtotal ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioE" disabled>
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuentoE">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
+                                        <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioDescuentoE" disabled>
+                                    </div>
+
+
                                 </div>            
                             </div>
                                 
