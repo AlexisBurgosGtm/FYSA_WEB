@@ -7,19 +7,19 @@ function getView(){
                     <div class="col-1 text-left">
                             <img src="./favicon.png" width="80px" height="80px">
                     </div>
-                    <div class="card bg-naranja card-rounded shadow col-11 p-2">
+                    <div class="card border-naranja card-rounded shadow col-11 p-2">
                         
                             <div class="row">
                                 <div class="col-4 text-left">   
-                                    <label class="text-white negrita h5" style="font-size:120%">Punto de Venta</label>
+                                    <label class="text-naranja negrita h5" style="font-size:120%">Punto de Venta</label>
+                                    <br>
+                                    <label class="text-naranja negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
-                                <div class="col-4 text-left">
-                                    <label class="text-white negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
-                                </div>
-                                <div class="col-4 text-right">
-                                    <h2 class="text-white negrita" id="lbTotalVenta">Q 0.00</h2>
-                                    <h2 class="text-verde-claro negrita" id="lbTotalDescuento">Q 0.00</h2>
-                                    <h1 class="text-white negrita" id="lbTotalVentaDescuento">Q 0.00</h1>
+                                
+                                <div class="col-8 text-right">
+                                    <h5 class="text-verde negrita" id="lbTotalVenta">Q 0.00</h5>
+                                    <h5 class="text-danger negrita" id="lbTotalDescuento">Q 0.00</h5>
+                                    <h1 class="text-naranja negrita" id="lbTotalVentaDescuento">Q 0.00</h1>
                                 </div>
                             </div>
                         
@@ -98,6 +98,8 @@ function getView(){
                                                 <td>CANTIDAD</td>
                                                 <td>PRECIO</td>
                                                 <td>SUBTOTAL</td>
+                                                <td>DESCUENTO</td>
+                                                <td>IMPORTE</td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
@@ -768,6 +770,7 @@ function listener_vista_pedido(){
 
         let cantidad = Number(document.getElementById('txtMCCantidad').value || 1);
         let preciounitario = Number(document.getElementById('txtMCPrecio').value||0);
+        let descuento = Number(document.getElementById('txtMCDescuento').value||0);
 
         if(preciounitario==0){
             funciones.AvisoError('Precio inválido');
@@ -780,7 +783,7 @@ function listener_vista_pedido(){
         };
 
 
-        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia,Selected_bono)
+        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia,Selected_bono,descuento)
         .then(()=>{
             
             $("#modal_cantidad").modal('hide');
@@ -824,6 +827,7 @@ function listener_vista_pedido(){
 
         let cantidad = Number(document.getElementById('txtMCCantidadE').value || 1);
         let preciounitario = Number(document.getElementById('txtMCPrecioE').value||0);
+        let descuento =Number(document.getElementById('txtMCDescuentoE').value||0);
 
         if(preciounitario==0){
             funciones.AvisoError('Precio inválido');
@@ -837,7 +841,7 @@ function listener_vista_pedido(){
 
 
         let nuevacantidad = Number(cantidad);
-        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario)
+        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
         .then(()=>{
             $("#modal_editar_cantidad").modal('hide');
 
@@ -1486,7 +1490,7 @@ function get_datos_precio(codprod,codmedida){
 
 
 
-function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia,bono){
+function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia,bono,descuento){
     
     let datos = 
         {
@@ -1507,7 +1511,8 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
             TIPOPROD:tipoprod,
             TIPOPRECIO:tipoprecio,
             EXISTENCIA:Number(existencia),
-            BONO:Number(bono)
+            BONO:Number(bono),
+            DESCUENTO:Number(descuento)
         };
 
     
@@ -1533,6 +1538,7 @@ function get_tbl_pedido(){
     let varTotalItems = 0;
     let varTotalVenta = 0;
     let varTotalCosto = 0;
+    let varTotalDescuento = 0;
 
     selectTempVentasPOS(cmbEmpresa.value)
     .then((data)=>{
@@ -1540,6 +1546,7 @@ function get_tbl_pedido(){
             varTotalItems += 1;
             varTotalVenta = varTotalVenta + Number(rows.TOTALPRECIO);
             varTotalCosto = varTotalCosto + Number(rows.TOTALCOSTO);
+            varTotalDescuento += Number(rows.DESCUENTO);
             return `
             <tr class="border-naranja border-left-0 border-right-0 border-top-0">
                 <td class="text-left">
@@ -1558,7 +1565,10 @@ function get_tbl_pedido(){
                     <b class="text-info" style="font-size:140%">${rows.CANTIDAD}</b>
                 </td>
                 <td class="negrita">${funciones.setMoneda(rows.PRECIO,'Q')}</td>
-                <td class="negrita text-danger h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
+                <td class="negrita h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
+                <td class="negrita text-danger">${funciones.setMoneda(rows.DESCUENTO,'Q')}</td>
+                <td class="negrita text-verde h4">${funciones.setMoneda((Number(rows.TOTALPRECIO)-Number(rows.DESCUENTO)),'Q')}</td>
+
                 <td>
                     <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}')">
                         <i class="fal fa-edit"></i>
@@ -1572,19 +1582,32 @@ function get_tbl_pedido(){
             </tr>`
        }).join('\n');
         container.innerHTML = datos;
+
         GlobalTotalCostoDocumento = varTotalCosto;
         GlobalTotalDocumento = varTotalVenta;
+        GlobalTotalDescuento = varTotalDescuento;
+
         document.getElementById('lbTotalItems').innerText = varTotalItems.toString() + ' items';
         document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(varTotalVenta,'Q');
-        document.getElementById('lbPosCobroTotalPagar').innerText = funciones.setMoneda(varTotalVenta,'Q');
+        document.getElementById('lbTotalDescuento').innerText = `- ${funciones.setMoneda(varTotalDescuento,'Q')}` ;
+        document.getElementById('lbTotalVentaDescuento').innerText = funciones.setMoneda((varTotalVenta-varTotalDescuento),'Q');
+        
+        document.getElementById('lbPosCobroTotalPagar').innerText = funciones.setMoneda((varTotalVenta-varTotalDescuento),'Q');
     })
     .catch((error)=>{
-        console.log('error cargar grid:')
-        console.log(error)
+        
         container.innerHTML = 'No hay datos...';
         GlobalTotalCostoDocumento = 0;
         GlobalTotalDocumento = 0;
+        GlobalTotalDescuento = 0;
+
+        document.getElementById('lbTotalItems').innerText = '---';
+        document.getElementById('lbTotalVenta').innerText = 
+        document.getElementById('lbTotalDescuento').innerText = '---';
+        document.getElementById('lbTotalVentaDescuento').innerText = '---';
+        document.getElementById('lbPosCobroTotalPagar').innerText = '---';
     })
+
 
 };
 
@@ -1758,6 +1781,7 @@ function finalizar_pedido(){
                 nomclie:ClienteNombre,
                 totalcosto:GlobalTotalCostoDocumento,
                 totalprecio:GlobalTotalDocumento,
+                totaldescuento:GlobalTotalDescuento,
                 nitclie:nit,
                 dirclie:dirclie,
                 obs:entrega_referencia,
@@ -1813,6 +1837,11 @@ function finalizar_pedido(){
 
 function fcnNuevoPedido(){
   
+        GlobalTotalDocumento =0;
+        GlobalTotalDescuento =0;
+        GlobalTotalCostoDocumento=0;
+        
+        
         document.getElementById('inlineRadio1').checked = true;
 
         document.getElementById('txtPosCobroNit').value = 'CF';

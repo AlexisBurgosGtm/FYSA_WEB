@@ -64,8 +64,9 @@ let GlobalConfigIVA = 1.12;
 let GlobalCodBodega  = 0;
 
 
-
-
+let GlobalTotalDocumento = 0;
+let GlobalTotalCostoDocumento = 0;
+let GlobalTotalDescuento = 0;
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');

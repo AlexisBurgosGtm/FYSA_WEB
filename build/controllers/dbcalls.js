@@ -724,8 +724,10 @@ function deleteItemVentaPOS(id){
     })            
 };
 
-function selectDataRowVentaPOS(id,nuevacantidad,nuevoprecio) {
+function selectDataRowVentaPOS(id,nuevacantidad,nuevoprecio,descuento) {
+
     let costo = 0; let precio = 0; let equivale =0; let exento=0; let cantidad= nuevacantidad;
+    
     return new Promise(async(resolve,reject)=>{
         var response = await connection.select({
             from: "temp_pos",
@@ -754,7 +756,8 @@ function selectDataRowVentaPOS(id,nuevacantidad,nuevoprecio) {
                 TOTALCOSTO:Number(totalcosto),
                 PRECIO:Number(nuevoprecio),
                 TOTALPRECIO:Number(totalprecio),
-                EXENTO:totalexento
+                EXENTO:totalexento,
+                DESCUENTO:Number(descuento)
             },
             where: {
                 ID: Number(id)
