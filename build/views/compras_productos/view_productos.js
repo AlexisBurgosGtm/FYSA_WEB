@@ -8,7 +8,7 @@ function getView(){
                             ${view.vista_listado() + view.modal_opciones_producto()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
-                            ${view.vista_ficha_producto() + view.modal_nuevo_precio() + view.modal_medidas() + view.modal_marcas() + view.modal_claseuno() + view.modal_proveedores()}
+                            ${view.vista_ficha_producto() + view.modal_nuevo_precio() + view.modal_medidas() + view.modal_marcas()}
                         </div>
                         <div class="tab-pane fade" id="tres" role="tabpanel" aria-labelledby="home-tab">
                             
@@ -247,48 +247,42 @@ function getView(){
                         
                         <br>
 
-                        <div class="card card-rounded col-12 border-naranja">
-                            <div class="card-body p-4"> 
 
-                                <h5 class="negrita text-danger">Gestión de Precios</h5>
-                                <br>
-                                <label class="negrita text-naranja">Costo Unitario</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control text-danger col-3 negrita" id="txtCosto">
-                                    <button class="btn btn-success hand hidden" id="">
-                                        <i class="fal fa-plus"></i>
-                                    </button>
-                                    <button class="btn btn-success hand" id="btnNuevoPrecio">
-                                        <i class="fal fa-plus"></i> Nuevo Precio
-                                    </button>
-                                </div>
-                                <br>
 
-                                <table class="table table-responsive h-full">
-                                    <thead class="bg-secondary text-white">
-                                        <tr>
-                                            <td>CODMEDIDA</td>
-                                            <td>EQ</td>
-                                            <td>COSTO</td>
-                                            <td>PRECIO</td>
-                                            <td>PRECIO_A</td>
-                                            <td>PRECIO_B</td>
-                                            <td>PRECIO_C</td>
-                                            <td>PRECIO_D</td>
-                                            <td>PRECIO_E</td>
-                                            <td>PRECIO_F</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblDataPrecios"></tbody>
-                                </table>
-
-                            </div>
-                        </div>
                 </div>
                 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="card card-rounded col-12 border-naranja">
+                        
+                        ${view.ficha_producto_precios()}
+
+                </div>
+            </div>
+            
+            <div class="row">
+                ${view.ficha_producto_clasificaciones()}
+            </div>
+            
+           
+
+
+            <button class="btn btn-secondary btn-bottom-l btn-xl btn-circle hand shadow" id="btnAtrasTabDos">
+                <i class="fal fa-arrow-left"></i>
+            </button>
+
+            <button class="btn btn-info btn-bottom-r btn-xl btn-circle hand shadow" id="btnGuardarProducto">
+                <i class="fal fa-save"></i>
+            </button>
+
+            <button class="btn btn-info btn-bottom-r btn-xl btn-circle hand shadow" id="btnGuardarProductoEditar">
+                <i class="fal fa-save"></i>
+            </button>
+
+            
+            `
+        },
+        ficha_producto_clasificaciones:()=>{
+            return `
+            <div class="card card-rounded col-12 border-naranja">
                             <div class="card-body p-4" style="font-size:80%">
 
                                 <div class="row">
@@ -376,27 +370,48 @@ function getView(){
 
                             </div>
                         </div>
-                </div>
-            </div>
-            
-            <br>
+            `
+        },
+        ficha_producto_precios:()=>{
+            return `
+                        <div class="card card-rounded col-12 border-naranja">
+                            <div class="card-body p-4"> 
 
-         
+                                <h5 class="negrita text-danger">Gestión de Precios</h5>
+                                <br>
+                                <label class="negrita text-naranja">Costo Unitario</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control text-danger col-3 negrita" id="txtCosto">
+                                    <button class="btn btn-success hand hidden" id="">
+                                        <i class="fal fa-plus"></i>
+                                    </button>
+                                    <button class="btn btn-success hand" id="btnNuevoPrecio">
+                                        <i class="fal fa-plus"></i> Nuevo Precio
+                                    </button>
+                                </div>
+                                <br>
 
+                                <table class="table table-responsive h-full">
+                                    <thead class="bg-secondary text-white">
+                                        <tr>
+                                            <td>CODMEDIDA</td>
+                                            <td>EQ</td>
+                                            <td>COSTO</td>
+                                            <td>PRECIO</td>
+                                            <td>PRECIO_A</td>
+                                            <td>PRECIO_B</td>
+                                            <td>PRECIO_C</td>
+                                            <td>PRECIO_D</td>
+                                            <td>PRECIO_E</td>
+                                            <td>PRECIO_F</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblDataPrecios"></tbody>
+                                </table>
 
-            <button class="btn btn-secondary btn-bottom-l btn-xl btn-circle hand shadow" id="btnAtrasTabDos">
-                <i class="fal fa-arrow-left"></i>
-            </button>
-
-            <button class="btn btn-info btn-bottom-r btn-xl btn-circle hand shadow" id="btnGuardarProducto">
-                <i class="fal fa-save"></i>
-            </button>
-
-            <button class="btn btn-info btn-bottom-r btn-xl btn-circle hand shadow" id="btnGuardarProductoEditar">
-                <i class="fal fa-save"></i>
-            </button>
-
-            
+                            </div>
+                        </div>
             `
         },
         modal_nuevo_precio:()=>{
