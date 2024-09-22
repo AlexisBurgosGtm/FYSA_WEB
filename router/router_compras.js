@@ -227,6 +227,54 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
 
 
 
+router.post("/surtido_sucursales", async(req,res)=>{
+   
+
+    const { token,sucursal} = req.body;
+
+    let qry ='';
+
+    if(sucursal=='TODAS'){
+        qry = `
+       SELECT INVSALDO.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, 
+			SUM(INVSALDO.MINIMO) AS MINIMO, 
+			SUM(INVSALDO.MAXIMO) AS MAXIMO, 
+			SUM(INVSALDO.EXISTENCIA) AS EXISTENCIA, 
+			MARCAS.DESMARCA,
+            (SUM(INVSALDO.MAXIMO) - SUM(INVSALDO.EXISTENCIA)) AS RELLENO
+        FROM     INVSALDO LEFT OUTER JOIN
+                        PRODUCTOS ON INVSALDO.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
+                        MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
+        WHERE  (INVSALDO.HABILITADO = 'SI')
+        GROUP BY INVSALDO.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, MARCAS.DESMARCA
+        HAVING (PRODUCTOS.TIPOPROD = 'B') AND (SUM(INVSALDO.EXISTENCIA) <= SUM(INVSALDO.MINIMO))
+
+        `
+    }else{
+        qry = `
+        SELECT INVSALDO.EMPNIT, INVSALDO.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, INVSALDO.MINIMO, 
+            INVSALDO.MAXIMO, INVSALDO.EXISTENCIA, 
+            MARCAS.DESMARCA,
+            (INVSALDO.MAXIMO - INVSALDO.EXISTENCIA) AS RELLENO, '2000-01-01' AS LASTUPDATE
+        FROM     INVSALDO LEFT OUTER JOIN
+                      PRODUCTOS ON INVSALDO.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
+                      MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
+        WHERE  (INVSALDO.EMPNIT = '${sucursal}') AND (PRODUCTOS.TIPOPROD = 'B') 
+            AND (INVSALDO.HABILITADO='SI') AND (INVSALDO.EXISTENCIA<=INVSALDO.MINIMO)
+        `
+
+    }
+
+   
+
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
+
 
 
 

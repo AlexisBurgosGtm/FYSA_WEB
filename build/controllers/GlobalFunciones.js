@@ -71,6 +71,63 @@ let GF = {
         })   
     
     },
+    get_data_buscar_producto(filtro){
+    
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/productos/listado',
+                {
+                    sucursal:GlobalEmpnit,
+                    token:TOKEN,
+                    habilitado:'SI',
+                    filtro:filtro
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
+    get_data_precios_producto(codprod){
+    
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/productos/lista_precios',
+                {
+                    sucursal:GlobalEmpnit,
+                    token:TOKEN,
+                    codprod:codprod
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
     verify_codprod_movimientos:(codprod)=>{
     
         return new Promise((resolve,reject)=>{
@@ -146,6 +203,26 @@ let GF = {
                 reject();
             });
         })     
+    },
+    get_data_empresas:()=>{
+    return new Promise((resolve,reject)=>{
+
+            axios.post(GlobalUrlCalls + '/general/empresas',{TOKEN:TOKEN})
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        }) 
     },
     get_data_color:()=>{
         return new Promise((resolve,reject)=>{

@@ -320,8 +320,8 @@ function getView(){
                                 <div class="form-group">
                                     <label class="text-secondary">Tipo de Documento</label>
                                     <select class="form-control col-12" id="cmbTipoDocumento">
-                                        <option value="FAC">FACTURA NORMAL</option>
-                                        <option value="FEL">FACTURA ELECTRONICA</option>
+                                        <option value="FEL">MODO A</option>    
+                                        <option value="FAC">MODO B</option>
                                         <option value="COT">COTIZACIÓN</option>
                                     </select>   
                                 </div>

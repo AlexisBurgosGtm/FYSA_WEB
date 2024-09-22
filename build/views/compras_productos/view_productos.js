@@ -364,7 +364,7 @@ function getView(){
                                             <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4">
                                                 <label class="negrita text-naranja">Tipo Contable</label>
                                                 <select class="form-control" id="cmbTipoProd">
-                                                    <option value="P">BIEN</option>
+                                                    <option value="B">BIEN</option>
                                                     <option value="S">SERVICIO</option>
                                                 </select>
                                             </div>
@@ -944,7 +944,7 @@ function listeners_menu_productos(){
             document.getElementById('txtDesprod3').value = '';
             document.getElementById('txtUxc').value = '1';
             //document.getElementById('txtBono').value = '0';
-            document.getElementById('cmbTipoProd').value = 'P';
+            document.getElementById('cmbTipoProd').value = 'B';
             document.getElementById('txtCosto').value = '0';
 
             document.getElementById('tab-dos').click();

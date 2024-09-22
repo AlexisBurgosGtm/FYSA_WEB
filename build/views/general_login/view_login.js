@@ -88,7 +88,7 @@ function addListeners(){
     //cmbEmpresa.innerHTML = get_empresas();
     document.getElementById('btnIniciar').style="visibility:hidden";
     
-        get_data_empresas()
+        GF.get_data_empresas()
         .then((data)=>{
             let str = '';
             data.recordset.map((r)=>{
@@ -111,8 +111,9 @@ function addListeners(){
         btnIniciar.addEventListener('click',()=>{
             
             GlobalEmpnit = cmbEmpresa.value;
-            GlobalNivelUsuario = 1;
-            Navegar.menu();
+            GlobalNivelUsuario = 2;
+           
+            Navegar.inicio();
             
             return;
 
@@ -314,24 +315,3 @@ function login(u,p){
     })   
 
 };
-
-function get_data_empresas(){
-    return new Promise((resolve,reject)=>{
-
-        axios.post(GlobalUrlCalls + '/general/empresas',{TOKEN:TOKEN})
-        .then((response) => {
-            if(response.status.toString()=='200'){
-                let data = response.data;
-                if(Number(data.rowsAffected[0])>0){
-                    resolve(data);             
-                }else{
-                    reject();
-                }            
-            }else{
-                reject();
-            }             
-        }, (error) => {
-            reject();
-        });
-    }) 
-}

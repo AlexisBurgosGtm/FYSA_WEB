@@ -31,12 +31,13 @@ router.post("/insert_producto", async(req,res)=>{
         ${bono} AS BONO,'${lastupdate}' AS LASTUPDATE;
     INSERT INTO PRECIOS 
         (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
-        PRECIO_D, PRECIO_E, PRECIO_F, PESO, LASTUPDATE)
+        PRECIO_D, PRECIO_E, PRECIO_F, PESO, LASTUPDATE, HABILITADO)
     SELECT '${codprod}' AS CODPROD, CODMEDIDA, 
         EQUIVALE, COSTO, 
         PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
         PRECIO_D, PRECIO_E, PRECIO_F,
-        PESO, '${lastupdate}' AS LASTUPDATE
+        PESO, '${lastupdate}' AS LASTUPDATE,
+        'SI' AS HABILITADO
     FROM TEMP_PRECIOS;
     INSERT INTO INVSALDO (EMPNIT, CODPROD,
         ENTRADAS, SALIDAS,
@@ -264,7 +265,7 @@ router.post("/listado", async(req,res)=>{
     const { token, sucursal, filtro, habilitado } = req.body;
 
     let qry = `
-        SELECT TOP 50 PRODUCTOS.CODPROD, 
+        SELECT TOP 50 PRODUCTOS.CODPROD, PRODUCTOS.CODPROD2,
             PRODUCTOS.DESPROD, PRODUCTOS.DESPROD2, PRODUCTOS.DESPROD3, 
             PRODUCTOS.UXC, 
             PRODUCTOS.COSTO_ULTIMO AS COSTO,
@@ -284,6 +285,8 @@ router.post("/listado", async(req,res)=>{
         ORDER BY PRODUCTOS.DESPROD
     `
   
+    
+
     execute.QueryToken(res,qry,token);
      
 });
