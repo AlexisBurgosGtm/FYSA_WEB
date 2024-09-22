@@ -1,4 +1,4 @@
-const DbName = "posdb_r3";
+const DbName = "posdb_r4";
 
 var tblDocumentos = {
     name: 'documentos',
@@ -38,48 +38,7 @@ var tblDocumentos = {
     }
 };
 
-var tblProductos = {
-    name: 'productos',
-    columns: {
-        ID:{ primaryKey: true, autoIncrement: true },
-        CODSUCURSAL:{dataType: "string"},
-        CODPROD:{dataType: "string"},
-        DESPROD:{dataType: "string"},
-        CODMEDIDA:{dataType: "string"},
-        EQUIVALE:{dataType: "number"},
-        COSTO:{dataType: "number"},
-        PRECIO:{dataType: "number"},
-        PRECIOA:{dataType: "number"},
-        PRECIOB:{dataType: "number"},
-        PRECIOC:{dataType: "number"},
-        DESMARCA:{dataType: "string"},
-        EXENTO:{dataType: "number"},
-        EXISTENCIA:{dataType: "number"},
-        DESPROD3:{dataType: "string"}
-    }
-};
 
-var tblClientes = {
-    name: 'clientes',
-    columns: {
-        ID:{ primaryKey: true, autoIncrement: true },
-        CODSUCURSAL:{dataType: "string"},
-        CODIGO:{dataType: "string"},
-        DESMUNI:{dataType: "string"},
-        DIRCLIE:{dataType: "string"},
-        LASTSALE:{dataType: "string"},
-        LAT:{dataType: "string"},
-        LONG:{dataType: "string"},
-        NIT:{dataType: "string"},
-        NOMCLIE:{dataType: "string"},
-        REFERENCIA:{dataType: "string"},
-        STVISITA:{dataType: "string"},
-        VISITA:{dataType: "string"},
-        TELEFONO:{dataType: "string"},
-        TIPONEGOCIO:{dataType:"string"},
-        NEGOCIO:{dataType:"string"}
-    }
-};
 
 var tblTempventas = {
     name: 'tempventa',
@@ -134,6 +93,35 @@ var tblTempventasPos = {
     }
 };
 
+var tblTempCompras = {
+    name: 'temp_compras',
+    columns: {
+        ID:{ primaryKey: true, autoIncrement: true },
+        CODSUCURSAL:{dataType: "string"},
+        EMPNIT:{dataType: "string"},
+        CODDOC:{dataType: "string"},
+        CODPROD:{dataType: "string"},
+        DESPROD:{dataType: "string"},
+        CODMEDIDA:{dataType: "string"},
+        EQUIVALE:{dataType: "number"},
+        CANTIDAD:{dataType: "number"},
+        TOTALUNIDADES:{dataType: "number"},
+        COSTO:{dataType: "number"},
+        PRECIO:{dataType: "number"},
+        DESCUENTO:{dataType: "number"},
+        TOTALCOSTO:{dataType: "number"},
+        TOTALPRECIO:{dataType: "number"},       
+        EXENTO:{dataType: "number"},
+        USUARIO:{dataType: "string"},
+        TIPOPRECIO:{dataType: "string"},
+        EXISTENCIA:{dataType: "number"},
+        CODBODEGA:{dataType: "string"},
+        NOLOTE:{dataType: "string"},
+        TIPOPROD:{dataType: "string"},
+        BONO:{dataType: "number"},
+    }
+};
+
 var tblCredenciales = {
     name: 'credenciales',
     columns: {
@@ -150,7 +138,7 @@ var tblCredenciales = {
 
 var database = {
     name: DbName,
-    tables: [tblDocumentos,tblProductos,tblClientes,tblTempventas,tblTempventasPos,tblCredenciales]
+    tables: [tblDocumentos,tblTempventas,tblTempventasPos,tblTempCompras,tblCredenciales]
 };
  
 // initiate jsstore connection

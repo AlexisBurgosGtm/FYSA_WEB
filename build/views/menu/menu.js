@@ -91,23 +91,17 @@ function getView(){
 
 };
 
-function handle_empresa_change(){
-    get_grafica();
 
-    funciones.ObtenerUbicacion()
-    .then((coords)=>{
-        rpt_mapa_empresas('mapContenedor',coords.latitude.toString(),coords.longitude.toString());
-    })
-    //get_rpt_fechas_compras();
-    //get_rpt_productos();
-};
 
 function addListeners(){
 
+    
+    document.title = "Inicio";
+
     Mousetrap.bind('ctrl+m', function() { document.getElementById('btnMenu').click() });
 
-    cmbEmpresa.removeEventListener('change', handle_empresa_change)
-    cmbEmpresa.addEventListener('change', handle_empresa_change)
+    //cmbEmpresa.removeEventListener('change', handle_empresa_change)
+    //cmbEmpresa.addEventListener('change', handle_empresa_change)
 
 
     get_grafica();
@@ -149,7 +143,7 @@ function get_data_mapa(){
     return new Promise((resolve, reject)=>{
         
         let data = {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             anio:2024,
             mes:8
         };
@@ -223,7 +217,7 @@ function getDataEmpresaFechas(){
     return new Promise((resolve, reject)=>{
         
         let data = {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             anio:2024,
             mes:8,
             tipo:'FAC'

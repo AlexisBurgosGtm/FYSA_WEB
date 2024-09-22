@@ -5,7 +5,7 @@ let GF = {
     print_orden_soporte:(noorden)=>{
         return new Promise((resolve,reject)=>{
 
-            axios.get(`http://192.168.0.250:9000/ticket_soporte?sucursal=${cmbEmpresa.value}&correlativo=${noorden}`)
+            axios.get(`http://192.168.0.250:9000/ticket_soporte?sucursal=${GlobalEmpnit}&correlativo=${noorden}`)
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
@@ -50,7 +50,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/productos/verify_codprod',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     codprod:codprod
                 })
@@ -77,7 +77,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/productos/verify_codprod_movimientos',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     codprod:codprod
                 })
@@ -103,7 +103,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/empleados/empleados_tipo',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     tipo:tipo
                 })
@@ -128,7 +128,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/cajas/listado',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN
                 })
             .then((response) => {
@@ -152,7 +152,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/pos/listado_colores',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN
                 })
             .then((response) => {
@@ -176,7 +176,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/productos/get_cantidad_productos',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     habilitado:habilitado
                 })
@@ -201,7 +201,7 @@ let GF = {
     
             axios.post(GlobalUrlCalls + '/documentos/listado_documentos',
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     tipo:tipo,
                     anio:anio,
@@ -230,7 +230,7 @@ let GF = {
             if(status=='A'){strcall='/documentos/desanular_documento'}else{strcall='/documentos/anular_documento'}
             axios.post(GlobalUrlCalls + strcall,
                 {
-                    sucursal:cmbEmpresa.value,
+                    sucursal:GlobalEmpnit,
                     token:TOKEN,
                     coddoc:coddoc,
                     correlativo:correlativo

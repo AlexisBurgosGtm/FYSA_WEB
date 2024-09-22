@@ -7,31 +7,35 @@ router.post("/insert_producto", async(req,res)=>{
    
     const {token,sucursal,codprod,codprod2,
         desprod,desprod2,desprod3,uxc,costo,
-        codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf, bono} = req.body;
+        codmarca,lastupdate,tipoprod,exento,nf, bono,
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno} = req.body;
 
     let qry = `
     INSERT INTO PRODUCTOS (CODPROD,CODPROD2,DESPROD,
         DESPROD2,DESPROD3,UXC,COSTO_ULTIMO,COSTO_ANTERIOR,
-        CODMARCA,CODCLAUNO,CODCLADOS,CODCLATRES,
+        CODMARCA,CLASIF_LABORATORIO,CLASIF_IMPULSO,CLASIF_PROGRAMA_SALUD,CLASIF_RM_MR,CLASIF_RELLENO,
         HABILITADO,EXENTO,
         NF,TIPOPROD,BONO,LASTUPDATE)
     SELECT '${codprod}' AS CODPROD,'${codprod2}' AS CODPROD2,
         '${desprod}' AS DESPROD,'${desprod2}' AS DESPROD2,
         '${desprod3}' AS DESPROD3,${uxc} AS UXC,    
         ${costo} AS COSTO_ULTIMO, ${costo} AS COSTO_ANTERIOR,
-        ${codmarca} AS CODMARCA,${codclaseuno} AS CODCLAUNO,
-        ${codclasedos} AS CODCLADOS, ${codclasetres} AS CODCLATRES,
+        ${codmarca} AS CODMARCA,
+        ${tipolaboratorio} AS CLASIF_LABORATORIO,
+        ${tipoimpulso} AS CLASIF_IMPULSO,
+        ${tipoprogramasalud} AS CLASIF_PROGRAMA_SALUD,
+        ${tipormmr} AS CLASIF_RM_MR,
+        ${tiporelleno} AS CLASIF_RELLENO,
         'SI' AS HABILITADO, ${exento} AS EXENTO,
         ${nf} AS NF,'${tipoprod}' AS TIPOPROD,
         ${bono} AS BONO,'${lastupdate}' AS LASTUPDATE;
     INSERT INTO PRECIOS 
         (CODPROD,CODMEDIDA,EQUIVALE,COSTO,PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
-        PRECIO_D, PRECIO_E, PRECIO_F, HABILITADO, PESO, LASTUPDATE)
+        PRECIO_D, PRECIO_E, PRECIO_F, PESO, LASTUPDATE)
     SELECT '${codprod}' AS CODPROD, CODMEDIDA, 
         EQUIVALE, COSTO, 
         PRECIO, PRECIO_A, PRECIO_B, PRECIO_C, 
-        PRECIO_D, PRECIO_E, PRECIO_F, 'SI' AS HABILITADO,
+        PRECIO_D, PRECIO_E, PRECIO_F,
         PESO, '${lastupdate}' AS LASTUPDATE
     FROM TEMP_PRECIOS;
     INSERT INTO INVSALDO (EMPNIT, CODPROD,
@@ -141,8 +145,8 @@ router.post("/edit_producto", async(req,res)=>{
 
     const {token,sucursal,codprod,codprod2,
         desprod,desprod2,desprod3,uxc,costo,
-        codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf, bono} = req.body;
+        codmarca,lastupdate,tipoprod,exento,nf, bono,
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno} = req.body;
 
     let qry = `
     UPDATE PRODUCTOS SET 
@@ -153,9 +157,11 @@ router.post("/edit_producto", async(req,res)=>{
         UXC=${uxc},
         COSTO_ULTIMO=${costo},
         CODMARCA=${codmarca},
-        CODCLAUNO=${codclaseuno},
-        CODCLADOS=${codclasedos},
-        CODCLATRES=${codclasetres},
+        CLASIF_LABORATORIO=${tipolaboratorio},
+        CLASIF_IMPULSO=${tipoimpulso},
+        CLASIF_PROGRAMA_SALUD=${tipoprogramasalud},
+        CLASIF_RM_MR=${tipormmr},
+        CLASIF_RELLENO=${tiporelleno},
         EXENTO=${exento},
         NF=${nf},
         BONO=${bono},
@@ -164,6 +170,7 @@ router.post("/edit_producto", async(req,res)=>{
     WHERE CODPROD='${codprod}';
     `
     
+    console.log(qry)
   
 
     execute.QueryToken(res,qry,token);
@@ -227,6 +234,7 @@ router.post("/delete_producto", async(req,res)=>{
     let qry = `
     DELETE FROM PRODUCTOS WHERE CODPROD='${codprod}';
     DELETE FROM PRECIOS WHERE CODPROD='${codprod}';
+     DELETE FROM INVSALDO WHERE CODPROD='${codprod}';
     `
 
     execute.QueryToken(res,qry,token);

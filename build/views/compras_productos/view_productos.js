@@ -247,6 +247,10 @@ function getView(){
                         
                         <br>
 
+                <div class="row">
+                    ${view.ficha_producto_clasificaciones()}
+                </div>
+            
 
 
                 </div>
@@ -258,10 +262,7 @@ function getView(){
                 </div>
             </div>
             
-            <div class="row">
-                ${view.ficha_producto_clasificaciones()}
-            </div>
-            
+         
            
 
 
@@ -283,99 +284,106 @@ function getView(){
         ficha_producto_clasificaciones:()=>{
             return `
             <div class="card card-rounded col-12 border-naranja">
-                            <div class="card-body p-4" style="font-size:80%">
+                <div class="card-body p-4" style="font-size:80%">
 
-                                <div class="row">
-                                                                        
-                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <label class="negrita text-naranja">Marca</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbMarca">
+                        </select>
+                        <button class="btn btn-naranja hand" id="btnBuscarMarca">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
                                         
-
-                                        <label class="negrita text-naranja">Marca</label>
-                                        <div class="input-group">
-                                            <select class="form-control" id="cmbMarca">
-                                            </select>
-                                            <button class="btn btn-naranja hand" id="btnBuscarMarca">
-                                                <i class="fal fa-search"></i>
-                                            </button>
-                                        </div>
+                    <br>
+                    <label class="negrita text-naranja">Tipo Laboratorio</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoLaboratorio">
+                        </select>
+                        <button class="btn btn-naranja hand" id="">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
                                         
-                                        <br>
-
-                                        <label class="negrita text-naranja">Fabricante</label>
-                                        <div class="input-group">
-                                            <select class="form-control" id="cmbClaseuno">
-                                            </select>
-                                            <button class="btn btn-naranja hand" id="btnBuscarClaseuno">
-                                                <i class="fal fa-search"></i>
-                                            </button>
-                                        </div>
+                    <br>
+                    <label class="negrita text-naranja">Tipo Impulso</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoImpulso">
+                        </select>    
+                        <button class="btn btn-naranja hand" id="">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
                                         
-                                        <br>
+                    <br>
+                    <label class="negrita text-naranja">Tipo Programa Salud</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoProgramaSalud">
+                        </select>
+                        <button class="btn btn-naranja hand">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
 
-                                        <label class="negrita text-naranja">Proveedor</label>
-                                        <div class="input-group">
-                                            <select class="form-control" id="cmbProveedor">
-                                            </select>    
-                                            <button class="btn btn-naranja hand" id="btnBuscarProv">
-                                                <i class="fal fa-search"></i>
-                                            </button>
-                                        </div>
+                    <br>
+                    <label class="negrita text-naranja">Tipo RM MR</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoRMMR">
+                        </select>
+                        <button class="btn btn-naranja hand">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
+
+                    <br>
+                    <label class="negrita text-naranja">Tipo Relleno</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoRelleno">
+                        </select>
+                        <button class="btn btn-naranja hand">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
                                         
-                                        <br>
-
-                                        <label class="negrita text-naranja">Clasificación</label>
-                                        <div class="input-group">
-                                            <select class="form-control" id="cmbClasedos">
-                                            </select>
-                                            <button class="btn btn-naranja hand">
-                                                <i class="fal fa-search"></i>
-                                            </button>
-                                        </div>
-                                        
-                                        <br>
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                        <div class="row">
-                                            
-                                                <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
-                                                <input type="number" class="form-control" id="txtUxc">
-                                            
-                                            <br><br>                                       
-                                                <label class="negrita text-naranja">Tipo Contable</label>
-                                                <select class="form-control" id="cmbTipoProd">
-                                                    <option value="P">BIEN</option>
-                                                    <option value="S">SERVICIO</option>
-                                                </select>
-                                            <br><br>
-                                                <label class="negrita text-naranja">Color Alerta</label>
-                                                <select class="form-control" id="cmbColor">
-                                                    
-                                                 
-                                                </select>
-                                            <br><br>
-                                                <label class="negrita text-naranja">Exento</label>
-                                                <select class="form-control" id="cmbExento">
-                                                    <option value="0">PAGA IVA (NO EXENTO)</option>
-                                                    <option value="1">EXENTO (NO PAGA IVA)</option>
-                                                </select>
-                                        
-                                        </div>
-
-                                    </div>
-
-
-
-                                </div>
-
-                            </div>
-                        </div>
+                   
+                </div>
+            </div>
             `
         },
         ficha_producto_precios:()=>{
             return `
                         <div class="card card-rounded col-12 border-naranja">
                             <div class="card-body p-4"> 
+
+                                
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4">
+                                                <label class="negrita text-naranja">Unidades por Caja (UxC)</label>
+                                                <input type="number" class="form-control" id="txtUxc">
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4">
+                                                <label class="negrita text-naranja">Tipo Contable</label>
+                                                <select class="form-control" id="cmbTipoProd">
+                                                    <option value="P">BIEN</option>
+                                                    <option value="S">SERVICIO</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-4 col-xl-4 col-md-4">
+                                                <label class="negrita text-naranja">Exento</label>
+                                                <select class="form-control" id="cmbExento">
+                                                    <option value="0">PAGA IVA (NO EXENTO)</option>
+                                                    <option value="1">EXENTO (NO PAGA IVA)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                                                                   
+                                        <br><br>
+                                            <label class="negrita text-naranja">Color Alerta</label>
+                                            <select class="form-control" id="cmbColor">
+                                                         
+                                            </select>
+                                        <br><br>
+
 
                                 <h5 class="negrita text-danger">Gestión de Precios</h5>
                                 <br>
@@ -894,6 +902,7 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Lista Productos";
     
     GF.get_data_color()
     .then((data)=>{
@@ -977,16 +986,22 @@ function listeners_menu_productos(){
                     let txtBono = 0 //document.getElementById('txtBono');
                     //if(txtBono.value==''){txtBono.value='0'};
 
-                    let cmbTipoProd = document.getElementById('cmbTipoProd');
-                    let cmbColor = document.getElementById('cmbColor');
-                    let cmbMarca = document.getElementById('cmbMarca');
-                    let cmbClaseuno = document.getElementById('cmbClaseuno');
-                    let cmbProveedor = document.getElementById('cmbProveedor');
-                    let cmbClasedos = document.getElementById('cmbClasedos');
                     let txtCosto = document.getElementById('txtCosto');
                     let lastupdate = funciones.getFecha();
                     let exento = document.getElementById('cmbExento').value;
 
+                    let cmbTipoProd = document.getElementById('cmbTipoProd');
+                    let cmbColor = document.getElementById('cmbColor');
+                    
+                    let cmbMarca = document.getElementById('cmbMarca');
+
+                    let cmbTipoLaboratorio = document.getElementById('cmbTipoLaboratorio');
+                    let cmbTipoImpulso = document.getElementById('cmbTipoImpulso');
+                    let cmbTipoProgramaSalud = document.getElementById('cmbTipoProgramaSalud');
+                    let cmbTipoRMMR = document.getElementById('cmbTipoRMMR');
+                    let cmbTipoRelleno = document.getElementById('cmbTipoRelleno');
+                    
+                    
 
                     btnGuardarProducto.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
                     btnGuardarProducto.disabled = true;
@@ -1008,8 +1023,8 @@ function listeners_menu_productos(){
 
                         insert_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
-                            cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono)
+                            cmbMarca.value,lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono,
+                            cmbTipoLaboratorio.value,cmbTipoImpulso.value,cmbTipoProgramaSalud.value,cmbTipoRMMR.value,cmbTipoRelleno.value)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha creado un nuevo producto');
@@ -1069,9 +1084,13 @@ function listeners_menu_productos(){
                     let cmbTipoProd = document.getElementById('cmbTipoProd');
                     let cmbColor = document.getElementById('cmbColor');
                     let cmbMarca = document.getElementById('cmbMarca');
-                    let cmbClaseuno = document.getElementById('cmbClaseuno');
-                    let cmbProveedor = document.getElementById('cmbProveedor');
-                    let cmbClasedos = document.getElementById('cmbClasedos');
+
+                    let cmbTipoLaboratorio = document.getElementById('cmbTipoLaboratorio');
+                    let cmbTipoImpulso = document.getElementById('cmbTipoImpulso');
+                    let cmbTipoProgramaSalud = document.getElementById('cmbTipoProgramaSalud');
+                    let cmbTipoRMMR = document.getElementById('cmbTipoRMMR');
+                    let cmbTipoRelleno = document.getElementById('cmbTipoRelleno');
+
                     let txtCosto = document.getElementById('txtCosto');
                     let lastupdate = funciones.getFecha();
                     let exento = document.getElementById('cmbExento').value;
@@ -1085,8 +1104,8 @@ function listeners_menu_productos(){
                     
 
                         edit_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
-                            txtDesprod3.value,txtUxc.value,txtCosto.value,
-                            cmbMarca.value,cmbClaseuno.value,cmbProveedor.value,cmbClasedos.value,
+                            txtDesprod3.value,txtUxc.value,txtCosto.value,cmbMarca.value,
+                            cmbTipoLaboratorio.value,cmbTipoImpulso.value,cmbTipoProgramaSalud.value,cmbTipoRMMR.value,cmbTipoRelleno.value,
                             lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono)
                             .then(()=>{
 
@@ -1148,6 +1167,8 @@ function listeners_menu_productos(){
                     })
                     .catch(()=>{
                         funciones.AvisoError('Este producto ya tiene movimientos, no puede eliminarlo, debe DESACTIVARLO');
+                        btnProdMenEliminar.innerHTML = '<i class="fal fa-trash"></i>';
+                        btnProdMenEliminar.disabled = false;
                     })
 
             
@@ -1231,9 +1252,14 @@ function listeners_menu_productos(){
                                 document.getElementById('cmbTipoProd').value = r.TIPOPROD;
                                 document.getElementById('cmbColor').value = r.NF;
                                 document.getElementById('cmbMarca').value = r.CODMARCA;
-                                document.getElementById('cmbClaseuno').value = r.CODCLAUNO;
-                                document.getElementById('cmbProveedor').value = r.CODCLADOS;
-                                document.getElementById('cmbClasedos').value = r.CODCLATRES;
+
+                                document.getElementById('cmbTipoLaboratorio').value = r.CLASIF_LABORATORIO;
+                                document.getElementById('cmbTipoImpulso').value = r.CLASIF_IMPULSO;
+                                document.getElementById('cmbTipoProgramaSalud').value = r.CLASIF_PROGRAMA_SALUD;
+                                document.getElementById('cmbTipoRMMR').value = r.CLASIF_RM_MR;
+                                document.getElementById('cmbTipoRelleno').value = r.CLASIF_RELLENO;
+                                
+
                                 document.getElementById('txtCosto').value = r.COSTO_ULTIMO;
                             })
 
@@ -1257,8 +1283,8 @@ function listeners_menu_productos(){
 
 function listeners_listado(){
 
-    cmbEmpresa.removeEventListener('change', handle_empresa_change)
-    cmbEmpresa.addEventListener('change', handle_empresa_change)
+    //cmbEmpresa.removeEventListener('change', handle_empresa_change)
+    //cmbEmpresa.addEventListener('change', handle_empresa_change)
 
     document.getElementById('cmbTipoLista').addEventListener('change',()=>{
         get_tbl_productos();
@@ -1339,123 +1365,6 @@ function listeners_listado(){
 
     // MARCAS ---------------------------
 
-    // CLASEUNO -------------------------
-
-    
-    let btnBuscarClaseuno = document.getElementById('btnBuscarClaseuno');
-    btnBuscarClaseuno.addEventListener('click',()=>{
-
-        $("#modal_claseuno").modal('show');
-
-        get_lista_fabricantes();
-
-    });
-
-    let btnProdAgregarClaseuno = document.getElementById('btnProdAgregarClaseuno');
-    btnProdAgregarClaseuno.addEventListener('click',()=>{
-
-        let codigo = document.getElementById('txtProdCodClaseuno').value || '0';
-        if(codigo=='0'){funciones.AvisoError('Indique un código de Fabricante válido');return;};
-
-        let descripcion = document.getElementById('txtProdDesClaseuno').value || 'SN';
-        if(descripcion=='SN'){funciones.AvisoError('Indique una descripción de Fabricante válido');return;};
-        
-
-        funciones.Confirmacion('¿Está seguro que desea agregar este Fabricante?')
-        .then((value)=>{
-            if(value==true){
-
-                btnProdAgregarClaseuno.innerHTML = `<i class="fal fa-plus fa-spin"></i>`;
-                btnProdAgregarClaseuno.disabled = true;
-
-                insert_fabricante(codigo,descripcion)
-                .then(()=>{
-
-                    funciones.Aviso('Fabricante creada exitosamente!!');
-                    get_lista_fabricantes();
-                    get_combo_fabricantes();
-
-                    document.getElementById('txtProdCodClaseuno').value ='';
-                    document.getElementById('txtProdDesClaseuno').value ='';
-                    
-                    btnProdAgregarClaseuno.innerHTML = `<i class="fal fa-plus"></i> Agregar`;
-                    btnProdAgregarClaseuno.disabled = false;
-
-                })
-                .catch(()=>{
-                    funciones.AvisoError('No se pudo guardar este Fabricante');
-                    
-                    btnProdAgregarClaseuno.innerHTML = `<i class="fal fa-plus"></i> Agregar`;
-                    btnProdAgregarClaseuno.disabled = false;
-                })
-            }
-        })
-
-        
-
-    });
-
-
-    // CLASEUNO -------------------------
-
-
-    // PROVEEDORES -------------------------
-
-    let btnBuscarProv = document.getElementById('btnBuscarProv');
-    btnBuscarProv.addEventListener('click',()=>{
-
-        $("#modal_proveedores").modal('show');
-
-        get_lista_proveedores();
-
-    });
-
-    let btnProdAgregarProv = document.getElementById('btnProdAgregarProv');
-    btnProdAgregarProv.addEventListener('click',()=>{
-
-        let codigo = document.getElementById('txtProdCodProv').value || '0';
-        if(codigo=='0'){funciones.AvisoError('Indique un código de Proveedor válido');return;};
-
-        let descripcion = document.getElementById('txtProdDesProv').value || 'SN';
-        if(descripcion=='SN'){funciones.AvisoError('Indique una descripción de Proveedor válido');return;};
-        
-
-        funciones.Confirmacion('¿Está seguro que desea agregar este Proveedor?')
-        .then((value)=>{
-            if(value==true){
-
-                btnProdAgregarProv.innerHTML = `<i class="fal fa-plus fa-spin"></i>`;
-                btnProdAgregarProv.disabled = true;
-
-                insert_proveedor(codigo,descripcion)
-                .then(()=>{
-
-                    funciones.Aviso('Proveedor creada exitosamente!!');
-                    get_lista_proveedores();
-                    get_combo_proveedores();
-
-                    document.getElementById('txtProdCodClaseuno').value ='';
-                    document.getElementById('txtProdDesClaseuno').value ='';
-                    
-                    btnProdAgregarProv.innerHTML = `<i class="fal fa-plus"></i> Agregar`;
-                    btnProdAgregarProv.disabled = false;
-
-                })
-                .catch(()=>{
-                    funciones.AvisoError('No se pudo guardar este Proveedor');
-                    
-                    btnProdAgregarProv.innerHTML = `<i class="fal fa-plus"></i> Agregar`;
-                    btnProdAgregarProv.disabled = false;
-                })
-            }
-        })
-
-        
-
-    });
-
-
-    // PROVEEDORES -------------------------
 
     
 };
@@ -1675,7 +1584,7 @@ function insert_temp_precio(codprod,codmedida,equivale,peso,costo,preciop,precio
 
         axios.post(GlobalUrlCalls + '/productos/insert_temp_precio',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 usuario:GlobalUsuario,
                 codprod:codprod,
@@ -1790,7 +1699,7 @@ function get_combo_marcas(){
         
         axios.post(GlobalUrlCalls + '/productos/listado_marcas',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN
             })
         .then((response) => {
@@ -1814,6 +1723,27 @@ function get_combo_marcas(){
 
 };
 
+function get_combo_clasificacion(tipo,idCmb){
+
+    let container = document.getElementById(idCmb);
+
+
+    GF.get_clasificaciones_listado(tipo)
+    .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+            str += `<option value='${r.CODIGO}'>${r.DESCRIPCION}</option>`
+        })
+        container.innerHTML = str
+    })
+    .catch(()=>{
+        container.innerHTML = `<option value='SN'>No se cargó la clasificacion</option>`;
+    })
+    
+   
+
+};
+
 function get_lista_marcas(){
 
     let container = document.getElementById('tblDataProdMarcas');
@@ -1821,7 +1751,7 @@ function get_lista_marcas(){
 
     axios.post(GlobalUrlCalls + '/productos/listado_marcas',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -1855,7 +1785,7 @@ function insert_marca(codmarca,desmarca){
 
         axios.post(GlobalUrlCalls + '/productos/insert_marca',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codmarca:codmarca,
                 desmarca:desmarca
@@ -1887,7 +1817,7 @@ function get_combo_fabricantes(){
         
     axios.post(GlobalUrlCalls + '/productos/listado_claseuno',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -1917,7 +1847,7 @@ function get_lista_fabricantes(){
 
     axios.post(GlobalUrlCalls + '/productos/listado_claseuno',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -1950,7 +1880,7 @@ function insert_fabricante(codigo,descripcion){
 
         axios.post(GlobalUrlCalls + '/productos/insert_claseuno',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codigo:codigo,
                 descripcion:descripcion
@@ -1983,7 +1913,7 @@ function get_combo_proveedores(){
         
     axios.post(GlobalUrlCalls + '/productos/listado_proveedores',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -2013,7 +1943,7 @@ function get_lista_proveedores(){
 
     axios.post(GlobalUrlCalls + '/productos/listado_proveedores',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -2047,7 +1977,7 @@ function insert_proveedor(codigo,descripcion){
 
         axios.post(GlobalUrlCalls + '/productos/insert_proveedor',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codigo:codigo,
                 descripcion:descripcion
@@ -2079,7 +2009,7 @@ function get_combo_clasedos(){
         
     axios.post(GlobalUrlCalls + '/productos/listado_clasedos',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -2109,7 +2039,7 @@ function get_combo_medidas(){
         
     axios.post(GlobalUrlCalls + '/productos/listado_medidas',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -2139,7 +2069,7 @@ function get_lista_medidas(){
 
     axios.post(GlobalUrlCalls + '/productos/listado_medidas',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN
         })
     .then((response) => {
@@ -2172,7 +2102,7 @@ function insert_medida(codigo,descripcion){
 
         axios.post(GlobalUrlCalls + '/productos/insert_medida',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codigo:codigo,
                 descripcion:descripcion
@@ -2208,17 +2138,22 @@ function initView(){
 };
 
 function get_combos_producto(){
+
     get_combo_marcas();
-    get_combo_fabricantes();
-    get_combo_proveedores();
-    get_combo_clasedos();
+    
     get_combo_medidas();
+
+
+    get_combo_clasificacion('LABORATORIO','cmbTipoLaboratorio');
+    get_combo_clasificacion('IMPULSO','cmbTipoImpulso');
+    get_combo_clasificacion('PROGRAMA_SALUD','cmbTipoProgramaSalud');
+    get_combo_clasificacion('RM_MR','cmbTipoRMMR');
+    get_combo_clasificacion('RELLENO','cmbTipoRelleno');
+
+ 
 };
 
-function handle_empresa_change(){
-    get_tbl_productos();
-    get_combos_producto();
-};
+
 
 function get_tbl_precios(){
 
@@ -2226,7 +2161,7 @@ function get_tbl_precios(){
 
         axios.post(GlobalUrlCalls + '/productos/lista_precios_temp',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN
             })
         .then((response) => {
@@ -2281,7 +2216,7 @@ function delete_temp_precio(idbtn,id){
 
         axios.post(GlobalUrlCalls + '/productos/delete_temp_precio',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 id:id
             })
@@ -2313,7 +2248,7 @@ function delete_lista_temp_precios(){
 
         axios.post(GlobalUrlCalls + '/productos/delete_lista_temp_precio',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 usuario:GlobalUsuario
             })
@@ -2344,7 +2279,7 @@ function data_productos_listado(filtro){
 
         axios.post(GlobalUrlCalls + '/productos/listado',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 habilitado:habilitado,
                 filtro:filtro
@@ -2430,15 +2365,15 @@ function get_tbl_productos(){
 
 
 function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
-        uxc,costo,codmarca,codclaseuno,codclasedos,codclasetres,
-        lastupdate,tipoprod,exento,nf,bono){
+        uxc,costo,codmarca,lastupdate,tipoprod,exento,nf,bono,
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno){
     
 
     return new Promise((resolve,reject)=>{
 
         axios.post(GlobalUrlCalls + '/productos/insert_producto',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codprod:codprod,
                 codprod2:codprod2,
@@ -2448,9 +2383,11 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
                 uxc:uxc,
                 costo:costo,
                 codmarca:codmarca,
-                codclaseuno:codclaseuno,
-                codclasedos:codclasedos,
-                codclasetres:codclasetres,
+                tipolaboratorio:tipolaboratorio,
+                tipoimpulso:tipoimpulso,
+                tipoprogramasalud:tipoprogramasalud,
+                tipormmr:tipormmr,
+                tiporelleno:tiporelleno,
                 lastupdate:lastupdate,
                 tipoprod:tipoprod,
                 exento:exento,
@@ -2480,7 +2417,7 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
 };
 
 function edit_producto(codprod,codprod2,desprod,desprod2,desprod3,
-    uxc,costo,codmarca,codclaseuno,codclasedos,codclasetres,
+    uxc,costo,codmarca,tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno,
     lastupdate,tipoprod,exento,nf,bono){
 
 
@@ -2488,7 +2425,7 @@ return new Promise((resolve,reject)=>{
 
     axios.post(GlobalUrlCalls + '/productos/edit_producto',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN,
             codprod:codprod,
             codprod2:codprod2,
@@ -2498,9 +2435,11 @@ return new Promise((resolve,reject)=>{
             uxc:uxc,
             costo:costo,
             codmarca:codmarca,
-            codclaseuno:codclaseuno,
-            codclasedos:codclasedos,
-            codclasetres:codclasetres,
+            tipolaboratorio:tipolaboratorio,
+            tipoimpulso:tipoimpulso,
+            tipoprogramasalud:tipoprogramasalud,
+            tipormmr:tipormmr,
+            tiporelleno:tiporelleno,
             lastupdate:lastupdate,
             tipoprod:tipoprod,
             exento:exento,
@@ -2535,7 +2474,7 @@ function get_detalle_producto_selecionado(codprod){
 
         axios.post(GlobalUrlCalls + '/productos/datos_producto',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codprod:codprod
             })
@@ -2588,7 +2527,7 @@ function get_tbl_precios_producto(codprod,idcontainer){
 
     axios.post(GlobalUrlCalls + '/productos/lista_precios',
         {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             token:TOKEN,
             codprod:codprod
         })
@@ -2642,7 +2581,7 @@ function insert_precio(codprod,codmedida,equivale,peso,costo,preciop,precioa,pre
 
         axios.post(GlobalUrlCalls + '/productos/insert_precio',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 usuario:GlobalUsuario,
                 codprod:codprod,
@@ -2690,7 +2629,7 @@ function delete_precio(idbtn,id,codprod){
 
                 axios.post(GlobalUrlCalls + '/productos/delete_precio',
                     {
-                        sucursal:cmbEmpresa.value,
+                        sucursal:GlobalEmpnit,
                         token:TOKEN,
                         id:id
                     })
@@ -2733,7 +2672,7 @@ function delete_producto(codprod){
 
         axios.post(GlobalUrlCalls + '/productos/delete_producto',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codprod:codprod
             })
@@ -2762,7 +2701,7 @@ function desactivar_producto(codprod,st){
 
         axios.post(GlobalUrlCalls + '/productos/desactivar_producto',
             {
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 token:TOKEN,
                 codprod:codprod,
                 status:st

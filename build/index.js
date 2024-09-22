@@ -1,13 +1,11 @@
 ﻿
-let versionapp = "Modif: 11.09.2024"
+TOKEN = 'FSYA';
+
+let versionapp = "Modif: 20.09.2024"
 
 let btnMenu = document.getElementById('btnMenu');
 document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
 
-btnMenu.addEventListener('click',()=>{
-    //$("#modal_menu_principal").modal('show');
-    Navegar.menu();
-})
 
 
 

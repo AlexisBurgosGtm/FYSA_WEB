@@ -6,6 +6,7 @@ let GlobalUrlServicioLocal = 'http://192.168.1.16:8080'
 let GlobalUrlPrinter = 'http://192.168.0.250:9000'
 let TOKEN = 'FSYA';
 let GlobalEmpnitBodega = 'FSYA000';
+let GlobalEmpnit ='';
 
 let GlobalUsuario = '';
 let GlobalPass = '';
@@ -17,7 +18,7 @@ let data_empresas = [];
 
 
 let root = document.getElementById('root');
-let cmbEmpresa = document.getElementById('cmbEmpresa');
+
 
 let navmenu = document.getElementById('js-nav-menu');
 

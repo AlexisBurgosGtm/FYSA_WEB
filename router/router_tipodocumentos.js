@@ -17,10 +17,12 @@ router.post("/coddoc", async(req,res)=>{
         case 'FEL':
             qry = `SELECT CODDOC FROM TIPODOCUMENTOS WHERE EMPNIT='${sucursal}' AND TIPODOC IN('FEF','FEC');`
             break;
-        case 'COT':
-            qry = `SELECT CODDOC FROM TIPODOCUMENTOS WHERE EMPNIT='${sucursal}' AND TIPODOC='COT';`
+
+        default:
+            qry = `SELECT CODDOC FROM TIPODOCUMENTOS WHERE EMPNIT='${sucursal}' AND TIPODOC='${tipo}';`
             break;
     }
+
 
     execute.QueryToken(res,qry,token);
      

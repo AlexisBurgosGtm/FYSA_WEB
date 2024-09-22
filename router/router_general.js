@@ -27,7 +27,8 @@ router.post("/empresas", async(req,res)=>{
 
     let qry = `
         SELECT 
-            EMPNIT,EMPNOMBRE, CODTIPOEMPRESA FROM EMPRESAS
+            EMPNIT,NOMBRE,CODTIPOEMPRESA,TIPO_PRECIO,OBJETIVO_VENTAS,OBJETIVO_RENTABILIDAD 
+        FROM EMPRESAS
          `
          //   WHERE NOSUCURSAL='SI';
     

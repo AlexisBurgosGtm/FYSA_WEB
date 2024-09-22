@@ -1,16 +1,4 @@
-let empresas = [{empnit:"FSYA000",nombre:"BODEGA FARMACIA SALUD Y AHORRO"},
-    {empnit:"FSYA001",nombre:"FARMACIA ZONA 5"},
-    {empnit:"FSYA002",nombre:"FARMACIA CENMA"}
-];
-// 
 
-function get_empresas(){
-    let str = '' //"<option value=''>Seleccione una sucursal</option>";
-    empresas.map((r)=>{
-        str += `<option value='${r.empnit}'>${r.nombre}</option>`
-    });
-    return str;
-}
 
 let GlobalTipoPrecio = 'PRECIO';
 
@@ -23,6 +11,15 @@ let tipo_precios =[
                 {tipo:"PRECIO_D",nombre:"PRECIO D"},
                 {tipo:"PRECIO_E",nombre:"PRECIO E"},
                 {tipo:"PRECIO_F",nombre:"PRECIO F"}
+            ];
+
+
+let tipo_clasificacion =[
+                {tipo:"LABORATORIO",nombre:"LABORATORIO"},
+                {tipo:"IMPULSO",nombre:"IMPULSO"},
+                {tipo:"PROGRAMA_SALUD",nombre:"PROGRAMA_SALUD"},
+                {tipo:"RM_MR",nombre:"RM_MR"},
+                {tipo:"RELLENO",nombre:"RELLENO"}
             ];
 
 

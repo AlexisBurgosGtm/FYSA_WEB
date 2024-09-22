@@ -21,6 +21,11 @@ function getView(){
                         <div class="" id="frmLogin" autocomplete="off">
                            
                             <div class="form-group">
+                                <label class="negrita text-naranja">Sucursal:</label>
+                                <select class="form-control negrita text-naranja" id="cmbEmpresa"></select>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="negrita text-naranja">Usuario:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -31,6 +36,7 @@ function getView(){
                                     <input class="form-control" type="text" id="txtUser" placeholder="Escriba su usuario" required="true">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="negrita text-naranja">Clave:</label>
                                 <div class="input-group">
@@ -76,35 +82,38 @@ function getView(){
 
 function addListeners(){
     
-    TOKEN = 'FSYA';
+    document.title = "Login";
 
-    cmbEmpresa.innerHTML = get_empresas();
-
-    /*
+    let cmbEmpresa = document.getElementById('cmbEmpresa');
+    //cmbEmpresa.innerHTML = get_empresas();
+    document.getElementById('btnIniciar').style="visibility:hidden";
+    
         get_data_empresas()
         .then((data)=>{
             let str = '';
             data.recordset.map((r)=>{
                 str += `
-                    <option value="${r.EMPNIT}">${r.EMPNOMBRE}</option>
+                    <option value="${r.EMPNIT}">${r.NOMBRE}</option>
                 `
             })
-
             cmbEmpresa.innerHTML = str;
             document.getElementById('btnIniciar').style="visibility:visible";
-    
+        })
+        .catch(()=>{
+            cmbEmpresa.innerHTML = "<option value=''>NO SE CARGARON LAS SEDES</option>"
         })
         
-      */
+      
 
         GlobalNivelUsuario = 0;
     
         let btnIniciar = document.getElementById('btnIniciar');
         btnIniciar.addEventListener('click',()=>{
             
-            console.log('iniciando...')
+            GlobalEmpnit = cmbEmpresa.value;
             GlobalNivelUsuario = 1;
             Navegar.menu();
+            
             return;
 
 

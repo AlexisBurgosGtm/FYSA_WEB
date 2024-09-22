@@ -203,7 +203,7 @@ function getView(){
 
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuento">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuento" oninput="calcular_descuento('txtMCDescuento','txtMCTotalPrecio','txtMCTotalPrecioDescuento')">
                                     </div>
                                     
                                     <div class="form-group">
@@ -271,7 +271,7 @@ function getView(){
 
                                     <div class="form-group">
                                         <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
-                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuentoE">
+                                        <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuentoE" oninput="calcular_descuento('txtMCDescuentoE','txtMCTotalPrecioE','txtMCTotalPrecioDescuentoE')">
                                     </div>
                                     
                                     <div class="form-group">
@@ -529,12 +529,13 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Ventas";
 
     funciones.slideAnimationTabs();
 
     //REINICIA EL HANDLE DE LA EMPRESA
-    cmbEmpresa.removeEventListener('change', handle_empresa_change)
-    cmbEmpresa.addEventListener('change', handle_empresa_change)
+    //cmbEmpresa.removeEventListener('change', handle_empresa_change)
+    //cmbEmpresa.addEventListener('change', handle_empresa_change)
 
 
 
@@ -589,16 +590,12 @@ function addListeners(){
 
     });
 
+
     document.getElementById('txtPosCodprod').focus();
 
 };
 
-function handle_empresa_change(){
-  
-    get_cajas();
-    get_vendedores();
-    listener_coddoc();
-};
+
 
 function listener_coddoc(){
 
@@ -612,7 +609,7 @@ function listener_coddoc(){
         container.innerHTML = '';
 
         axios.post('/tipodocumentos/coddoc',{
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             tipo:tipo,
             token:TOKEN
         })
@@ -649,7 +646,7 @@ function get_correlativo(coddoc){
       
     return new Promise((resolve,reject)=>{
         axios.post('/tipodocumentos/correlativo',{
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             coddoc:coddoc,
             token:TOKEN
         })
@@ -879,6 +876,15 @@ function listener_vista_pedido(){
         };  
     });
 
+    document.getElementById('txtMCDescuentoE').addEventListener('keyup',(e)=>{
+        if (e.code === 'Enter') { 
+            document.getElementById('btnMCGuardarE').focus();
+        };
+        if (e.keyCode === 13 && !e.shiftKey) {
+            document.getElementById('btnMCGuardarE').focus();
+        };  
+    });
+
 
 
    
@@ -1091,7 +1097,7 @@ function tbl_clientes(filtro){
 
     axios.post('/clientes/buscar_cliente', {
         token:TOKEN,
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         filtro:filtro
     })
     .then((response) => {        
@@ -1132,7 +1138,7 @@ function insert_cliente(nit,nombre,direccion,telefono){
     return new Promise((resolve,reject)=>{
         axios.post('/clientes/insert_cliente',{
             fecha:funciones.getFecha(),
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             nit: nit,
             nombre: nombre,
             direccion: direccion,
@@ -1167,7 +1173,7 @@ function fcn_buscar_cliente(nit){
         };
     
         axios.post('/pos/buscar_cliente_nit', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             nit:nit
         })
         .then((response) => {        
@@ -1246,7 +1252,7 @@ function get_buscar_producto(filtro){
     let idf = 'first-element'; let i =0;
 
     axios.post('/pos/productos_filtro', {
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         token:TOKEN,
         filtro:filtro,
         tipoprecio:GlobalTipoPrecio
@@ -1375,7 +1381,7 @@ function get_tbl_productos_clasificacion(codigo){
     let str = '';
 
     axios.post('/pos/productos_categoria', {
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         codigo:codigo
     })
     .then((response) => {        
@@ -1467,7 +1473,7 @@ function get_datos_precio(codprod,codmedida){
     return new Promise((resolve,reject)=>{
 
         axios.post('/pos/productos_precio', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             token:TOKEN,
             codprod:codprod,
             codmedida:codmedida
@@ -1488,14 +1494,26 @@ function get_datos_precio(codprod,codmedida){
 };
 
 
+function calcular_descuento(idDescuento,idTotalPrecio,idTotalPrecioDescuento){
+
+    try {
+        let descuento = Number(document.getElementById(idDescuento).value || 0) ;
+        let totalprecio = Number(document.getElementById(idTotalPrecio).value || 0);
+        document.getElementById(idTotalPrecioDescuento).value = (totalprecio - descuento) 
+
+    } catch (error) {
+        document.getElementById(idTotalPrecioDescuento).value = totalprecio;
+    }
+
+};
 
 
 function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,cantidad,exento,tipoprod,tipoprecio,existencia,bono,descuento){
     
     let datos = 
         {
-            CODSUCURSAL:cmbEmpresa.value.toString(),
-            EMPNIT:cmbEmpresa.value.toString(),
+            CODSUCURSAL:GlobalEmpnit.toString(),
+            EMPNIT:GlobalEmpnit.toString(),
             USUARIO:'',
             CODPROD:codprod.toString(),
             DESPROD:desprod.toString(),
@@ -1540,7 +1558,7 @@ function get_tbl_pedido(){
     let varTotalCosto = 0;
     let varTotalDescuento = 0;
 
-    selectTempVentasPOS(cmbEmpresa.value)
+    selectTempVentasPOS(GlobalEmpnit)
     .then((data)=>{
         let datos = data.map((rows)=>{
             varTotalItems += 1;
@@ -1570,7 +1588,7 @@ function get_tbl_pedido(){
                 <td class="negrita text-verde h4">${funciones.setMoneda((Number(rows.TOTALPRECIO)-Number(rows.DESCUENTO)),'Q')}</td>
 
                 <td>
-                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}')">
+                    <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}','${rows.BONO}','${rows.DESCUENTO}')">
                         <i class="fal fa-edit"></i>
                     </button>
                 </td> 
@@ -1596,6 +1614,7 @@ function get_tbl_pedido(){
     })
     .catch((error)=>{
         
+        console.log(error)
         container.innerHTML = 'No hay datos...';
         GlobalTotalCostoDocumento = 0;
         GlobalTotalDocumento = 0;
@@ -1611,7 +1630,7 @@ function get_tbl_pedido(){
 
 };
 
-function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia,bono){
+function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,precio,tipoprod,exento,existencia,bono,descuento){
 
     $("#modal_editar_cantidad").modal('show');
 
@@ -1631,6 +1650,7 @@ function edit_item_pedido(id,codprod,desprod,codmedida,equivale,cantidad,costo,p
 
     document.getElementById('txtMCCantidadE').value = cantidad;
     document.getElementById('txtMCPrecioE').value = precio;
+    document.getElementById('txtMCDescuentoE').value = descuento;
 
     CalcularTotalPrecioEditar();
 
@@ -1658,7 +1678,7 @@ function delete_item_pedido(id){
 function get_coddoc(tipo){
     return new Promise((resolve, reject)=>{
         axios.post('/tipodocumentos/series_doc', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             tipo:tipo
         })
         .then((response) => {
@@ -1677,7 +1697,7 @@ function get_coddoc(tipo){
 function get_correlativo_coddoc(coddoc){
     return new Promise((resolve, reject)=>{
         axios.post('/tipodocumentos/correlativo_doc', {
-            sucursal: cmbEmpresa.value,
+            sucursal: GlobalEmpnit,
             coddoc:coddoc
         })
         .then((response) => {
@@ -1767,7 +1787,7 @@ function finalizar_pedido(){
         .then((response)=>{
             axios.post('/pos/insertventa', {
                 jsondocproductos:JSON.stringify(response),
-                sucursal:cmbEmpresa.value,
+                sucursal:GlobalEmpnit,
                 coddoc:coddoc,
                 correlativo: correlativoDoc,
                 anio:anio,
@@ -1896,7 +1916,7 @@ function tbl_lista_documentos(){
     let totalpedidos = 0;
     
     axios.post('/pos/lista_documentos', {
-        sucursal: cmbEmpresa.value,
+        sucursal: GlobalEmpnit,
         tipo:tipo,
         fecha:fecha,
         coddoc:coddoc   
@@ -1951,7 +1971,7 @@ function get_pdf(coddoc, correlativo, idbtn){
     btn.disabled = true;
 
     axios.post('/pdf',{
-        sucursal:cmbEmpresa.value,
+        sucursal:GlobalEmpnit,
         coddoc:coddoc,
         correlativo:correlativo
      })
@@ -2040,7 +2060,7 @@ function loadDetallePedido(coddoc,correlativo){
     
     return new Promise((resolve,reject)=>{
         axios.post('/ventas/loadpedido_edicion', {
-            sucursal:cmbEmpresa.value,
+            sucursal:GlobalEmpnit,
             coddoc: coddoc,
             correlativo: correlativo,
             usuario:GlobalUsuario
@@ -2081,7 +2101,7 @@ function anular_factura(coddoc,correlativo,status,idbtn){
             GF.get_anulacion_documento(coddoc,correlativo,status)
             .then(()=>{
                 funciones.Aviso('Documento anulado exitosamente!!');
-                socket.emit('ANULACION',`Se ha anulado el documento: ${coddoc}-${correlativo} en la sede ${cmbEmpresa.value}`);
+                socket.emit('ANULACION',`Se ha anulado el documento: ${coddoc}-${correlativo} en la sede ${GlobalEmpnit}`);
                 tbl_lista_documentos();
             })
             .catch(()=>{

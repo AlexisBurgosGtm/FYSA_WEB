@@ -28,6 +28,16 @@ let Menu = {
     pos:()=>{
         if(Menu.verify()==true){
             funciones.loadScript('../views/ventas_pos/view_pos.js','root')
+            .then(async()=>{ 
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
+    compras:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/compras/view_compras.js','root')
             .then(async()=>{
                 initView();
             })
