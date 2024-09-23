@@ -16,7 +16,7 @@ var router_empleados = require('./router/router_empleados');
 var router_productos = require('./router/router_productos');
 var router_pos = require('./router/router_pos');
 var router_compras = require('./router/router_compras');
-
+var router_inventarios = require('./router/router_inventarios.js')
 var router_reportes = require('./router/router_reportes');
 var router_despacho = require('./router/router_despacho');
 var router_ordenes = require('./router/router_ordenes');
@@ -168,6 +168,7 @@ app.use('/productos', router_productos);
 app.use('/cajas', router_cajas);
 app.use('/pos', router_pos);
 app.use('/compras', router_compras);
+app.use('/inventarios', router_inventarios);
 app.use('/reportes', router_reportes);
 app.use('/despacho', router_despacho);
 app.use('/ordenes', router_ordenes);

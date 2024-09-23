@@ -93,10 +93,10 @@ function getView(){
                     <h4 class="negrita text-danger" id="lbCodprod"></4>
                 </div>
                 <div class="form-group">
-                    <label class="negrita text-naranja">Escriba para filtrar</label>
+                    <label class="negrita text-verde">Escriba para filtrar</label>
                     <div class="input-group">
                         <input type="text" id="txtBuscarPrecio" class="form-control negrita text-verde border-verde">
-                        <button class="btn btn-info btn-md hand shadow" id="btnBuscarPrecio">
+                        <button class="btn btn-verde btn-md hand shadow" id="btnBuscarPrecio">
                             <i class="fal fa-search"></i>
                         </button>
                     </div>

@@ -46,7 +46,10 @@ function get_button_loader(texto){
 
 }
 
+
 // VARIABLES
+let GlobalSelected_empnit = '';
+
 let GlobalSelected_Codprod = '';
 let GlobalSelected_Desprod = '';
 let GlobalSelected_Costo = 0;
