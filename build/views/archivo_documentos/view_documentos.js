@@ -95,6 +95,8 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Documentos";
+
     document.getElementById('cmbTipos').innerHTML = get_tipo_documentos();
     document.getElementById('cmbMes').innerHTML = funciones.ComboMeses();
     document.getElementById('cmbAnio').innerHTML = funciones.ComboAnio();

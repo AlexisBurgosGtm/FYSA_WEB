@@ -184,6 +184,7 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Gestión de Precios";
 
     funciones.slideAnimationTabs();
 

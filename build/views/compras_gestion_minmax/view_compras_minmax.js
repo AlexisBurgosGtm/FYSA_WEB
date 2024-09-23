@@ -183,7 +183,8 @@ function getView(){
 };
 
 function addListeners(){
-
+    
+    document.title = "Gestión de Mínimos y Máximo";
 
     funciones.slideAnimationTabs();
 

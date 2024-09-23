@@ -98,6 +98,7 @@ let GF = {
                 reject();
             });
         })   
+        
     
     },
     get_data_precios_producto(codprod){
