@@ -274,6 +274,51 @@ router.post("/surtido_sucursales", async(req,res)=>{
 });
 
 
+router.post("/documentos_pendientes", async(req,res)=>{
+   
+
+    const { token,sucursal,tipo} = req.body;
+
+    let qry ='';
+    
+    switch (sucursal) {
+        case 'TODAS':
+            qry = `
+            SELECT DOCUMENTOS.EMPNIT,DOCUMENTOS.CODDOC, DOCUMENTOS.CORRELATIVO, DOCUMENTOS.FECHA, DOCUMENTOS.HORA, DOCUMENTOS.DOC_NIT, DOCUMENTOS.DOC_NOMCLIE, DOCUMENTOS.DOC_DIRCLIE, DOCUMENTOS.TOTALVENTA, 
+                       DOCUMENTOS.TOTALDESCUENTO, DOCUMENTOS.TOTALPRECIO, DOCUMENTOS.STATUS, DOCUMENTOS.ETIQUETA
+                 FROM     DOCUMENTOS LEFT OUTER JOIN
+                       TIPODOCUMENTOS ON DOCUMENTOS.CODDOC = TIPODOCUMENTOS.CODDOC AND DOCUMENTOS.EMPNIT = TIPODOCUMENTOS.EMPNIT
+                 WHERE  (DOCUMENTOS.STATUS = 'O') AND (TIPODOCUMENTOS.TIPODOC = '${tipo}')
+                 ORDER BY DOCUMENTOS.FECHA, DOCUMENTOS.ID
+             `
+            break;
+    
+        default:
+            qry = `
+            SELECT DOCUMENTOS.EMPNIT,DOCUMENTOS.CODDOC, DOCUMENTOS.CORRELATIVO, DOCUMENTOS.FECHA, DOCUMENTOS.HORA, DOCUMENTOS.DOC_NIT, DOCUMENTOS.DOC_NOMCLIE, DOCUMENTOS.DOC_DIRCLIE, DOCUMENTOS.TOTALVENTA, 
+                       DOCUMENTOS.TOTALDESCUENTO, DOCUMENTOS.TOTALPRECIO, DOCUMENTOS.STATUS, DOCUMENTOS.ETIQUETA
+                 FROM     DOCUMENTOS LEFT OUTER JOIN
+                       TIPODOCUMENTOS ON DOCUMENTOS.CODDOC = TIPODOCUMENTOS.CODDOC AND DOCUMENTOS.EMPNIT = TIPODOCUMENTOS.EMPNIT
+                 WHERE  (DOCUMENTOS.EMPNIT = '${sucursal}') AND (DOCUMENTOS.STATUS = 'O') AND (TIPODOCUMENTOS.TIPODOC = '${tipo}')
+                 ORDER BY DOCUMENTOS.FECHA, DOCUMENTOS.ID
+             `
+            break;
+    }
+
+   
+
+  
+  
+
+   
+
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
 
 
 

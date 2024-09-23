@@ -10,7 +10,7 @@ function getView(){
                 <div class="col-12 p-0 bg-white">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active fixed" id="uno" role="tabpanel" aria-labelledby="receta-tab">
-                            ${view.panel_inicio()}
+                            ${view.panel_inicio() + view.modal_documento_detall()}
                             
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
@@ -102,6 +102,36 @@ function getView(){
                                     
                     <div class="card border-naranja card-rounded shadow col-12">
                         <div class="card-body p-2">
+
+                            <h2 class="text-verde negrita">Seguimiento de Documentos</h2>
+                             <div class="text-right">
+                                <h4 class="negrita text-danger" id="lbTotalDocumentos"></h4>
+                            </div>
+
+                            <div class="form-group">
+                                <select class="negrita text-verde form-control" id="cmbTipoDoc">
+                                    <option value="REQ">REQUISICIONES PENDIENTES</option>
+                                    <option value="ORC">ORDENES DE COMPRA PENDIENTES</option>
+                                </select>
+                            </div>
+
+                           
+
+                                <div class="table-responsive">
+                                    <table class="table h-full table-hove table-bordered">
+                                        <thead class="bg-verde text-white">
+                                            <tr>
+                                                <td>DOCUMENTO</td>
+                                                <td>FECHA</td>
+                                                <td>PROVEEDOR</td>
+                                                <td>IMPORTE</td>
+                                                <td>ETIQUETA</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataDocumentos"></tbody>
+                                    </table>
+                               </div>
                                             
                         </div>
                     </div>
@@ -109,7 +139,64 @@ function getView(){
                 </div>
             </div>
             `;
-        }
+        },
+        modal_documento_detall:()=>{
+            return `
+            <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_detalle_documento">
+                <div class="modal-dialog modal-dialog-right modal-xl">
+                    <div class="modal-content">
+                        <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
+                            <h4 class="m-0 text-center color-white" id="">
+                                Detalle del Documento
+                            </h4>
+                        </div>
+                        <div class="modal-body p-4">
+                            
+                            <div class="card card-rounded">
+                                <div class="card-body p-2">
+
+                                    <h5 class="negrita text-secondary" id="lbProveedorDoc"></h5>
+                                    <h5 class="negrita text-secondary" id="lbNitDoc"></h5>
+                                    <h5 class="negrita text-naranja" id="lbDocumento"></h5>
+
+                                    <table class="table table-responsive h-full f-med" id="">
+                                        <thead class="negrita bg-secondary text-white">
+                                            <tr>
+                                                <td>PRODUCTO</td>
+                                                <td>MARCA</td>
+                                                <td>CANTIDAD</td>
+                                                <td>COSTO</td>
+                                                <td>SUBTOTAL</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataDetalleDocumento">
+                                                    
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+
+                     
+                           
+                                
+                            <div class="row">
+                                <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-left"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+            
+            `
+        },
     }
 
     root.innerHTML = view.body();
@@ -123,8 +210,10 @@ function addListeners(){
     
     document.title = "Inicio Compras";
 
+    let cmbTipoDoc = document.getElementById('cmbTipoDoc');
+    
+    let cmdSucursal = document.getElementById('cmbSucursal');
 
-    let cmdSucursal = document.getElementById('cmbSucursal')
     GF.get_data_empresas()
     .then((data)=>{
         let str = '<option value="TODAS">TODAS LAS SUCURSALES</option>';
@@ -134,7 +223,8 @@ function addListeners(){
             `
         })
         cmdSucursal.innerHTML = str;
-        get_tbl_surtido(cmbSucursal.value);  
+        get_tbl_surtido(cmbSucursal.value); 
+        get_tbl_documentos(cmbSucursal.value,cmbTipoDoc.value) 
     })
     .catch(()=>{
         cmdSucursal.innerHTML = "<option value=''>NO SE CARGARON LAS SEDES</option>"
@@ -143,8 +233,14 @@ function addListeners(){
 
 
     cmdSucursal.addEventListener('change',()=>{
-        get_tbl_surtido(cmbSucursal.value);  
+        get_tbl_surtido(cmbSucursal.value);
+        get_tbl_documentos(cmbSucursal.value,cmbTipoDoc.value)   
     })
+
+    cmbTipoDoc.addEventListener('change',()=>{
+        get_tbl_documentos(cmbSucursal.value,cmbTipoDoc.value)   
+    })
+
  
    
 };
@@ -232,6 +328,134 @@ function get_tbl_surtido(empnit){
 
 
 
+function get_data_documentos(empnit,tipo){
+
+    return new Promise((resolve, reject)=>{
+        
+        let data = {
+            sucursal:empnit,
+            tipo:tipo,
+            token:TOKEN
+        };
+
+        axios.post(`/compras/documentos_pendientes`, data)
+        .then(res => {
+            if(res.status.toString()=='200'){
+                let data = res.data;
+                if(Number(data.rowsAffected[0])>0){
+                    resolve(data);             
+                }else{
+                    reject();
+                }            
+            }else{
+                reject();
+            } 
+        })
+        .catch(()=>{
+            reject();
+        })
+
+    })
+};
+
+function get_tbl_documentos(empnit,tipo){
+
+
+    let container = document.getElementById('tblDataDocumentos');
+    container.innerHTML = GlobalLoader;
+    let lbTotal = document.getElementById('lbTotalDocumentos');
+    lbTotal.innerText = '---'
+
+    let contador = 0;
+
+    get_data_documentos(empnit,tipo)
+    .then((data)=>{  
+        let str = '';
+        data.recordset.map((r)=>{
+            contador +=1;
+            str +=`
+                <tr>
+                    <td>${r.CODDOC}-${r.CORRELATIVO}
+                        <br>
+                        <small class="negrita">${r.EMPNIT}</small>
+                    </td>
+                    <td>${funciones.convertDateNormal(r.FECHA)}
+                        <br>
+                        <small class="negrita text-verde">H: ${r.HORA}</small>
+                    </td>
+                    <td>${r.DOC_NOMCLIE}
+                        <br>
+                        <small class="negrita text-naranja">NIT: ${r.DOC_NIT}</small>
+                    </td>
+                    <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    <td>${r.ETIQUETA}</td>
+                    <td>
+                        <button class="btn btn-verde btn-circle btn-md hand shadow" onclick="get_detalle_documento('${r.EMPNIT}','${r.CODDOC}','${r.CORRELATIVO}','${r.DOC_NIT}','${r.DOC_NOMCLIE}')">
+                            <i class="fal fa-list"></i>
+                        </button>
+                    </td>
+                </tr>
+            `
+        })
+        container.innerHTML = str;
+        lbTotal.innerText = `Documentos pendientes ${contador}`
+    })
+    .catch((err)=>{
+        console.log(err)
+        container.innerHTML = 'No se cargaron datos...'
+        lbTotal.innerText = '---'
+    })
+
+
+}
+
+
+function get_detalle_documento(empnit,coddoc,correlativo,nit,proveedor){
+
+        $("#modal_detalle_documento").modal('show');
+
+        document.getElementById('lbProveedorDoc').innerText = `${proveedor}`;
+        document.getElementById('lbNitDoc').innerText = `${nit}`;
+        document.getElementById('lbDocumento').innerText = `${coddoc}-${correlativo}`;
+
+        let container = document.getElementById('tblDataDetalleDocumento');
+        container.innerHTML = GlobalLoader;
+
+        GF.get_data_detalle_documento(empnit,coddoc,correlativo)
+        .then((data)=>{
+            let str = '';
+            data.recordset.map((r)=>{
+                str += `
+                    <tr>
+                        <td>${r.DESPROD}
+                            <br>
+                            <small>${r.CODPROD}</small>
+                        </td>
+                        <td>${r.DESMARCA}</td>
+                        <td>${r.CANTIDAD} ${r.CODMEDIDA}</td>
+                        <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                        <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    </tr>
+                `
+            })
+            container.innerHTML = str;
+        })
+        .catch(()=>{
+            container.innerHTML = 'No day datos...';
+        })
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -253,8 +477,16 @@ function get_data(){
 
         axios.post(`/bi/rpt_mapa`, data)
         .then(res => {
-            const datos = res.data.recordset;   
-            resolve(datos);
+            if(res.status.toString()=='200'){
+                let data = res.data;
+                if(Number(data.rowsAffected[0])>0){
+                    resolve(data);             
+                }else{
+                    reject();
+                }            
+            }else{
+                reject();
+            } 
         })
         .catch(()=>{
             reject();

@@ -3,6 +3,31 @@ const express = require('express');
 const router = express.Router();
 
 
+
+router.post("/detalle_documento", async(req,res)=>{
+   
+    const { token, sucursal, coddoc,correlativo} = req.body;
+
+    let qry = `
+        SELECT DOCPRODUCTOS.CODPROD, DOCPRODUCTOS.DESPROD, MARCAS.DESMARCA,
+                DOCPRODUCTOS.CODMEDIDA, DOCPRODUCTOS.CANTIDAD, DOCPRODUCTOS.CANTIDADBONIF, DOCPRODUCTOS.EQUIVALE, DOCPRODUCTOS.TOTALUNIDADES, 
+                DOCPRODUCTOS.TOTALBONIF, DOCPRODUCTOS.COSTO, DOCPRODUCTOS.PRECIO, 
+                DOCPRODUCTOS.TOTALCOSTO, DOCPRODUCTOS.DESCUENTO, DOCPRODUCTOS.TOTALPRECIO, 
+                DOCPRODUCTOS.OBS
+        FROM PRODUCTOS INNER JOIN
+                  MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA RIGHT OUTER JOIN
+                  DOCPRODUCTOS ON PRODUCTOS.CODPROD = DOCPRODUCTOS.CODPROD
+        WHERE  (DOCPRODUCTOS.EMPNIT = '${sucursal}') 
+        AND (DOCPRODUCTOS.CODDOC = '${coddoc}') 
+        AND (DOCPRODUCTOS.CORRELATIVO = ${correlativo})
+    `
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
+
 router.post("/anular_documento", async(req,res)=>{
    
     const { token, sucursal, coddoc,correlativo} = req.body;

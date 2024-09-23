@@ -38,10 +38,12 @@ function get_tipo_precios(){
 
 let tipo_documentos =[
     {tipo:"FAC",nombre:"FACTURA ENVIO NORMAL"},
-    {tipo:"FEF",nombre:"FACTURA ELECTRONICA FEL (CONTADO SAT)"},  
+    {tipo:"FEF",nombre:"FACTURA ELECTRONICA FEL (CONTADO SAT)"},
+    {tipo:"REQ",nombre:"REQUISICIONES A PROVEEDORES"},
+    {tipo:"ORC",nombre:"ORDEN DE COMPRA"},  
     {tipo:"COM",nombre:"COMPRAS (IVA)"},
     {tipo:"COP",nombre:"COMPRAS (PEQUEÑO CONTRIBUYENTE)"},
-    {tipo:"COR",nombre:"CORTE DE CAJA"}
+    {tipo:"COR",nombre:"CORTE DE CAJA"},
 ];
 
 function get_tipo_documentos(){

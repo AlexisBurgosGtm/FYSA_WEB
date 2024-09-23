@@ -349,5 +349,34 @@ let GF = {
         }) 
     
     },
+    get_data_detalle_documento: (empnit,coddoc,correlativo)=>{
+        return new Promise((resolve, reject)=>{
+            
+            let data = {
+                sucursal:empnit,
+                token:TOKEN,
+                coddoc:coddoc,
+                correlativo:correlativo
+            };
+    
+            axios.post(`/documentos/detalle_documento`, data)
+            .then(res => {
+                if(res.status.toString()=='200'){
+                    let data = res.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                } 
+            })
+            .catch(()=>{
+                reject();
+            })
+    
+        })
+    },
 };
 

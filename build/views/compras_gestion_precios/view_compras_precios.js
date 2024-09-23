@@ -10,7 +10,7 @@ function getView(){
                             ${view.vista_listado_productos()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
-                           ${view.vista_listado_precios()}
+                           ${view.vista_listado_precios() + view.modal_codmedida()}
                         </div>
                         <div class="tab-pane fade" id="tres" role="tabpanel" aria-labelledby="home-tab">
                             
@@ -129,9 +129,53 @@ function getView(){
                 </button>
             `
         },
-        vista_nuevo:()=>{
+        modal_codmedida:()=>{
+            return `
+            <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_detalle_medida">
+                <div class="modal-dialog modal-dialog-right modal-xl">
+                    <div class="modal-content">
+                        <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
+                            <h4 class="m-0 text-center color-white" id="">
+                                Gestión de Marcas
+                            </h4>
+                        </div>
+                        <div class="modal-body p-4">
+                            
+                            <div class="card card-rounded">
+                                <div class="card-body p-2">
 
-        }
+                                     <table class="table table-responsive h-full f-med" id="">
+                                        <thead class="negrita bg-naranja text-white">
+                                            <tr>
+                                                <td>COSTO</td>
+                                                <td>PRECIO</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblDataProdMarcas">
+                                                    
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>
+
+                                
+                            <div class="row">
+                                <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-left"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+            
+            `
+        },
     }
 
     root.innerHTML = view.body();
@@ -222,8 +266,8 @@ function get_tbl_producto(){
                 <td>${r.DESMARCA}</td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
-                    <button class="btn btn-circle btn-info btn-lg hand shadow" onclick="get_precios_producto('${r.CODPROD}','${r.DESPROD}')">
-                        <i class="fal fa-edit"></i>
+                    <button class="btn btn-circle btn-naranja btn-md hand shadow" onclick="get_precios_producto('${r.CODPROD}','${r.DESPROD}')">
+                        <i class="fal fa-arrow-right"></i>
                     </button>
                 </td>
             </tr>
@@ -262,6 +306,10 @@ function get_tbl_precios(codprod){
                 <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
+                    <button class="btn btn-info btn-circle btn-lg hand shadow" 
+                        onclick="get_datos_codmedida('${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.PRECIO_A}','${r.PRECIO_B}','${r.PRECIO_C}','${r.PRECIO_D}','${r.PRECIO_E}','${r.PRECIO_F}')">
+                        <i class="fal fa-edit"></i>
+                    </button>
                 </td>
             </tr>
             `
@@ -271,5 +319,17 @@ function get_tbl_precios(codprod){
     .catch(()=>{
         container.innerHTML = 'No se cargaron datos...'
     })
+
+}
+
+
+function get_datos_codmedida(codmedida,equivale,costo,precio,precioa,preciob,precioc,preciod,precioe,preciof){
+
+    $("#modal_detalle_medida").modal('show');
+
+
+
+
+
 
 }
