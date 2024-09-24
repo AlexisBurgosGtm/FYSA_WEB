@@ -12,6 +12,7 @@ const execute = require('./connection');
 
 
 var router_general = require('./router/router_general');
+var router_sucursales = require('./router/router_sucursales');
 var router_empleados = require('./router/router_empleados');
 var router_productos = require('./router/router_productos');
 var router_pos = require('./router/router_pos');
@@ -163,6 +164,7 @@ app.get("/despacho_finalizado",function(req,res){
 
 //Router 
 app.use('/general', router_general);
+app.use('/sucursales', router_sucursales);
 app.use('/empleados', router_empleados);
 app.use('/productos', router_productos);
 app.use('/cajas', router_cajas);

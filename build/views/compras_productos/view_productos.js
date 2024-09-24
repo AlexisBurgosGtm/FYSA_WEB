@@ -8,7 +8,7 @@ function getView(){
                             ${view.vista_listado() + view.modal_opciones_producto()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
-                            ${view.vista_ficha_producto() + view.modal_nuevo_precio() + view.modal_medidas() + view.modal_marcas()}
+                            ${view.vista_ficha_producto() + view.modal_nuevo_precio() + view.modal_medidas() + view.modal_sucursales_precio() + view.modal_marcas()}
                         </div>
                         <div class="tab-pane fade" id="tres" role="tabpanel" aria-labelledby="home-tab">
                             
@@ -218,10 +218,11 @@ function getView(){
 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="card card-rounded col-12 border-naranja">
-                            <div class="card-body p-4" style="font-size:80%"> 
+                            <div class="card-body p-4" style="font-size:80%">
+
                                     <div class="row">
                                         <div class="col-6">
-                                            <label class="negrita text-naranja">Código</label>
+                                            <label class="negrita text-naranja">Código Interno</label>
                                             <input type="text" class="form-control" id="txtCodprod" maxlength="50">
                                         </div>
                                         <div class="col-6">
@@ -229,8 +230,7 @@ function getView(){
                                             <input type="text" class="form-control" id="txtCodprod2" maxlength="50">
                                         </div>
                                     </div>
-                                  
-                                     
+                                                                       
                                     <br>
                                         <label class="negrita text-naranja">Descripción</label>
                                         <input type="text" class="form-control" id="txtDesprod" maxlength="255">
@@ -498,6 +498,7 @@ function getView(){
                                             <td></td>
                                             <td class="negrita text-naranja">Utilidad</td>
                                             <td class="negrita text-naranja">Margen %</td>
+                                            <td class="negrita text-naranja">Sucursales</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -512,6 +513,11 @@ function getView(){
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenPublico" disabled=true>
                                             </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="negrita">Precio A</td>
@@ -523,6 +529,11 @@ function getView(){
                                             </td>
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoA" disabled=true>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_A')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -536,6 +547,11 @@ function getView(){
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoB" disabled=true>
                                             </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_B')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="negrita">Precio C</td>
@@ -547,6 +563,11 @@ function getView(){
                                             </td>
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoC" disabled=true>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_C')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -560,6 +581,11 @@ function getView(){
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoD" disabled=true>
                                             </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_D')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="negrita">Precio E</td>
@@ -572,6 +598,11 @@ function getView(){
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoE" disabled=true>
                                             </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_E')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="negrita">Precio F</td>
@@ -583,6 +614,11 @@ function getView(){
                                             </td>
                                             <td>
                                                 <input type="number" class="form-control negrita text-info" id="txtPreMargenMayoreoF" disabled=true>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="get_lista_sucursales_precio('PRECIO_F')">
+                                                    <i class="fal fa-list"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -601,6 +637,53 @@ function getView(){
                                         <i class="fal fa-save"></i>
                                     </button>
                                 </div>
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+            
+            `
+        },
+        modal_sucursales_precio:()=>{
+            return `
+            <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_sucursales_precio">
+                <div class="modal-dialog modal-dialog-right modal-xl">
+                    <div class="modal-content">
+                        <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
+                            <h4 class="m-0 text-center color-white" id="">
+                                Sucursales con este catálogo de Precios
+                            </h4>
+                        </div>
+                        <div class="modal-body p-4">
+                            
+                            <div class="card card-rounded">
+                                <div class="card-body p-4">
+                                        <h3 class="negrita text-naranja">Sucursales</h3>
+                                        <table class="table table-responsive h-full" id="">
+                                            <thead class="bg-naranja text-white">
+                                                <tr>
+                                                    <td>CODIGO</td>
+                                                    <td>SUCURSAL</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblDataSucursalesPrecio">
+                                            </tbody>
+                                        </table>
+
+
+                                   
+                                </div>
+                            </div>
+
+                                
+                            <div class="row">
+                                <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-left"></i>
+                                </button>
                             </div>
 
                         </div>
@@ -1573,6 +1656,34 @@ function listeners_precios(){
 
     });
     // MEDIDAS -----------------------------
+
+
+};
+
+function get_lista_sucursales_precio(precio){
+
+    $("#modal_sucursales_precio").modal('show');
+
+
+    let container = document.getElementById('tblDataSucursalesPrecio');
+    container.innerHTML = GlobalLoader;
+
+    GF.get_data_sucursales_precios(precio)
+    .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+            str += `
+            <tr>
+                <td>${r.EMPNIT}</td>
+                <td>${r.NOMBRE}</td>
+            </tr>
+            `
+        })
+        container.innerHTML = str;
+    })
+    .catch(()=>{
+        container.innerHTML = 'No se cargaron datos';
+    })
 
 
 };
