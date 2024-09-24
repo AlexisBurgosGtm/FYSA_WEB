@@ -47,13 +47,12 @@ function getView(){
                             <div class="form-group">
                                 <label class="negrita text-danger">Seleccione una Clasificación</label>
                                 <select class="form-control negrita text-verde" id="cmbTipo">
-                                    <option value="RENTABILIDAD">TIPO DE RENTABILIDAD</option>
+                                    <option value="BI">TIPO DE RENTABILIDAD</option>
                                     <option value="TIPO">TIPO PRODUCTO</option>
                                     <option value="LABORATORIO">TIPO DE LABORATORIO</option>
-                                    <option value="ROTACION">TIPO DE ROTACIÓN</option>
                                     <option value="IMPULSO">TIPO DE IMPULSO</option>
-                                    <option value="PROGRAMA">PROGRAMA DE SALUD</option>
-                                    <option value="MEDIA">MEDIA RENTABILIDAD Y ROTACIÓN</option>
+                                    <option value="PROGRAMA_SALUD">PROGRAMA DE SALUD</option>
+                                    <option value="RM_MR">MEDIA RENTABILIDAD Y ROTACIÓN</option>
                                     <option value="RELLENO">PRODUCTOS DE RELLENO</option>
                                 </select>
                             </div>
@@ -153,7 +152,7 @@ function addListeners(){
 
         let strTitulo = '';
         switch (tipo.value) {
-            case 'RENTABILIDAD':
+            case 'BI':
                 strTitulo = `TIPO DE RENTABILIDAD`
                 break;
             case 'TIPO':
@@ -162,16 +161,14 @@ function addListeners(){
             case 'LABORATORIO':
                 strTitulo = `TIPO DE LABORATORIO`
                 break;       
-            case 'ROTACION':
-                strTitulo = `TIPO DE ROTACIÓN`
-                break; 
+         
             case 'IMPULSO':
                 strTitulo = `TIPO DE IMPULSO`
                 break;
-            case 'PROGRAMA':
+            case 'PROGRAMA_SALUD':
                 strTitulo = `TIPO PROGRAMA DE SALUD`
                 break;
-            case 'MEDIA':
+            case 'RM_MR':
                 strTitulo = `CLASIFICACIÓN DE MEDIA ROTACIÓN Y RENTABILIDAD`
                 break;
             case 'RELLENO':
@@ -315,7 +312,7 @@ function get_listado(tipo){
         container.innerHTML = str;
     })
     .catch(()=>{
-        funciones.AvisoError('No se pudo cargar la lista');
+        //funciones.AvisoError('No se pudo cargar la lista');
         container.innerHTML = 'No se cargaron datos..'
     })
 };

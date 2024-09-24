@@ -294,7 +294,27 @@ function getView(){
                             <i class="fal fa-search"></i>
                         </button>
                     </div>
-                                        
+                   
+                     <br>
+                    <label class="negrita text-naranja">Tipo Rentabilidad</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoRentabilidad">
+                        </select>
+                        <button class="btn btn-naranja hand" id="">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
+
+                     <br>
+                    <label class="negrita text-naranja">Clasificación (Tipo)</label>
+                    <div class="input-group">
+                        <select class="form-control" id="cmbTipoTipo">
+                        </select>
+                        <button class="btn btn-naranja hand" id="">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
+
                     <br>
                     <label class="negrita text-naranja">Tipo Laboratorio</label>
                     <div class="input-group">
@@ -1083,7 +1103,9 @@ function listeners_menu_productos(){
                     let cmbTipoProgramaSalud = document.getElementById('cmbTipoProgramaSalud');
                     let cmbTipoRMMR = document.getElementById('cmbTipoRMMR');
                     let cmbTipoRelleno = document.getElementById('cmbTipoRelleno');
-                    
+                    let cmbTipoRentabilidad = document.getElementById('cmbTipoRentabilidad');
+                    let cmbTipoTipo = document.getElementById('cmbTipoTipo');
+
                     
 
                     btnGuardarProducto.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
@@ -1107,7 +1129,8 @@ function listeners_menu_productos(){
                         insert_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,
                             cmbMarca.value,lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono,
-                            cmbTipoLaboratorio.value,cmbTipoImpulso.value,cmbTipoProgramaSalud.value,cmbTipoRMMR.value,cmbTipoRelleno.value)
+                            cmbTipoLaboratorio.value,cmbTipoImpulso.value,cmbTipoProgramaSalud.value,cmbTipoRMMR.value,cmbTipoRelleno.value,
+                            cmbTipoRentabilidad.value,cmbTipoTipo.value)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha creado un nuevo producto');
@@ -1173,6 +1196,9 @@ function listeners_menu_productos(){
                     let cmbTipoProgramaSalud = document.getElementById('cmbTipoProgramaSalud');
                     let cmbTipoRMMR = document.getElementById('cmbTipoRMMR');
                     let cmbTipoRelleno = document.getElementById('cmbTipoRelleno');
+                    let cmbTipoRentabilidad = document.getElementById('cmbTipoRentabilidad');
+                    let cmbTipoTipo = document.getElementById('cmbTipoTipo');
+                   
 
                     let txtCosto = document.getElementById('txtCosto');
                     let lastupdate = funciones.getFecha();
@@ -1189,7 +1215,7 @@ function listeners_menu_productos(){
                         edit_producto(txtCodprod.value,txtCodprod2.value,txtDesprod.value,txtDesprod2.value,
                             txtDesprod3.value,txtUxc.value,txtCosto.value,cmbMarca.value,
                             cmbTipoLaboratorio.value,cmbTipoImpulso.value,cmbTipoProgramaSalud.value,cmbTipoRMMR.value,cmbTipoRelleno.value,
-                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono)
+                            lastupdate,cmbTipoProd.value,exento,cmbColor.value,txtBono,cmbTipoRentabilidad.value,cmbTipoTipo.value)
                             .then(()=>{
 
                                 funciones.Aviso('Se ha actualizado el producto');
@@ -2260,6 +2286,8 @@ function get_combos_producto(){
     get_combo_clasificacion('PROGRAMA_SALUD','cmbTipoProgramaSalud');
     get_combo_clasificacion('RM_MR','cmbTipoRMMR');
     get_combo_clasificacion('RELLENO','cmbTipoRelleno');
+    get_combo_clasificacion('TIPO','cmbTipoTipo');
+    get_combo_clasificacion('BI','cmbTipoRentabilidad');
 
  
 };
@@ -2477,7 +2505,7 @@ function get_tbl_productos(){
 
 function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
         uxc,costo,codmarca,lastupdate,tipoprod,exento,nf,bono,
-        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno){
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno,tipoRentabilidad,tipoTipo){
     
 
     return new Promise((resolve,reject)=>{
@@ -2499,6 +2527,8 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
                 tipoprogramasalud:tipoprogramasalud,
                 tipormmr:tipormmr,
                 tiporelleno:tiporelleno,
+                tiporentabilidad:tipoRentabilidad,
+                tipotipo:tipoTipo,
                 lastupdate:lastupdate,
                 tipoprod:tipoprod,
                 exento:exento,
@@ -2529,7 +2559,7 @@ function insert_producto(codprod,codprod2,desprod,desprod2,desprod3,
 
 function edit_producto(codprod,codprod2,desprod,desprod2,desprod3,
     uxc,costo,codmarca,tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno,
-    lastupdate,tipoprod,exento,nf,bono){
+    lastupdate,tipoprod,exento,nf,bono,tipoRentabilidad,tipoTipo){
 
 
 return new Promise((resolve,reject)=>{
@@ -2551,6 +2581,8 @@ return new Promise((resolve,reject)=>{
             tipoprogramasalud:tipoprogramasalud,
             tipormmr:tipormmr,
             tiporelleno:tiporelleno,
+            tiporentabilidad:tipoRentabilidad,
+            tipotipo:tipoTipo,
             lastupdate:lastupdate,
             tipoprod:tipoprod,
             exento:exento,

@@ -8,12 +8,13 @@ router.post("/insert_producto", async(req,res)=>{
     const {token,sucursal,codprod,codprod2,
         desprod,desprod2,desprod3,uxc,costo,
         codmarca,lastupdate,tipoprod,exento,nf, bono,
-        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno} = req.body;
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno,tiporentabilidad,tipotipo} = req.body;
 
     let qry = `
     INSERT INTO PRODUCTOS (CODPROD,CODPROD2,DESPROD,
         DESPROD2,DESPROD3,UXC,COSTO_ULTIMO,COSTO_ANTERIOR,
         CODMARCA,CLASIF_LABORATORIO,CLASIF_IMPULSO,CLASIF_PROGRAMA_SALUD,CLASIF_RM_MR,CLASIF_RELLENO,
+        CLASIF_TIPO,CLASIF_BI,
         HABILITADO,EXENTO,
         NF,TIPOPROD,BONO,LASTUPDATE)
     SELECT '${codprod}' AS CODPROD,'${codprod2}' AS CODPROD2,
@@ -26,6 +27,8 @@ router.post("/insert_producto", async(req,res)=>{
         ${tipoprogramasalud} AS CLASIF_PROGRAMA_SALUD,
         ${tipormmr} AS CLASIF_RM_MR,
         ${tiporelleno} AS CLASIF_RELLENO,
+        ${tipotipo} AS CLASIF_TIPO,
+        ${tiporentabilidad} AS CLASIF_BI,
         'SI' AS HABILITADO, ${exento} AS EXENTO,
         ${nf} AS NF,'${tipoprod}' AS TIPOPROD,
         ${bono} AS BONO,'${lastupdate}' AS LASTUPDATE;
@@ -147,7 +150,7 @@ router.post("/edit_producto", async(req,res)=>{
     const {token,sucursal,codprod,codprod2,
         desprod,desprod2,desprod3,uxc,costo,
         codmarca,lastupdate,tipoprod,exento,nf, bono,
-        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno} = req.body;
+        tipolaboratorio,tipoimpulso,tipoprogramasalud,tipormmr,tiporelleno,tiporentabilidad,tipotipo} = req.body;
 
     let qry = `
     UPDATE PRODUCTOS SET 
@@ -158,6 +161,8 @@ router.post("/edit_producto", async(req,res)=>{
         UXC=${uxc},
         COSTO_ULTIMO=${costo},
         CODMARCA=${codmarca},
+        CLASIF_BI=${tiporentabilidad},
+        CLASIF_TIPO=${tipotipo},
         CLASIF_LABORATORIO=${tipolaboratorio},
         CLASIF_IMPULSO=${tipoimpulso},
         CLASIF_PROGRAMA_SALUD=${tipoprogramasalud},

@@ -1,7 +1,4 @@
 ﻿
-TOKEN = 'FSYA';
-
-let versionapp = "Modif: 20.09.2024"
 
 let btnMenu = document.getElementById('btnMenu');
 document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
