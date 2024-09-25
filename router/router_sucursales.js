@@ -19,6 +19,23 @@ router.post("/sucursales_precio", async(req,res)=>{
 });
 
 
+router.post("/sucursales_existencia_producto", async(req,res)=>{
+
+    const {token,codprod} = req.body;
+
+    let qry = `
+       SELECT INVSALDO.EMPNIT, EMPRESAS.NOMBRE AS NOMEMPRESA, INVSALDO.CODPROD, 
+			INVSALDO.MINIMO, INVSALDO.MAXIMO, INVSALDO.EXISTENCIA, (INVSALDO.MAXIMO - INVSALDO.EXISTENCIA) AS RELLENO 
+        FROM     INVSALDO LEFT OUTER JOIN
+                  EMPRESAS ON INVSALDO.EMPNIT = EMPRESAS.EMPNIT
+        WHERE  (INVSALDO.CODPROD = '${codprod}')
+        ORDER BY INVSALDO.EMPNIT
+        `     
+  
+    execute.QueryToken(res,qry,token)
+
+});
+
 
 
 module.exports = router;

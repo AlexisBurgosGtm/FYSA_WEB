@@ -114,6 +114,28 @@
                                     <span class="nav-link-text" data-i18n="nav.application_intel">INICIO</span>
                                 </a>
                             </li>
+
+                             <!-- BUSINESS INTELLIGENCE -->
+                             <li>
+                                <a href="#" title="Application Intel" data-filter-tags="application intel">
+                                    <i class="fal fa-chart-pie"></i>
+                                    <span class="nav-link-text" data-i18n="nav.application_intel">BUSINESS INTELLIGENCE</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.bi_autorizaciones()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">TABLERO DE AUTORIZACIONES</span>
+                                        </a>
+                                    </li>
+                                   
+                                    <li>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.bi_notificaciones()">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">TABLERO DE NOTIFICACIONES</span>
+                                        </a>
+                                    </li>                                   
+                                    
+                                </ul>
+                            </li>
                             
                             <!-- PUNTO DE VENTA -->
                             <li>
@@ -156,12 +178,12 @@
                                     </li>
                                     <li>
                                         <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.compras_gestion_precios()">
-                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE PRECIOS</span>
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE PRECIOS E IPs</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.compras_gestion_bonos()">
-                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE BONOS IPs</span>
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="">
+                                            <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE PRECIOS MAYORISTAS</span>
                                         </a>
                                     </li>
                                     <li>
@@ -169,11 +191,7 @@
                                             <span class="nav-link-text" data-i18n="nav.application_intel_introduction">MINIMOS Y MÁXIMOS</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.cotizacion_proveedores()">
-                                            <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">COTIZACIÓN A PROVEEDORES</span>
-                                        </a>
-                                    </li>
+                                   
                                     <li>
                                         <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.requisiciones()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">REQUISICIONES</span>
@@ -603,6 +621,38 @@
             </div>
         </div> <!-- END Page Settings -->
         
+
+        <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_detalle_medida">
+            <div class="modal-dialog modal-dialog-right modal-xl">
+                <div class="modal-content">
+                    <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
+                        <h4 class="m-0 text-center color-white" id="">
+                            Errores
+                        </h4>
+                    </div>
+                    <div class="modal-body p-4">
+                        
+                        <div class="card card-rounded">
+                            <div class="card-body p-2">
+
+                               <div id="rootErrores"></div>
+                            
+                            </div>
+                        </div>
+
+                            
+                        <div class="row">
+                            <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                <i class="fal fa-arrow-left"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
 
         <script src="js/vendors.bundle.js"></script>
         <script src="js/app.bundle.js"></script>

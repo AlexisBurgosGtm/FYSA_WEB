@@ -230,7 +230,7 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
 router.post("/surtido_sucursales", async(req,res)=>{
    
 
-    const { token,sucursal} = req.body;
+    const { token,sucursal,tipobi} = req.body;
 
     let qry ='';
 
@@ -319,6 +319,23 @@ router.post("/documentos_pendientes", async(req,res)=>{
 });
 
 
+
+router.post("/total_rellenos", async(req,res)=>{
+   
+
+    const { token} = req.body;
+
+    let qry ='';
+    qry = `
+           SELECT COUNT(CODPROD) AS CONTEO 
+           FROM view_inventarios_relleno WHERE HABILITADO='SI' 
+             `
+
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
 
 
 

@@ -92,15 +92,7 @@ function getView(){
                     <h2 class="negrita text-naranja" id="lbDesprod"></h2>
                     <h4 class="negrita text-danger" id="lbCodprod"></4>
                 </div>
-                <div class="form-group">
-                    <label class="negrita text-verde">Escriba para filtrar</label>
-                    <div class="input-group">
-                        <input type="text" id="txtBuscarPrecio" class="form-control negrita text-verde border-verde">
-                        <button class="btn btn-verde btn-md hand shadow" id="btnBuscarPrecio">
-                            <i class="fal fa-search"></i>
-                        </button>
-                    </div>
-                </div>                    
+                              
                 <div class="table-responsive">
                     <table class="table h-full table-hove table-bordered col-12" id="tblPrecios">
                         <thead class="bg-verde text-white">

@@ -105,5 +105,15 @@ let Menu = {
             funciones.AvisoError('No tiene permitido entrar a esta sección');
         }
     },
+    bi_notificaciones:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/administracion/view_tablero_notificaciones.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
 
 }

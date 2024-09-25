@@ -1,6 +1,6 @@
 ﻿
 
-let btnMenu = document.getElementById('btnMenu');
+
 document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
 
 

@@ -21,6 +21,7 @@ let data_empresas = [];
 
 
 let root = document.getElementById('root');
+let rootErrores = document.getElementById('rootErrores');
 
 
 let navmenu = document.getElementById('js-nav-menu');
