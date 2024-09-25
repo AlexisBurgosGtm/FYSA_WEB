@@ -191,7 +191,7 @@ function getView(){
         modal_existencia_sucursales:()=>{
             return `
             <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_existencia_sucursales">
-                <div class="modal-dialog modal-dialog-center modal-lg">
+                <div class="modal-dialog modal-dialog-center modal-xl">
                     <div class="modal-content">
                         <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
                             <h4 class="m-0 text-center color-white" id="">
@@ -200,30 +200,62 @@ function getView(){
                         </div>
                         <div class="modal-body p-4">
                             
-                            <div class="card card-rounded">
-                                <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    
+                                    <div class="card card-rounded">
+                                        <div class="card-body p-4">
 
-                                    <h3 class="negrita text-verde" id="lbDesprodSucursales"></h3>
-                                    <h5 class="negrita text-secondary" id="lbDesmarcaSucursales"></h5>
-                                  
-                                    <table class="table table-responsive h-full f-med" id="">
-                                        <thead class="negrita bg-naranja text-white">
-                                            <tr>
-                                                <td>SUCURSAL</td>
-                                                <td>MINIMO</td>
-                                                <td>MAXIMO</td>
-                                                <td>EXISTENCIA</td>
-                                                <td>RELLENO</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblDataSucursales">
-                                                    
-                                        </tbody>
-                                        <tfoot id="tblFooterSucursales" class="border-naranja text-naranja negrita">
-                                           
-                                        </tfoot>
-                                    </table>
+                                            <h3 class="negrita text-verde" id="lbDesprodSucursales"></h3>
+                                            <h5 class="negrita text-secondary" id="lbDesmarcaSucursales"></h5>
+                                        
+                                            <table class="table table-responsive h-full f-med" id="">
+                                                <thead class="negrita bg-naranja text-white">
+                                                    <tr>
+                                                        <td>SUCURSAL</td>
+                                                        <td>MINIMO</td>
+                                                        <td>MAXIMO</td>
+                                                        <td>EXISTENCIA</td>
+                                                        <td>RELLENO</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblDataSucursales">
+                                                            
+                                                </tbody>
+                                                <tfoot id="tblFooterSucursales" class="border-naranja text-naranja negrita">
+                                                
+                                                </tfoot>
+                                            </table>
 
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-6">
+                                    
+                                    <div class="card card-rounded">
+                                        <div class="card-body p-4">
+
+                                            <h5 class="negrita text-ver">Documentos pendientes del producto</h5>
+                                        
+                                            <table class="table table-responsive h-full f-med" id="">
+                                                <thead class="negrita bg-verde text-white">
+                                                    <tr>
+                                                        <td>FECHA</td>
+                                                        <td>DOCUMENTO</td>
+                                                        <td>CANTIDAD SOLICITADA</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblDataDocumentosProducto">
+                                                            
+                                                </tbody>
+                                               
+                                            </table>
+
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
