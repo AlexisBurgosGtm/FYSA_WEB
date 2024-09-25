@@ -6,6 +6,10 @@
   font-size: 80%;
 }
 
+.f-sm{
+  font-size: 50%;
+}
+
 .card-deck{ 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 2fr));

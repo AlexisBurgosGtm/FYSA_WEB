@@ -72,7 +72,7 @@ function getView(){
         },
         panel_inicio:()=>{
             return `
-            <div class="row">
+            <div class="row p-4">
                 <div class="col-4">
 
                     <div class="hand shadow p-3 bg-danger-300 rounded overflow-hidden position-relative text-white mb-g" onclick="document.getElementById('tab-dos').click()">
@@ -201,7 +201,7 @@ function getView(){
                         <div class="modal-body p-4">
                             
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     
                                     <div class="card card-rounded">
                                         <div class="card-body p-4">
@@ -233,7 +233,7 @@ function getView(){
 
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     
                                     <div class="card card-rounded">
                                         <div class="card-body p-4">

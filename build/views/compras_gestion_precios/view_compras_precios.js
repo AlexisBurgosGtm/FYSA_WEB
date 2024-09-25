@@ -64,8 +64,8 @@ function getView(){
                 <div class="form-group">
                     <label class="negrita text-naranja">Escriba para buscar un Producto</label>
                     <div class="input-group">
-                        <input type="text" id="txtBuscar" class="form-control negrita text-verde border-verde">
-                        <button class="btn btn-info btn-md hand shadow" id="btnBuscar">
+                        <input type="text" id="txtBuscar" class="form-control negrita text-verde border-verde" placeholder="Escriba para buscar un Producto...">
+                        <button class="btn btn-naranja btn-md hand shadow" id="btnBuscar">
                             <i class="fal fa-search"></i>
                         </button>
                     </div>
@@ -94,19 +94,27 @@ function getView(){
                 </div>
                               
                 <div class="table-responsive">
-                    <table class="table h-full table-hove table-bordered col-12" id="tblPrecios">
+                    <table style="font-size:85%" class="table h-full table-hove table-bordered table-striped col-12" id="tblPrecios">
                         <thead class="bg-verde text-white">
-                            <tr>
+                            <tr class="f-med">
                                 <td>MEDIDA</td>
-                                <td>EQUIVALE</td>
+                                <td>EQUIV</td>
                                 <td>COSTO</td>
-                                <td>PRECIO</td>
+                                <td>C.PROM</td>
+                                <td class="bg-verde-claro">PRECIO</td>
+                                <td class="bg-verde-claro">BONO</td>
                                 <td>PRECIO_A</td>
-                                <td>PRECIO_B</td>
+                                <td>BONO_P_A</td>
+                                <td class="bg-verde-claro">PRECIO_B</td>
+                                <td class="bg-verde-claro">BONO_P_B</td>
                                 <td>PRECIO_C</td>
-                                <td>PRECIO_D</td>
+                                <td>BONO_P_C</td>
+                                <td class="bg-verde-claro">PRECIO_D</td>
+                                <td class="bg-verde-claro">BONO_P_D</td>
                                 <td>PRECIO_E</td>
-                                <td>PRECIO_F</td>
+                                <td>BONO_P_E</td>
+                                <td class="bg-verde-claro">PRECIO_F</td>
+                                <td class="bg-verde-claro">BONO_P_F</td>
                                 <td>MODIFICADO</td>
                                 <td></td>
                             </tr>
@@ -126,26 +134,130 @@ function getView(){
             <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_detalle_medida">
                 <div class="modal-dialog modal-dialog-right modal-xl">
                     <div class="modal-content">
-                        <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
-                            <h4 class="m-0 text-center color-white" id="">
-                                Gestión de Marcas
-                            </h4>
+                        <div class="dropdown-header bg-verde d-flex justify-content-center align-items-center w-100">
+                           
                         </div>
                         <div class="modal-body p-4">
                             
                             <div class="card card-rounded">
-                                <div class="card-body p-2">
+                                <div class="card-body p-4">
 
-                                     <table class="table table-responsive h-full f-med" id="">
-                                        <thead class="negrita bg-naranja text-white">
-                                            <tr>
-                                                <td>COSTO</td>
+                                    <h3 class="negrita text-naranja" id="lbCodmedida">CODMEDIDA</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-4 col-lg-3 col-xl-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="negrita text-secondary">EQUIVALE:</label>
+                                                <input type="number" class="negrita text-naranja form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6">
+                                            <div class="form-group">
+                                                <label class="negrita text-secondary">COSTO MEDIDA:</label>
+                                                <input type="number" class="negrita text-naranja form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                     <table style="font-size:95%" class="table table-responsive h-full">
+                                        <thead class="negrita bg-verde text-white">
+                                            <tr class="text-center negrita">
+                                                <td></td>
                                                 <td>PRECIO</td>
+                                                <td>BONO</td>
+                                                <td>MARGEN</td>
                                                 <td></td>
                                             </tr>
                                         </thead>
-                                        <tbody id="tblDataProdMarcas">
-                                                    
+                                        <tbody id="">
+
+                                            <tr>
+                                                <td class="negrita text-verde-claro">PRECIO PUBLICO</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="negrita text-verde-claro">PRECIO A</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="negrita text-verde-claro">PRECIO B</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                             <tr>
+                                                <td class="negrita text-verde-claro">PRECIO C</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                             <tr>
+                                                <td class="negrita text-verde-claro">PRECIO D</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                             <tr>
+                                                <td class="negrita text-verde-claro">PRECIO E</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                             <tr>
+                                                <td class="negrita text-verde-claro">PRECIO F</td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td>
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                        <i class="fal fa-sync"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+
+
                                         </tbody>
                                     </table>
                                 
@@ -250,7 +362,7 @@ function get_tbl_producto(){
         let str = '';
         data.recordset.map((r)=>{
             str += `
-            <tr>
+            <tr >
                 <td>${r.CODPROD}
                     <br>
                     <small class="negrita text-info">${r.CODPROD2}</small>
@@ -259,7 +371,7 @@ function get_tbl_producto(){
                 <td>${r.DESMARCA}</td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
-                    <button class="btn btn-circle btn-naranja btn-md hand shadow" onclick="get_precios_producto('${r.CODPROD}','${r.DESPROD}')">
+                    <button class="btn btn-circle btn-naranja btn-lg hand shadow" onclick="get_precios_producto('${r.CODPROD}','${r.DESPROD}')">
                         <i class="fal fa-arrow-right"></i>
                     </button>
                 </td>
@@ -286,20 +398,28 @@ function get_tbl_precios(codprod){
         let str = '';
         data.recordset.map((r)=>{
             str += `
-            <tr>
+            <tr class="f-med">
                 <td>${r.CODMEDIDA}</td>
                 <td>${r.EQUIVALE}</td>
                 <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_A,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_B,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_C,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_D,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_E,'Q')}</td>
+                <td></td>
                 <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
+                <td></td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
-                    <button class="btn btn-info btn-circle btn-lg hand shadow" 
+                    <button class="btn btn-verde btn-circle btn-lg hand shadow" 
                         onclick="get_datos_codmedida('${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.PRECIO_A}','${r.PRECIO_B}','${r.PRECIO_C}','${r.PRECIO_D}','${r.PRECIO_E}','${r.PRECIO_F}')">
                         <i class="fal fa-edit"></i>
                     </button>
