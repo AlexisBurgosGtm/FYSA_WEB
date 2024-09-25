@@ -13,7 +13,7 @@ function get_conf_token(token){
 		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 	};
 	
-	let configX = {
+	let configx = {
 		user: 'iEx',
 		password: 'iEx',
 		server: 'DESKTOP-3L7R1E4\\SQL22',

@@ -711,6 +711,7 @@ function get_existencia_sucursales(codprod,desprod,desmarca){
     document.getElementById('lbDesmarcaSucursales').innerText = desmarca;
 
     let container = document.getElementById('tblDataSucursales');
+    container.innerHTML = GlobalLoader;
 
     GF.get_data_sucursales_existencia(codprod)
     .then((data)=>{
@@ -754,6 +755,32 @@ function get_existencia_sucursales(codprod,desprod,desmarca){
                                                                     </tr>`
     })
 
+
+    let container2 = document.getElementById('tblDataDocumentosProducto');
+    container2.innerHTML = GlobalLoader;
+
+    GF.get_data_documentos_pendientes_producto(codprod)
+    .then((data)=>{
+        let str = '';
+     
+        data.recordset.map((r)=>{
+            str += `
+            <tr>
+                <td>${funciones.convertDateNormal(r.FECHA)}
+                    <br>
+                    <small class="negrita text-danger">H:${r.HORA}</small>
+                </td>
+                <td>${r.CODDOC}-${r.CORRELATIVO}</td>
+                <td>${r.CODMEDIDA} - ${r.CANTIDAD}</td>
+            </tr>
+            `
+        })
+        container2.innerHTML = str;
+      
+    })
+    .catch(()=>{
+        container2.innerHTML = 'No se cargaron datos....';
+    })
 
 
 
