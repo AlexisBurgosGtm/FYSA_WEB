@@ -836,6 +836,17 @@ let funciones = {
           num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
       return ( ((sign) ? '' : '-') +  num + ((cents == "00") ? '' : '.' + cents) + ' ' + signo  ).toString();
     },
+    get_margen(costo,precio,bono){
+
+        let costoreal = (Number(costo)+Number(bono));
+        let utilidad = (Number(precio) - costoreal);
+    
+        let porc = Number(utilidad) / Number(costoreal);
+        porc = porc * 100
+    
+        return porc.toFixed(2)
+  
+    },
     loadScript: function(url, idContainer) {
         return new Promise((resolve, reject) => {
           var script = document.createElement('script');

@@ -562,6 +562,7 @@ function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
 
 
     //recalcula los margenes
+    let idcosto = 'txtECosto';
     get_margen_medida(idcosto,idprecio,idmargen)
 
 
@@ -577,7 +578,7 @@ function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
     let bono = Number(document.getElementById(idbono).value) || 0;
     let margen = Number(document.getElementById(idmargen).value) || 0;
 
-    let idcosto = 'txtECosto';
+    
 
 
     GF.update_precio_medida(tipo,codmedida,equivale,precio,bono,margen)
