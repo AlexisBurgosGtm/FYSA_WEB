@@ -14,7 +14,7 @@ function get_conf_token(token){
 	};
 	
 	
-	let configx = {
+	let configX = {
 		user: 'iEx',
 		password: 'iEx',
 		server: 'DESKTOP-3L7R1E4\\SQL22',

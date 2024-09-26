@@ -240,7 +240,7 @@ router.post("/productos_filtro", async(req,res)=>{
    
     const { token, sucursal, filtro, tipoprecio } = req.body;
 
-    let qry = `SELECT PRODUCTOS.CODPROD, PRODUCTOS.CODPROD2, PRODUCTOS.DESPROD, 
+    let qry = `SELECT TOP 70 PRODUCTOS.CODPROD, PRODUCTOS.CODPROD2, PRODUCTOS.DESPROD, 
                     PRODUCTOS.DESPROD2, PRODUCTOS.DESPROD3, PRODUCTOS.CODMARCA, 
                     MARCAS.DESMARCA, PRODUCTOS.TIPOPROD, 
                     PRECIOS.CODMEDIDA, PRECIOS.EQUIVALE, PRECIOS.COSTO, 
@@ -251,8 +251,11 @@ router.post("/productos_filtro", async(req,res)=>{
                          INVSALDO ON PRODUCTOS.CODPROD = INVSALDO.CODPROD LEFT OUTER JOIN
                          MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA LEFT OUTER JOIN
                          PRECIOS ON PRODUCTOS.CODPROD = PRECIOS.CODPROD
-                    WHERE (PRODUCTOS.HABILITADO = 'SI') AND (PRODUCTOS.DESPROD LIKE '%${filtro}%') AND (PRECIOS.CODMEDIDA IS NOT NULL) AND (INVSALDO.EMPNIT = '${sucursal}') OR
-                         (PRODUCTOS.HABILITADO = 'SI') AND (PRECIOS.CODMEDIDA IS NOT NULL) AND (INVSALDO.EMPNIT = '${sucursal}') AND (PRODUCTOS.CODPROD = '${filtro}')
+                    WHERE (PRODUCTOS.HABILITADO = 'SI') AND (PRODUCTOS.DESPROD LIKE '%${filtro}%') 
+                        AND (PRECIOS.CODMEDIDA IS NOT NULL) AND (INVSALDO.EMPNIT = '${sucursal}') 
+                        OR
+                        (PRODUCTOS.HABILITADO = 'SI') AND (PRECIOS.CODMEDIDA IS NOT NULL) 
+                        AND (INVSALDO.EMPNIT = '${sucursal}') AND (PRODUCTOS.CODPROD = '${filtro}')
                     `
     
     execute.QueryToken(res,qry,token);
