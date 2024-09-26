@@ -405,19 +405,19 @@ function get_tbl_precios(codprod){
                 <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.COSTO_PROMEDIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIO,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_A,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOA,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOA,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_B,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOB,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOB,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_C,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOC,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOC,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_D,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOD,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOD,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_E,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOE,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOE,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
-                <td>${funciones.setMoneda(r.BONOPRECIOF,'Q')}</td>
+                <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOF,'Q')}</td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
                     <button class="btn btn-verde btn-circle btn-lg hand shadow" 
@@ -509,6 +509,12 @@ function get_margen_medida(idcosto,idprecio,idmargen){
 function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
 
 
+    //recalcula los margenes
+    get_margen_medida(idcosto,idprecio,idmargen)
+
+
+
+
     let btn = document.getElementById(idbtn)
     btn.disabled = true;
     btn.innerHTML = `<i class="fal fa-spin fa-sync"></i>`
@@ -521,7 +527,6 @@ function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
 
     let idcosto = 'txtECosto';
 
-    get_margen_medida(idcosto,idprecio,idmargen)
 
     GF.update_precio_medida(tipo,codmedida,equivale,precio,bono,margen)
     .then(()=>{
