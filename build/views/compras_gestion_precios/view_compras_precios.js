@@ -148,13 +148,13 @@ function getView(){
                                         <div class="col-md-4 col-lg-3 col-xl-3 col-sm-6">
                                             <div class="form-group">
                                                 <label class="negrita text-secondary">EQUIVALE:</label>
-                                                <input type="number" class="negrita text-naranja form-control">
+                                                <input type="number" class="negrita text-naranja form-control" id="txtEEquivale">
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6">
                                             <div class="form-group">
                                                 <label class="negrita text-secondary">COSTO MEDIDA:</label>
-                                                <input type="number" class="negrita text-naranja form-control">
+                                                <input type="number" class="negrita text-naranja form-control" id="txtECosto" disabled="true">
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@ function getView(){
                                                 <td></td>
                                                 <td>PRECIO</td>
                                                 <td>BONO</td>
-                                                <td>MARGEN</td>
+                                                <td>% MARGEN</td>
                                                 <td></td>
                                             </tr>
                                         </thead>
@@ -173,11 +173,11 @@ function getView(){
 
                                             <tr>
                                                 <td class="negrita text-verde-claro">PRECIO PUBLICO</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioP" oninput="get_margen_medida('txtECosto','txtEPrecioP','txtEMargenP')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoP"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenP" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('P','txtEPrecioP','txtEBonoP','txtEMargenP','btnActualizarPrecioP')" id="btnActualizarPrecioP">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -185,11 +185,11 @@ function getView(){
 
                                             <tr>
                                                 <td class="negrita text-verde-claro">PRECIO A</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioA" oninput="get_margen_medida('txtECosto','txtEPrecioA','txtEMargenA')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoA"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenA" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('A','txtEPrecioA','txtEBonoA','txtEMargenA','btnActualizarPrecioA')" id="btnActualizarPrecioA">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -198,11 +198,11 @@ function getView(){
 
                                             <tr>
                                                 <td class="negrita text-verde-claro">PRECIO B</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioB" oninput="get_margen_medida('txtECosto','txtEPrecioB','txtEMargenB')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoB"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenB" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('B','txtEPrecioB','txtEBonoB','txtEMargenB','btnActualizarPrecioB')" id="btnActualizarPrecioB">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -210,11 +210,11 @@ function getView(){
 
                                              <tr>
                                                 <td class="negrita text-verde-claro">PRECIO C</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioC" oninput="get_margen_medida('txtECosto','txtEPrecioC','txtEMargenC')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoC"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenC" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('C','txtEPrecioC','txtEBonoC','txtEMargenC','btnActualizarPrecioC')" id="btnActualizarPrecioC">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -222,11 +222,11 @@ function getView(){
 
                                              <tr>
                                                 <td class="negrita text-verde-claro">PRECIO D</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioD" oninput="get_margen_medida('txtECosto','txtEPrecioD','txtEMargenD')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoD"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenD" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('D','txtEPrecioD','txtEBonoD','txtEMargenD','btnActualizarPrecioD')" id="btnActualizarPrecioD">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -234,11 +234,11 @@ function getView(){
 
                                              <tr>
                                                 <td class="negrita text-verde-claro">PRECIO E</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioE" oninput="get_margen_medida('txtECosto','txtEPrecioE','txtEMargenE')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoE"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenE" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('E','txtEPrecioE','txtEBonoE','txtEMargenE','btnActualizarPrecioE')" id="btnActualizarPrecioE">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -246,11 +246,11 @@ function getView(){
 
                                              <tr>
                                                 <td class="negrita text-verde-claro">PRECIO F</td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
-                                                <td class="text-center"><input type="number" class="form-control negrita text-verde"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEPrecioF" oninput="get_margen_medida('txtECosto','txtEPrecioF','txtEMargenF')"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-naranja" id="txtEBonoF"></td>
+                                                <td class="text-center"><input type="number" class="form-control negrita text-verde" id="txtEMargenF" disabled="true"></td>
                                                 <td>
-                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow">
+                                                    <button class="btn btn-circle btn-md btn-naranja hand shadow" onclick="update_precio_medida('F','txtEPrecioF','txtEBonoF','txtEMargenF','btnActualizarPrecioF')" id="btnActualizarPrecioF">
                                                         <i class="fal fa-sync"></i>
                                                     </button>
                                                 </td>
@@ -392,6 +392,7 @@ function get_tbl_precios(codprod){
     let container = document.getElementById('tblDataPrecios');
     container.innerHTML = GlobalLoader;
 
+    GlobalSelected_Codprod = codprod;
 
     GF.get_data_precios_producto(codprod)
     .then((data)=>{
@@ -402,25 +403,32 @@ function get_tbl_precios(codprod){
                 <td>${r.CODMEDIDA}</td>
                 <td>${r.EQUIVALE}</td>
                 <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.COSTO_PROMEDIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIO,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_A,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOA,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_B,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOB,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_C,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOC,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_D,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOD,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_E,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOE,'Q')}</td>
                 <td>${funciones.setMoneda(r.PRECIO_F,'Q')}</td>
-                <td></td>
+                <td>${funciones.setMoneda(r.BONOPRECIOF,'Q')}</td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
                     <button class="btn btn-verde btn-circle btn-lg hand shadow" 
-                        onclick="get_datos_codmedida('${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.PRECIO_A}','${r.PRECIO_B}','${r.PRECIO_C}','${r.PRECIO_D}','${r.PRECIO_E}','${r.PRECIO_F}')">
+                        onclick="get_datos_codmedida('${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}',
+                                                    '${r.PRECIO}','${r.BONOPRECIO}','${r.MARGEN}',
+                                                    '${r.PRECIO_A}','${r.BONOPRECIOA}','${r.MARGENA}',
+                                                    '${r.PRECIO_B}','${r.BONOPRECIOB}','${r.MARGENB}',
+                                                    '${r.PRECIO_C}','${r.BONOPRECIOC}','${r.MARGENC}',
+                                                    '${r.PRECIO_D}','${r.BONOPRECIOD}','${r.MARGEND}',
+                                                    '${r.PRECIO_E}','${r.BONOPRECIOE}','${r.MARGENE}',
+                                                    '${r.PRECIO_F}','${r.BONOPRECIOF}','${r.MARGENF}',)">
                         <i class="fal fa-edit"></i>
                     </button>
                 </td>
@@ -436,13 +444,98 @@ function get_tbl_precios(codprod){
 }
 
 
-function get_datos_codmedida(codmedida,equivale,costo,precio,precioa,preciob,precioc,preciod,precioe,preciof){
-
-    $("#modal_detalle_medida").modal('show');
 
 
+function get_datos_codmedida(codmedida,equivale,costo,
+                                    precio,bono,margen,
+                                    precioa,bonoa,margena,
+                                    preciob,bonob,margenb,
+                                    precioc,bonoc,margenc,
+                                    preciod,bonod,margend,
+                                    precioe,bonoe,margene,
+                                    preciof,bonof,margenf){
 
+        $("#modal_detalle_medida").modal('show');
 
+        GlobalSelected_codmedida = codmedida;
 
+        document.getElementById('lbCodmedida').innerText = codmedida;
+        document.getElementById('txtEEquivale').value = equivale;
+        document.getElementById('txtECosto').value = costo;
+        document.getElementById('txtEPrecioP').value = precio;
+        document.getElementById('txtEBonoP').value = bono;
+        document.getElementById('txtEMargenP').value = margen;
+        document.getElementById('txtEPrecioA').value = precioa;
+        document.getElementById('txtEBonoA').value = bonoa;
+        document.getElementById('txtEMargenA').value = margena;
+        document.getElementById('txtEPrecioB').value = preciob;
+        document.getElementById('txtEBonoB').value = bonob;
+        document.getElementById('txtEMargenB').value = margenb;
+        document.getElementById('txtEPrecioC').value = precioc;
+        document.getElementById('txtEBonoC').value = bonoc;
+        document.getElementById('txtEMargenC').value = margenc;
+        document.getElementById('txtEPrecioD').value = preciod;
+        document.getElementById('txtEBonoD').value = bonod;
+        document.getElementById('txtEMargenD').value = margend;
+        document.getElementById('txtEPrecioE').value = precioe;
+        document.getElementById('txtEBonoE').value = bonoe;
+        document.getElementById('txtEMargenE').value = margene;
+        document.getElementById('txtEPrecioF').value = preciof;
+        document.getElementById('txtEBonoF').value = bonof;
+        document.getElementById('txtEMargenF').value = margenf;
+       
 
+        //calcula los margenes
+        //get_margen_medida('txtECosto','txtEPrecioP','txtEMargenP')
 }
+
+
+function get_margen_medida(idcosto,idprecio,idmargen){
+
+    let costo = Number(document.getElementById(idcosto).value) || 0;
+    let precio = Number(document.getElementById(idprecio).value) || 0;
+    let utilidad = Number((precio-costo))
+
+    try {
+        document.getElementById(idmargen).value = ((utilidad / costo) * 100);
+
+    } catch (error) {
+        document.getElementById(idmargen).value = 0;
+    }
+
+};
+
+
+function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
+
+
+    let btn = document.getElementById(idbtn)
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fal fa-spin fa-sync"></i>`
+
+    let codmedida = document.getElementById('lbCodmedida').innerText;
+    let equivale = 0;
+    let precio = Number(document.getElementById(idprecio).value) || 0;
+    let bono = Number(document.getElementById(idbono).value) || 0;
+    let margen = Number(document.getElementById(idmargen).value) || 0;
+
+    let idcosto = 'txtECosto';
+
+    get_margen_medida(idcosto,idprecio,idmargen)
+
+    GF.update_precio_medida(tipo,codmedida,equivale,precio,bono,margen)
+    .then(()=>{
+        funciones.Aviso('Precio actualizado exitosamente!!');
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fal fa-sync"></i>`;
+        get_tbl_precios(GlobalSelected_Codprod)
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se logro actualizar el precio');
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fal fa-sync"></i>`;
+    })
+
+
+};
+

@@ -460,5 +460,38 @@ let GF = {
         })   
     
     },
+    update_precio_medida(tipo,codmedida,equivale,precio,bono,margen){
+    
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/productos/update_precio_medida',
+                {
+                    token:TOKEN,
+                    sucursal:GlobalEmpnit,
+                    tipo:tipo,
+                    codmedida:codmedida,
+                    equivale:equivale,
+                    precio:precio,
+                    bono:bono,
+                    margen:margen
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
 };
 

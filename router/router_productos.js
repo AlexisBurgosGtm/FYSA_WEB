@@ -59,6 +59,70 @@ router.post("/insert_producto", async(req,res)=>{
      
 });
 
+router.post("/update_precio_medida", async(req,res)=>{
+   
+    const {token,sucursal,tipo,codmedida,equivale,precio,bono,margen} = req.body;
+
+
+    let qry = '';
+
+    switch (tipo) {
+        case 'P':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO=${precio},
+                        BONO_PRECIO=${bono},
+                        MARGEN=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'A':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_A=${precio},
+                        BONO_PRECIO_A=${bono},
+                        MARGEN_A=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'B':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_B=${precio},
+                        BONO_PRECIO_B=${bono},
+                        MARGEN_B=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'C':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_C=${precio},
+                        BONO_PRECIO_C=${bono},
+                        MARGEN_C=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'D':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_D=${precio},
+                        BONO_PRECIO_D=${bono},
+                        MARGEN_D=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'E':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_E=${precio},
+                        BONO_PRECIO_E=${bono},
+                        MARGEN_E=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+        case 'F':
+            qry = `UPDATE PRECIOS SET 
+                        PRECIO_F=${precio},
+                        BONO_PRECIO_F=${bono},
+                        MARGEN_F=${margen}
+                    WHERE CODMEDIDA='${codmedida}';`
+            break;
+    }
+   
+    console.log(qry)
+
+    execute.QueryToken(res,qry,token);
+     
+});
 
 
 router.post("/delete_lista_temp_precio", async(req,res)=>{
@@ -319,9 +383,18 @@ router.post("/lista_precios", async(req,res)=>{
    
     let qry = `
     SELECT ID,  
-    CODPROD,CODMEDIDA,EQUIVALE,COSTO,
-    PRECIO, PRECIO_A,PRECIO_B, PRECIO_C, PRECIO_D, PRECIO_E, PRECIO_F,
-	PESO,LASTUPDATE
+    CODPROD,CODMEDIDA,EQUIVALE,
+    COSTO, ISNULL(COSTO_PROMEDIO,COSTO) AS COSTO_PROMEDIO,
+    PRECIO, ISNULL(MARGEN,0) AS MARGEN, ISNULL(BONO_PRECIO,0) AS BONOPRECIO,
+    PRECIO_A, ISNULL(MARGEN_A,0) AS MARGENA, ISNULL(BONO_PRECIO_A,0) AS BONOPRECIOA,
+    PRECIO_B, ISNULL(MARGEN_B,0) AS MARGENB, ISNULL(BONO_PRECIO_B,0) AS BONOPRECIOB,
+    PRECIO_C, ISNULL(MARGEN_C,0) AS MARGENC, ISNULL(BONO_PRECIO_C,0) AS BONOPRECIOC,
+    PRECIO_D, ISNULL(MARGEN_D,0) AS MARGEND, ISNULL(BONO_PRECIO_D,0) AS BONOPRECIOD,
+    PRECIO_E, ISNULL(MARGEN_E,0) AS MARGENE, ISNULL(BONO_PRECIO_E,0) AS BONOPRECIOE,
+    PRECIO_F, ISNULL(MARGEN_F,0) AS MARGENF, ISNULL(BONO_PRECIO_F,0) AS BONOPRECIOF,
+	ISNULL(MAYORISTA,0) AS MAYORISTA, ISNULL(CRITERIO_MAYORISTA,0) AS CRITERIO_MAYORISTA,
+    PESO,
+    LASTUPDATE
     FROM
     PRECIOS WHERE CODPROD='${codprod}';
     `

@@ -1,4 +1,4 @@
-let versionapp = "M.25092024.1731"
+let versionapp = "M.26092024.1040"
 
 
 let map; //mapa de leaflet
@@ -54,6 +54,7 @@ function get_button_loader(texto){
 // VARIABLES
 let GlobalSelected_empnit = '';
 
+let GlobalSelected_codmedida = '';
 let GlobalSelected_Codprod = '';
 let GlobalSelected_Desprod = '';
 let GlobalSelected_Costo = 0;
