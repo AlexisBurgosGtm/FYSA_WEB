@@ -99,7 +99,7 @@ function getView(){
                             <tr class="f-med">
                                 <td>MEDIDA</td>
                                 <td>EQUIV</td>
-                                <td>COSTO</td>
+                                <td>COSTO ULT</td>
                                 <td>C.PROM</td>
                                 <td class="bg-verde-claro">PRECIO</td>
                                 <td class="bg-verde-claro">BONO</td>
@@ -409,84 +409,112 @@ function get_tbl_precios(codprod){
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO,0)}%</small>
+                    <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIO,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO,r.BONOPRECIO)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO,r.BONOPRECIO)}%</small>
+                    <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO,r.BONOPRECIO)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_A,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,0)}%</small>
+                    <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOA,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                    <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_B,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_B,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_B,0)}%</small>
+                    <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_B,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOB,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                    <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_C,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_C,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_C,0)}%</small>
+                    <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_C,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOC,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                    <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_D,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_D,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_D,0)}%</small>
+                    <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_D,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOD,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                    <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_E,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_E,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_E,0)}%</small>
+                      <hr>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_E,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOE,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                     <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.setMoneda(r.PRECIO_F,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_F,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_F,0)}%</small>
+                    <br>
+                    <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_F,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOF,'Q')}
                     <br>
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}%</small>
+                     <hr>
+                    <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
                 <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 <td>
@@ -511,7 +539,8 @@ function get_tbl_precios(codprod){
         container.innerHTML = 'No se cargaron datos...'
     })
 
-}
+};
+
 
 
 function get_margen(costo,precio,bono){
@@ -524,8 +553,7 @@ function get_margen(costo,precio,bono){
 
     return porc.toFixed(2)
 
-}
-
+};
 
 function get_margen_pventa(costo,precio,bono){
 
@@ -537,7 +565,22 @@ function get_margen_pventa(costo,precio,bono){
 
     return porc.toFixed(2)
 
-}
+};
+
+function get_utilidad_dinero(costo,precio,bono){
+
+    let costoreal = (Number(costo)+Number(bono));
+    let utilidad = (Number(precio) - costoreal);
+
+    
+
+    return funciones.setMoneda(utilidad,'Q');
+
+};
+
+
+
+
 
 function get_datos_codmedida(codmedida,equivale,costo,
                                     precio,bono,margen,
