@@ -115,7 +115,6 @@ function getView(){
                                 <td>BONO_P_E</td>
                                 <td class="bg-verde-claro">PRECIO_F</td>
                                 <td class="bg-verde-claro">BONO_P_F</td>
-                                <td>MODIFICADO</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -400,7 +399,10 @@ function get_tbl_precios(codprod){
         data.recordset.map((r)=>{
             str += `
             <tr class="f-med">
-                <td>${r.CODMEDIDA}</td>
+                <td>${r.CODMEDIDA}
+                    <br>
+                     <small>Mod:${funciones.convertDateNormal(r.LASTUPDATE)}</small>
+                </td>
                 <td>${r.EQUIVALE}</td>
                 <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
                 <td>${funciones.setMoneda(r.COSTO_PROMEDIO,'Q')}</td>
@@ -505,7 +507,7 @@ function get_tbl_precios(codprod){
                     <small class="text-danger negrita">${get_margen(r.COSTO,r.PRECIO_F,0)}%</small>
                     <br>
                     <small class="text-naranja negrita">${get_margen_pventa(r.COSTO,r.PRECIO_F,0)}%</small>
-                    <br>
+                    <hr>
                     <small class="text-success negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_F,0)}</small>
                 </td>
                 <td class="text-naranja">${funciones.setMoneda(r.BONOPRECIOF,'Q')}
@@ -516,7 +518,7 @@ function get_tbl_precios(codprod){
                      <hr>
                     <small class="text-info negrita">${get_utilidad_dinero(r.COSTO,r.PRECIO_A,r.BONOPRECIOA)}</small>
                 </td>
-                <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
+               
                 <td>
                     <button class="btn btn-verde btn-circle btn-lg hand shadow" 
                         onclick="get_datos_codmedida('${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}',
