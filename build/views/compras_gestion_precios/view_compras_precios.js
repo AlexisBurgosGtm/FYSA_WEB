@@ -596,7 +596,7 @@ function get_datos_codmedida(codmedida,equivale,costo,
         $("#modal_detalle_medida").modal('show');
 
         GlobalSelected_codmedida = codmedida;
-
+      
         document.getElementById('lbCodmedida').innerText = codmedida;
         document.getElementById('txtEEquivale').value = equivale;
         document.getElementById('txtECosto').value = costo;
@@ -667,7 +667,7 @@ function update_precio_medida(tipo,idprecio,idbono,idmargen,idbtn){
     
 
 
-    GF.update_precio_medida(tipo,codmedida,equivale,precio,bono,margen)
+    GF.update_precio_medida(GlobalSelected_Codprod,tipo,codmedida,equivale,precio,bono,margen)
     .then(()=>{
         funciones.Aviso('Precio actualizado exitosamente!!');
         btn.disabled = false;

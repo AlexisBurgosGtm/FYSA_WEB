@@ -2,28 +2,31 @@
 
 function get_conf_token(token){
 
-	//token = empresa que manda la solicitud (puede cambiarse entre empresas)
-	//let config = [];
+		//token = empresa que manda la solicitud (puede cambiarse entre empresas)
+		//let config = [];
 
-	let config = {
-		user: 'db_a6478c_fsya_admin',
-		password: 'razors1805',
-		server: 'sql5112.site4now.net',
-		database: 'db_a6478c_fsya',
-		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-	};
-	
-	
-	let configX = {
-		user: 'iEx',
-		password: 'iEx',
-		server: 'DESKTOP-3L7R1E4\\SQL22',
-		database: 'fsya',
-		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
-	};
+		let config = {
+			user: 'db_a6478c_fsya_admin',
+			password: 'razors1805',
+			server: 'sql5112.site4now.net',
+			database: 'db_a6478c_fsya',
+			pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
+		};
+		
+		
+		let configx = {
+			user: 'iEx',
+			password: 'iEx',
+			server: 'DESKTOP-3L7R1E4\\SQL22',
+			database: 'fsya',
+			pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
+		};
 
-	return config;
-	
+
+
+		return config;
+		
+
 }
 
 

@@ -150,18 +150,18 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.pos()">
+                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">TRASLADOS RECIBIDOS</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.corte_caja()">
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">CORTE DE CAJA</span>
                                         </a>
                                     </li>
                                     
                                     <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.nota_credito()">
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_introduction">NOTAS DE CRÉDITO CLIENTES</span>
                                         </a>
                                     </li>                                   
@@ -187,7 +187,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="">
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_introduction">GESTIÓN DE PRECIOS MAYORISTAS</span>
                                         </a>
                                     </li>
@@ -198,12 +198,12 @@
                                     </li>
                                    
                                     <li>
-                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.requisiciones()">
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.compras_requisiones()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">REQUISICIONES</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.orden_compra()">
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">ORDEN DE COMPRA</span>
                                         </a>
                                     </li>
@@ -214,7 +214,7 @@
                                     </li>
                                  
                                     <li>
-                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.nota_credito_proveedores()">
+                                        <a href="#" title="Privacy" data-filter-tags="application intel privacy"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_privacy">NOTAS DE CRÉDITO PROVEEDORES</span>
                                         </a>
                                     </li>
@@ -231,17 +231,17 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="">
+                                        <a href="#" title="Analytics Dashboard" data-filter-tags="application intel analytics dashboard" onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">RELLENO A SUCURSALES</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="">
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_introduction">TRASLADO EXTRAORDINARIO</span>
                                         </a>
                                     </li>                                   
                                     <li>
-                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="">
+                                        <a href="#" title="Introduction" data-filter-tags="application intel introduction"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.application_intel_introduction">INVENTARIO FISICO</span>
                                         </a>
                                     </li>                                   
@@ -258,12 +258,12 @@
                                 <ul>
                                     
                                     <li>
-                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.entradas()">
+                                        <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">ENTRADAS INVENTARIO</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.salidas()">
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.pendiente()">
                                             <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">SALIDAS INVENTARIO</span>
                                         </a>
                                     </li>
@@ -348,6 +348,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="#" title="Skin Options" data-filter-tags="theme settings skin options"  onclick="Menu.config_tipodocumentos()">
+                                            <span class="nav-link-text" data-i18n="nav.theme_settings_skin_options">TIPO DE DOCUMENTOS</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="#" title="Layout Options" data-filter-tags="theme settings layout options"  onclick="Menu.usuarios()">
                                             <span class="nav-link-text" data-i18n="nav.theme_settings_layout_options">USUARIOS</span>
                                         </a>
@@ -429,8 +434,7 @@
                     <footer class="page-footer bg-naranja" role="contentinfo">
                        
                         <div class="d-flex align-items-right text-right flex-1 text-white">
-                            <select class="form-control col-4 bg-naranja-text-white" id="cmbTipoPrecio" disabled>
-                            </select>
+                           
                         </div>
 
                     </footer>

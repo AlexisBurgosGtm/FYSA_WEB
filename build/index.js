@@ -1,10 +1,6 @@
 ﻿
 
 
-document.getElementById('cmbTipoPrecio').innerHTML = get_tipo_precios();
-
-
-
 
 function InicializarServiceWorkerNotif(){
   if ('serviceWorker' in navigator) {

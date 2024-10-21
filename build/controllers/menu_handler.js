@@ -3,6 +3,15 @@ let Menu = {
         if(Number(GlobalNivelUsuario)==0){return false;}
         return true;
     },
+    pendiente:()=>{
+        
+        if(Number(GlobalNivelUsuario)==0){return false;}
+        
+        funciones.AvisoError("Función no disponible");
+
+        return true;
+        
+    },
     inicio_admin:()=>{         
         if(Menu.verify()==true){
             funciones.loadScript('../views/menu/menu.js','root')
@@ -18,6 +27,31 @@ let Menu = {
             funciones.loadScript('../views/menu/inicio_compras.js','root')
             .then(async()=>{
                 initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
+    inicio_compras_requisiones:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/menu/inicio_compras_requisiones.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
+    config_tipodocumentos:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/config_tipodocumentos/config_tipodocumentos.js','root')
+            .then(async()=>{
+
+                funciones.loadClass('../models/classTipodocumentos.js','root')
+                .then(async()=>{
+                    
+                    initView();
+                })
             })
         }else{
             funciones.AvisoError('No tiene permitido entrar a esta sección');
@@ -115,5 +149,4 @@ let Menu = {
             funciones.AvisoError('No tiene permitido entrar a esta sección');
         }
     },
-
 }

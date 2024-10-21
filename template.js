@@ -58,8 +58,37 @@ function getView(){
             </div>
             `
         },
-        vista_nuevo:()=>{
+        modal:()=>{
+            return `
+              <div id="modal_" class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-right modal-xl">
+                    <div class="modal-content">
+                        <div class="dropdown-header bg-secondary d-flex justify-content-center align-items-center w-100">
+                            <h4 class="m-0 text-center color-white" id="">
+                                TITULO
+                            </h4>
+                        </div>
+                        <div class="modal-body p-4">
+                            
+                            <div class="card card-rounded">
+                                <div class="card-body p-2">
 
+                                </div>
+                            </div>
+
+                                
+                            <div class="row">
+                                <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-left"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            `
         }
     }
 

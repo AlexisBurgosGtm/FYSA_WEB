@@ -176,7 +176,8 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
             TOTALUNIDADES_DEVUELTAS,
             POR_IVA,
             EXISTENCIA,
-            BONO
+            BONO,
+            TOTALBONO
             )
         SELECT 
             '${sucursal}' AS EMPNIT,
@@ -210,7 +211,8 @@ function str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega
             0 AS TOTALUNIDADES_DEVUELTAS,
             ${iva} AS POR_IVA,
             ${r.EXISTENCIA} AS EXISTENCIA,
-            ${r.BONO} AS BONO;
+            ${r.BONO} AS BONO,
+            ${Number(r.BONO) * Number(r.CANTIDAD)} AS TOTALBONO;
         `
 
     })
@@ -245,7 +247,8 @@ router.post("/productos_filtro", async(req,res)=>{
                     MARCAS.DESMARCA, PRODUCTOS.TIPOPROD, 
                     PRECIOS.CODMEDIDA, PRECIOS.EQUIVALE, PRECIOS.COSTO, 
                     PRECIOS.${tipoprecio} AS PRECIO, INVSALDO.EMPNIT, INVSALDO.EXISTENCIA, 
-                    COLORES.COLOR, PRODUCTOS.EXENTO, (ISNULL(PRODUCTOS.BONO,0) * PRECIOS.EQUIVALE) AS BONO
+                    COLORES.COLOR, PRODUCTOS.EXENTO, 
+                    ISNULL(PRECIOS.BONO_${tipoprecio}, 0) AS BONO
                     FROM PRODUCTOS LEFT OUTER JOIN
                          COLORES ON PRODUCTOS.NF = COLORES.NF LEFT OUTER JOIN
                          INVSALDO ON PRODUCTOS.CODPROD = INVSALDO.CODPROD LEFT OUTER JOIN
@@ -256,8 +259,13 @@ router.post("/productos_filtro", async(req,res)=>{
                         OR
                         (PRODUCTOS.HABILITADO = 'SI') AND (PRECIOS.CODMEDIDA IS NOT NULL) 
                         AND (INVSALDO.EMPNIT = '${sucursal}') AND (PRODUCTOS.CODPROD = '${filtro}')
+                        OR
+                        (PRODUCTOS.HABILITADO = 'SI') AND (PRECIOS.CODMEDIDA IS NOT NULL) 
+                        AND (INVSALDO.EMPNIT = '${sucursal}') AND (PRODUCTOS.CODPROD2 = '${filtro}')
                     `
     
+                    console.log(qry)
+
     execute.QueryToken(res,qry,token);
      
 });

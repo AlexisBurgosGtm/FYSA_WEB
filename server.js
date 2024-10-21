@@ -29,7 +29,6 @@ var router_cajas = require('./router/router_cajas');
 var router_documentos = require('./router/router_documentos');
 var router_bi = require('./router/router_bi')
 var router_clasificaciones = require('./router/router_clasificaciones')
-var router_empresas = require('./router/router_empresas.js')
 var router_usuarios = require('./router/router_usuarios.js')
 
 

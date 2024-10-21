@@ -61,7 +61,7 @@ router.post("/insert_producto", async(req,res)=>{
 
 router.post("/update_precio_medida", async(req,res)=>{
    
-    const {token,sucursal,tipo,codmedida,equivale,precio,bono,margen} = req.body;
+    const {token,sucursal,codprod,tipo,codmedida,equivale,precio,bono,margen} = req.body;
 
 
     let qry = '';
@@ -72,49 +72,49 @@ router.post("/update_precio_medida", async(req,res)=>{
                         PRECIO=${precio},
                         BONO_PRECIO=${bono},
                         MARGEN=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'A':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_A=${precio},
                         BONO_PRECIO_A=${bono},
                         MARGEN_A=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'B':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_B=${precio},
                         BONO_PRECIO_B=${bono},
                         MARGEN_B=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'C':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_C=${precio},
                         BONO_PRECIO_C=${bono},
                         MARGEN_C=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'D':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_D=${precio},
                         BONO_PRECIO_D=${bono},
                         MARGEN_D=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'E':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_E=${precio},
                         BONO_PRECIO_E=${bono},
                         MARGEN_E=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
         case 'F':
             qry = `UPDATE PRECIOS SET 
                         PRECIO_F=${precio},
                         BONO_PRECIO_F=${bono},
                         MARGEN_F=${margen}
-                    WHERE CODMEDIDA='${codmedida}';`
+                    WHERE CODMEDIDA='${codmedida}' AND CODPROD='${codprod}';`
             break;
     }
    

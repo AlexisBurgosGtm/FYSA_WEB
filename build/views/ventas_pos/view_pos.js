@@ -567,11 +567,6 @@ function addListeners(){
     listener_coddoc();
 
    
-    document.getElementById('cmbTipoPrecio').addEventListener('change',()=>{
-
-        GlobalTipoPrecio = document.getElementById('cmbTipoPrecio').value;
-
-    })
 
     let btnGuardarFactura = document.getElementById('btnGuardarFactura');
     btnGuardarFactura.addEventListener('click',()=>{
@@ -780,7 +775,7 @@ function listener_vista_pedido(){
         };
 
 
-        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, GlobalTipoPrecio, Selected_existencia,Selected_bono,descuento)
+        insert_producto_pedido(Selected_codprod,Selected_desprod,Selected_codmedida,Selected_equivale,Selected_costo,preciounitario,cantidad, Selected_exento, Selected_tipoprod, data_empresa_config.TIPO_PRECIO, Selected_existencia,Selected_bono,descuento)
         .then(()=>{
             
             $("#modal_cantidad").modal('hide');
@@ -1255,7 +1250,7 @@ function get_buscar_producto(filtro){
         sucursal: GlobalEmpnit,
         token:TOKEN,
         filtro:filtro,
-        tipoprecio:GlobalTipoPrecio
+        tipoprecio:data_empresa_config.TIPO_PRECIO
     })
     .then((response) => {        
         if(response=='error'){

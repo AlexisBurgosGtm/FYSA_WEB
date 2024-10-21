@@ -1,4 +1,4 @@
-let versionapp = "M.26092024.1640"
+let versionapp = "M.19102024.1640"
 
 
 let map; //mapa de leaflet
@@ -17,7 +17,9 @@ let GlobalNivelUsuario = 0;
 
 let GlobalBolEditando = false;
 let GlobalSignoMoneda = 'Q'
-let data_empresas = [];
+
+let data_empresa_config = [];
+let data_usuario_config = []; 
 
 
 let root = document.getElementById('root');
@@ -28,8 +30,13 @@ let navmenu = document.getElementById('js-nav-menu');
 
 
 let GlobalLoader = `
-
                 <div>
+                    <div  class="spinner-border" role="status">
+                        <img src="./favicon.png" width="40" height="40">
+                    </div>
+                    <div  class="spinner-border" role="status">
+                        <img src="./favicon.png" width="40" height="40">
+                    </div>
                     <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>
                     <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>
                     <div class="spinner-border text-naranja" role="status"><span class="sr-only">Loading...</span></div>

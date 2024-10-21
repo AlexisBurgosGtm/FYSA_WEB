@@ -854,9 +854,27 @@ let funciones = {
     
           script.onload = resolve;
           script.onerror = reject;
-             
+          document.getElementById(idContainer).innerHTML = '';   
           document.getElementById(idContainer).appendChild(script)
         });
+    },
+    loadClass: function(url, idContainer) {
+      return new Promise((resolve, reject) => {
+        var script = document.createElement('script');
+        script.src = url;
+  
+        script.onload = resolve;
+        script.onerror = reject;
+
+        try {
+          console.log('cargando clase...')
+          document.getElementById(idContainer).appendChild(script)  
+        } catch (error) {
+          console.log('Clase registrada con anterioridad... ' + error)
+        }
+        
+
+      });
     },
     hablar: function(msn){
         var utterance = new SpeechSynthesisUtterance(msn);

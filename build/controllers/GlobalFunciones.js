@@ -379,6 +379,33 @@ let GF = {
     
         })
     },
+    get_data_empresa_config(sucursal){
+    
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/sucursales/data_empresa_config',
+                {
+                    token:TOKEN,
+                    sucursal:sucursal
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
     get_data_sucursales_precios(precio){
     
   
@@ -460,7 +487,7 @@ let GF = {
         })   
     
     },
-    update_precio_medida(tipo,codmedida,equivale,precio,bono,margen){
+    update_precio_medida(codprod,tipo,codmedida,equivale,precio,bono,margen){
     
   
         return new Promise((resolve,reject)=>{
@@ -469,6 +496,7 @@ let GF = {
                 {
                     token:TOKEN,
                     sucursal:GlobalEmpnit,
+                    codprod:codprod,
                     tipo:tipo,
                     codmedida:codmedida,
                     equivale:equivale,

@@ -113,7 +113,19 @@ function addListeners(){
             GlobalEmpnit = cmbEmpresa.value;
             GlobalNivelUsuario = 2;
            
-            Navegar.inicio();
+
+            GF.get_data_empresa_config(GlobalEmpnit)
+            .then((data)=>{
+                
+                data_empresa_config = data.recordset[0];
+                Navegar.inicio();
+
+            })
+            .catch(()=>{
+                F.AvisoError('No se pudieron cargar los datos de la empresa');
+
+            })
+
             
             return;
 

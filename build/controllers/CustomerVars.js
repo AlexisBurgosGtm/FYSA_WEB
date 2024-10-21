@@ -1,6 +1,7 @@
 
 
-let GlobalTipoPrecio = 'PRECIO';
+
+//data_empresa_config.TIPO_PRECIO
 
 
 let tipo_precios =[
