@@ -4,14 +4,13 @@ const router = express.Router();
 
 
 
-router.post("/listado_tipos", async(req,res)=>{
+router.post("/listado_formatos", async(req,res)=>{
    
     const { token } = req.body;
 
 
     let qry = ``
-    qry = `SELECT TIPODOC, DESCRIPCION, INV 
-            FROM CONFIG_TIPODOCUMENTOS`
+    qry = `SELECT CODFORMATO, DESCRIPCION FROM CONTA_FORMATOS`
    
 
     execute.QueryToken(res,qry,token);
