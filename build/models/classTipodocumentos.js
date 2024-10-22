@@ -84,4 +84,121 @@ let classTipodocumentos = {
         })   
     
     },
+    insert_tipodocumento(tipodoc,coddoc,correlativo,descripcion,contacon,contacre){
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/tipodocumentos/insert_tipodocumento',
+                {
+                    token:TOKEN,
+                    sucursal:GlobalEmpnit,
+                    tipodoc:tipodoc,
+                    coddoc:coddoc,
+                    correlativo:correlativo,
+                    descripcion:descripcion,
+                    fcontacon:contacon,
+                    fcontacre:contacre
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
+    edit_tipodocumento(coddoc,correlativo,descripcion,contacon,contacre){
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/tipodocumentos/edit_tipodocumento',
+                {
+                    token:TOKEN,
+                    sucursal:GlobalEmpnit,
+                    coddoc:coddoc,
+                    correlativo:correlativo,
+                    descripcion:descripcion,
+                    fcontacon:contacon,
+                    fcontacre:contacre
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
+    delete_tipodocumento(coddoc){
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/tipodocumentos/delete_tipodocumento',
+                {
+                    token:TOKEN,
+                    sucursal:GlobalEmpnit,
+                    coddoc:coddoc
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
+    verify_movimientos_tipodocumento(coddoc){
+  
+        return new Promise((resolve,reject)=>{
+    
+            axios.post(GlobalUrlCalls + '/tipodocumentos/verify_movimientos',
+                {
+                    token:TOKEN,
+                    sucursal:GlobalEmpnit,
+                    coddoc:coddoc
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    }
 }

@@ -31,3 +31,4 @@ var classConta = {
         })   
     
     },
+}

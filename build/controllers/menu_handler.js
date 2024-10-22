@@ -49,8 +49,11 @@ let Menu = {
 
                 funciones.loadClass('../models/classTipodocumentos.js','root')
                 .then(async()=>{
-                    
+
                     initView();
+
+                  
+                   
                 })
             })
         }else{

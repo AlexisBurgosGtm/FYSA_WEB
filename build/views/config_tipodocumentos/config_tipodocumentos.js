@@ -52,7 +52,6 @@ function getView(){
                                     <td>CODDOC</td>
                                     <td>CORRELATIVO</td>
                                     <td>DESCRIPCION</td>
-                                    <td>F.IMPRESION</td>
                                     <td>F.CONTA CON</td>
                                     <td>F.CONTA CRE</td>
                                     <td>STATUS</td>
@@ -78,7 +77,7 @@ function getView(){
                     <div class="modal-content">
                         <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
                             <h4 class="m-0 text-center color-white" id="">
-                                DATOS DEL NUEVO DOCUMENTO
+                                DATOS DEL DOCUMENTO
                             </h4>
                         </div>
                         <div class="modal-body p-4">
@@ -178,11 +177,80 @@ function addListeners(){
         })
 
 
-       get_combos();
+        get_combos();
        
-
-
         get_tbl_documentos();
+
+
+        let btnGuardar = document.getElementById('btnGuardar');
+        btnGuardar.addEventListener('click',()=>{
+
+            let coddoc = document.getElementById("txtCoddoc");
+            if(coddoc.disabled.toString()=='true'){
+
+                funciones.Confirmacion("¿Está seguro que desea EDITAR este nuevo Documento?")
+                .then((value)=>{
+                    if(value==true){
+    
+                        let txtCoddoc = document.getElementById('txtCoddoc').value || '';
+                        let txtCorrelativo = document.getElementById('txtCorrelativo').value || '1';
+                        let txtDescripcion = document.getElementById('txtDescripcion').value || 'SN';
+                        let cmbFContaCon = document.getElementById('cmbFContaCon').value;
+                        let cmbFContaCre = document.getElementById('cmbFContaCre').value;
+    
+    
+                        classTipodocumentos.edit_tipodocumento(txtCoddoc,txtCorrelativo,txtDescripcion,cmbFContaCon,cmbFContaCre)
+                        .then(()=>{
+                            
+                            funciones.Aviso("Documento actualizado exitosamente!!");
+                            $("#modal_nuevo").modal("hide");
+    
+                            get_tbl_documentos();
+                        })
+                        .catch(()=>{
+                            funciones.AvisoError("No se pudo actualizar");
+                        })
+    
+                    }
+                })
+
+            }else{
+
+                    funciones.Confirmacion("¿Está seguro que desea Crear este nuevo Documento?")
+                    .then((value)=>{
+                        if(value==true){
+
+                            let cmbTipodocumento = document.getElementById('cmbTipodocumento').value;
+                            let txtCoddoc = document.getElementById('txtCoddoc').value || '';
+                            let txtCorrelativo = document.getElementById('txtCorrelativo').value || '1';
+                            let txtDescripcion = document.getElementById('txtDescripcion').value || 'SN';
+                            let cmbFContaCon = document.getElementById('cmbFContaCon').value;
+                            let cmbFContaCre = document.getElementById('cmbFContaCre').value;
+
+                            if(txtCoddoc==''){funciones.AvisoError("Escriba una serie válida");return;}
+                            
+
+                            classTipodocumentos.insert_tipodocumento(cmbTipodocumento,txtCoddoc,txtCorrelativo,txtDescripcion,cmbFContaCon,cmbFContaCre)
+                            .then(()=>{
+                                
+                                funciones.Aviso("Documento generado exitosamente!!");
+                                $("#modal_nuevo").modal("hide");
+
+                                get_tbl_documentos();
+                            })
+                            .catch(()=>{
+                                funciones.AvisoError("No se pudo guardar");
+                            })
+
+                        }
+                    })
+
+            }
+
+            
+
+
+        });
 
 
 };
@@ -213,21 +281,48 @@ function get_combos(){
         })
 
 
-        //COMBO FORMATO CONTA CON
+        funciones.loadClass('../models/classConta.js','root')
+        .then(async()=>{
+            //COMBO FORMATO CONTA CON CRE
+            classConta.get_data_formatos()
+            .then((data)=>{
+                let str = '';
+                data.recordset.map((r)=>{
+                    str += `
+                        <option value="${r.CODFORMATO}">${r.DESCRIPCION}</option>
+                    `
+                })
+                document.getElementById('cmbFContaCon').innerHTML = str;
+                document.getElementById('cmbFContaCre').innerHTML = str;
+            })
+            .catch(()=>{
+                document.getElementById('cmbFContaCon').innerHTML = '';
+                document.getElementById('cmbFContaCre').innerHTML = '';
+            })
+        })
+        
 
-
-        //COMBO FORMATO CONTA CRE
-
+     
         
 
 
 
 
 
-}
+};
 
 function fcn_limpiar_datos(){
+    
+    document.getElementById('cmbTipodocumento').disabled = false;
+    document.getElementById('txtCoddoc').disabled = false;
 
+    document.getElementById('txtDescripcion').value = '';
+    document.getElementById('txtCoddoc').value = '';
+    document.getElementById('txtCorrelativo').value = '';
+
+
+    document.getElementById('cmbFContaCon').value = 'SN';
+    document.getElementById('cmbFContaCre').value = 'SN';
 
 
 };
@@ -245,14 +340,13 @@ function get_tbl_documentos(){
 
             let strClassHabilitado = ""; if(r.HABILITADO=='SI'){strClassHabilitado='btn-success'}else{strClassHabilitado='btn-danger'};
             let idBtnStatus = `btnStatus${r.CODDOC}${r.TIPODOC}`;
-
+            let idBtnEliminar = `btnEliminar${r.ID}`
             str += `
                     <tr>
                         <td>${r.TIPODOC}</td>
                         <td>${r.CODDOC}</td>
                         <td>${r.CORRELATIVO}</td>
                         <td>${r.DESCRIPCION}</td>
-                        <td>${r.FORMATO}</td>
                         <td>${r.CONTA_CON}</td>
                         <td>${r.CONTA_CRE}</td>
                         <td>
@@ -261,12 +355,14 @@ function get_tbl_documentos(){
                             </button>
                         </td>
                          <td>
-                            <button class="btn btn-info btn-circle btn-md hand shadow" onclick="">
+                            <button class="btn btn-info btn-circle btn-md hand shadow" 
+                            onclick="editar_documento('${r.TIPODOC}','${r.CODDOC}','${r.CORRELATIVO}','${r.DESCRIPCION}','${r.CONTA_CON}','${r.CONTA_CRE}')">
                                 <i class="fal fa-edit"></i>
                             </button>
                         </td>
                          <td>
-                            <button class="btn btn-danger btn-circle btn-md hand shadow" onclick="">
+                            <button id="${idBtnEliminar}" class="btn btn-danger btn-circle btn-md hand shadow" 
+                            onclick="eliminar_documento('${r.CODDOC}','${idBtnEliminar}')">
                                 <i class="fal fa-trash"></i>
                             </button>
                         </td>
@@ -324,4 +420,63 @@ function fcn_set_tipo_status(coddoc,status,idBtn){
         })
 
         
+};
+
+function eliminar_documento(coddoc,idbtn){
+
+    let btn = document.getElementById(idbtn);
+
+    funciones.Confirmacion("¿Está seguro que desea ELIMINAR este documento?")
+    .then((value)=>{
+        if(value==true){
+
+            btn.disabled =true;
+            btn.innerHTML = `<i class="fal fa-spin fa-trash"></i>`;
+    
+            funciones.showToast("Verificando movimientos del documento...")
+
+            classTipodocumentos.verify_movimientos_tipodocumento(coddoc)
+            .then(()=>{
+                
+                    funciones.AvisoError("Este documento ya tiene movimientos, no se puede eliminar, debe deshabilitarlo en su lugar");
+                    btn.disabled =false;
+                    btn.innerHTML = `<i class="fal fa-trash"></i>`;
+            })
+            .catch(()=>{
+                classTipodocumentos.delete_tipodocumento(coddoc)
+                .then(()=>{
+                    funciones.Aviso("Documento eliminado exitosamente!!")
+                    get_tbl_documentos();
+                })
+                .catch(()=>{
+                    funciones.AvisoError("No se pudo eliminar el documento. Error en el servidor");
+                    btn.disabled =false;
+                    btn.innerHTML = `<i class="fal fa-trash"></i>`; 
+                })
+            })
+
+        }
+       
+    })
+
+};
+
+
+function editar_documento(tipodoc,coddoc,correlativo,descripcion,contacon,contacre){
+
+
+    document.getElementById('cmbTipodocumento').disabled = true;
+    document.getElementById('txtCoddoc').disabled = true;
+
+    document.getElementById('txtDescripcion').value = descripcion;
+    document.getElementById('txtCoddoc').value = coddoc;
+    document.getElementById('txtCorrelativo').value = correlativo;
+
+
+    document.getElementById('cmbFContaCon').value = contacon;
+    document.getElementById('cmbFContaCre').value = contacre;
+
+    $("#modal_nuevo").modal("show");
+
+
 };
