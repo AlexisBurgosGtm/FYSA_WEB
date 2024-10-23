@@ -92,6 +92,26 @@ let Menu = {
             funciones.AvisoError('No tiene permitido entrar a esta sección');
         }
     },
+    compras_requisiciones:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/compras_cotizaciones/view_compras_requisiciones.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
+    compras_orden:()=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/compras_cotizaciones/view_compras_orden.js','root')
+            .then(async()=>{
+                initView();
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
     compras_gestion_precios:()=>{
         if(Menu.verify()==true){
             funciones.loadScript('../views/compras_gestion_precios/view_compras_precios.js','root')

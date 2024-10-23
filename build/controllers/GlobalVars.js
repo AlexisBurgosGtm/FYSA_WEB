@@ -1,4 +1,4 @@
-let versionapp = "M.21102024.1607"
+let versionapp = "M.22102024.1607"
 
 
 let map; //mapa de leaflet
@@ -19,7 +19,14 @@ let GlobalBolEditando = false;
 let GlobalSignoMoneda = 'Q'
 
 let data_empresa_config = [];
-let data_usuario_config = []; 
+let data_usuario_config = [];
+
+let tbl_etiquetas = [
+    {valor:"BAJA",color:"bg-info"},
+    {valor:"MEDIA",color:"bg-warning"},
+    {valor:"ALTA",color:"bg-danger"},
+]
+
 
 
 let root = document.getElementById('root');

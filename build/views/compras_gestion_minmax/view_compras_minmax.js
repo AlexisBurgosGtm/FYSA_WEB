@@ -358,12 +358,16 @@ function get_tbl_minmax(codprod){
     .then((data)=>{
         let str = '';
         data.recordset.map((r)=>{
+            let idHabilitado = `btnHabilitado${r.SUCURSAL}-${r.CODPROD}`
             str += `
             <tr>
                 <td>${r.SUCURSAL}</td>
                 <td>${r.MINIMO}</td>
                 <td>${r.MAXIMO}</td>
-                <td>${r.HABILITADO}</td>
+                <td>${r.HABILITADO}
+                    <input class="hand" type="checkbox"  id="${idHabilitado}" data-on="HABILITADO" data-off="DESHABILITADO" 
+                    checked data-toggle="toggle"  data-width="95" data-onstyle="success" data-offstyle="danger"></input>  
+                </td>
                 <td>${r.NOTAS}</td>
 
                 <td>

@@ -92,7 +92,6 @@ function getView(){
                                 <td>COSTO ANTERIOR</td>
                                 <td>MARCA</td>
                                 <td>TIPO</td>
-                                <td>IPs</td>
                                 <td>ACT</td>
                             </tr>
                         </thead>
@@ -2467,7 +2466,6 @@ function get_tbl_productos(){
                      <td>${funciones.setMoneda(r.COSTO_ANTERIOR,'Q')}</td>
                     <td>${r.DESMARCA}</td>
                     <td>${r.TIPOPROD}</td>
-                    <td>${funciones.setMoneda(r.BONO,'Q')}</td>
                     <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
                 </tr>
             `

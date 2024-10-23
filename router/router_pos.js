@@ -13,7 +13,7 @@ router.post("/insertventa", async(req,res)=>{
             codven, lat, long, hora, tipo_pago, tipo_doc,
             entrega_contacto, entrega_telefono, entrega_direccion,
             entrega_referencia, entrega_lat, entrega_long,
-            codcaja, iva } = req.body;
+            codcaja, iva, etiqueta } = req.body;
 
     let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
         coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
@@ -22,7 +22,7 @@ router.post("/insertventa", async(req,res)=>{
         codven, lat, long, hora, tipo_pago, tipo_doc,
         entrega_contacto, entrega_telefono, entrega_direccion,
         entrega_referencia, entrega_lat, entrega_long,
-        codcaja, iva);
+        codcaja, iva,etiqueta);
 
     let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
    
@@ -44,7 +44,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
     codven, lat, long, hora, tipo_pago, tipo_doc,
     entrega_contacto, entrega_telefono, entrega_direccion,
     entrega_referencia, entrega_lat, entrega_long,
-    codcaja, iva){
+    codcaja, iva, etiqueta){
 
     let qry = `INSERT INTO DOCUMENTOS (
             EMPNIT,
@@ -87,6 +87,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
             ENTREGADO,
             POR_IVA,
             TIPO_VENTA,
+            ETIQUETA,
             JSONDOCPRODUCTOS)
         SELECT
             '${sucursal}' AS EMPNIT,
@@ -130,6 +131,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
             'NO' AS ENTREGADO, 
             ${iva} POR_IVA,
             '${tipo_doc}' AS TIPO_VENTA,
+            '${etiqueta}' AS ETIQUETA,            
             '${jsondocproductos}' AS JSONDOCPRODUCTOS;
         `
 

@@ -880,6 +880,13 @@ let funciones = {
         var utterance = new SpeechSynthesisUtterance(msn);
         return window.speechSynthesis.speak(utterance); 
     },
+    get_prioridades: function(){
+        let str = '';
+        tbl_etiquetas.map((r)=>{
+            str += `<option value="${r.valor}" class="${r.color}">${r.valor}</option>`
+        })
+        return str;
+    },
     crearBusquedaTabla: function(idTabla,idBusqueda){
     var tableReg = document.getElementById(idTabla);
     var searchText = document.getElementById(idBusqueda).value.toLowerCase();
