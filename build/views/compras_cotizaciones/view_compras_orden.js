@@ -73,16 +73,35 @@ function getView(){
                             <div class="card card-rounded shadow border-naranja col-12 p-2">
                                 <div class="card-body">
                                     
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                           
-                                            <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
-                                                <i class="fal fa-search"></i>
-                                            </button>
-                                                                                    
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                
+                                                    <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                                                    <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
+                                                        <i class="fal fa-search"></i>
+                                                    </button>
+                                                                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                
+                                                    <button class="btn btn-info hand shadow" id="btnTomarDatos">
+                                                        <i class="fal fa-download"></i> Tomar Requisición
+                                                    </button>
+                                                                                            
+                                                </div>
+                                            </div>
+                                            
                                         </div>
                                     </div>
+
+                                   
 
                                     <div class="row">
 
@@ -480,7 +499,7 @@ function getView(){
                         <div class="modal-body p-4">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label>Búsqueda de Proveedores</label>
+                                    <label class="negrita text-secondary">Búsqueda de Proveedores</label>
                                     <div class="input-group">
                                         <input type="search" autocomplete="off" class="form-control border-naranja negrita" id="txtBuscarClie">
                                         <button class="btn btn-naranja hand text-white" id="btnBuscarClie">
@@ -546,6 +565,7 @@ function getView(){
     root.innerHTML = view.body();
 
 };
+
 
 function addListeners(){
 
