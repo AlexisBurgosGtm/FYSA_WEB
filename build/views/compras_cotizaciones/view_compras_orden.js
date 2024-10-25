@@ -25,11 +25,11 @@ function getView(){
                         
                     </div>
                 </div>
-                <br>
+                
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() }
+                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() + view.modal_tomar_datos()}
                         </div> 
                         <div class="tab-pane fade" id="precios" role="tabpanel" aria-labelledby="clientes-tab">
                           
@@ -559,7 +559,50 @@ function getView(){
                     </div>
                 </div>
             </div>`
-        }
+        },
+        modal_tomar_datos:()=>{
+            return `
+            <div class="modal" id="modal_tomar_datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-naranja">
+                            <label class="modal-title text-white h3" id="">Seleccione una Requisición para Cargar</label>
+                        </div>
+            
+                        <div class="modal-body p-4">
+                            <div class="table-responsive col-12">
+                                <table class="table table-responsive table-bordered table-hover" id="tblTomarDatos">
+                                    <thead class="bg-verde text-white">
+                                        <tr>
+                                            <td>FECHA</td>
+                                            <td>DOCUMENTO</td>
+                                            <td>PROVEEDOR</td>
+                                            <td>OBSERVACIONES</td>
+                                            <td>IMPORTE</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblDataTomarDatos"></tbody>
+                                </table>
+
+                            
+                            </div>
+                                
+        
+                            <div class="row">
+                                    <div class="col-5 text-right">
+                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
+                                            <i class="fal fa-arrow-left"></i>
+                                        </button>                                
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        },
     }
 
     root.innerHTML = view.body();
@@ -627,6 +670,16 @@ function addListeners(){
         
 
     });
+
+
+    document.getElementById('btnTomarDatos').addEventListener('click',()=>{
+
+        $("#modal_tomar_datos").modal("show");
+
+        get_tbl_tomar_datos('REQ');
+
+
+    })
 
 
     document.getElementById('txtPosCodprod').focus();
@@ -1824,7 +1877,7 @@ function finalizar_pedido(){
 
         gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/compras/insertventa', {
+            axios.post('/compras/insertcompra', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
@@ -2155,3 +2208,86 @@ function anular_factura(coddoc,correlativo,status,idbtn){
    
 
 };
+
+
+
+
+
+
+function get_data_tomar_datos(tipo){
+
+    return new Promise((resolve,reject)=>{
+
+        axios.post('/documentos/documentos_pendientes', {
+            sucursal: GlobalEmpnit,
+            token:TOKEN,
+            tipodoc:tipo
+        })
+        .then((response) => {
+            if(response.status.toString()=='200'){
+                let data = response.data;
+                if(Number(data.rowsAffected[0])>0){
+                    resolve(data);             
+                }else{
+                    reject();
+                }            
+            }else{
+                reject();
+            }
+        }, (error) => {
+            funciones.AvisoError('Error en la solicitud');
+        });
+
+    })
+
+};
+
+function get_tbl_tomar_datos(tipo){
+
+    let container = document.getElementById('tblDataTomarDatos');
+    container.innerHTML = GlobalLoader;
+
+    let str = "";
+
+    get_data_tomar_datos(tipo)
+    .then((data)=>{
+
+        data.recordset.map((r)=>{
+            console.log(r)
+            str += `
+            <tr>
+                <td>${funciones.convertDateNormal(r.FECHA)}</td>
+                <td>${r.CODDOC}-${r.CORRELATIVO}</td>
+                <td>${r.NOMBRE}
+                    <br>
+                    <small class="col-12 text-center negrita text-white ${funciones.get_color_prioridad(r.ETIQUETA)}">Prioridad: ${r.ETIQUETA}</small>
+                </td>
+                <td>${r.OBS}</td>
+                <td class="negrita text-naranja">${funciones.setMoneda(r.IMPORTE,'Q')}</td>
+                <td>
+                    <button class="btn btn-md btn-info btn-circle hand shadow" onclick="">
+                        <i class="fal fa-edit"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-md btn-naranja btn-circle hand shadow" onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}')">
+                        <i class="fal fa-download"></i>
+                    </button>
+                </td>
+            </tr>
+            `
+        })
+
+        container.innerHTML = str;
+
+    })
+    .catch((error)=>{
+        console.log(error)
+        container.innerHTML = 'No hay datos para mostrar....';
+
+    })
+
+
+
+
+}

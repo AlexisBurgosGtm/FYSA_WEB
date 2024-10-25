@@ -1390,6 +1390,24 @@ let funciones = {
           let str = atob(base64string)
           resolve(str);
       })
+    },
+    get_color_prioridad(prioridad){
+
+        let bg = '';
+
+        tbl_etiquetas.map((r)=>{
+            if(r.valor==prioridad){bg = r.color }       
+        })
+        /*
+        let tbl_etiquetas = [
+          {valor:"BAJA",color:"bg-info"},
+          {valor:"MEDIA",color:"bg-warning"},
+          {valor:"ALTA",color:"bg-danger"},
+        ]
+        */
+
+        return bg;
+
     }
 };
 

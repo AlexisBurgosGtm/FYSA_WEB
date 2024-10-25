@@ -3,6 +3,39 @@ const express = require('express');
 const router = express.Router();
 
 
+router.post("/insertcompra", async(req,res)=>{
+   
+
+    const { token,jsondocproductos,sucursal,
+            coddoc,correlativo,serie_fac,numero_fac,anio,mes,fecha,fechaentrega,formaentrega,
+            codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+            nitclie, dirclie, obs, direntrega, usuario,
+            codven, lat, long, hora, tipo_pago, tipo_doc,
+            entrega_contacto, entrega_telefono, entrega_direccion,
+            entrega_referencia, entrega_lat, entrega_long,
+            codcaja, iva, etiqueta} = req.body;
+
+    let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
+        coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
+        codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+        nitclie, dirclie, obs, direntrega, usuario,
+        codven, lat, long, hora, tipo_pago, tipo_doc,
+        entrega_contacto, entrega_telefono, entrega_direccion,
+        entrega_referencia, entrega_lat, entrega_long,
+        codcaja, iva,serie_fac,numero_fac,etiqueta);
+
+    let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
+   
+    let nuevoCorrelativo = Number(correlativo) + 1;
+    let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
+    
+    let qry = qryDocumentos + qryDocproductos + qryTipodocumentos;
+
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
 router.post("/insertventa", async(req,res)=>{
    
 
@@ -44,7 +77,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
     codven, lat, long, hora, tipo_pago, tipo_doc,
     entrega_contacto, entrega_telefono, entrega_direccion,
     entrega_referencia, entrega_lat, entrega_long,
-    codcaja, iva,serie_fac,numero_fac){
+    codcaja, iva,serie_fac,numero_fac,etiqueta){
 
     let qry = `INSERT INTO DOCUMENTOS (
             EMPNIT,
@@ -87,6 +120,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
             ENTREGADO,
             POR_IVA,
             TIPO_VENTA,
+            ETIQUETA,
             JSONDOCPRODUCTOS)
         SELECT
             '${sucursal}' AS EMPNIT,
@@ -130,6 +164,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
             'NO' AS ENTREGADO, 
             ${iva} POR_IVA,
             '${tipo_doc}' AS TIPO_VENTA,
+            '${etiqueta}' AS ETIQUETA,
             '${jsondocproductos}' AS JSONDOCPRODUCTOS;
         `
 

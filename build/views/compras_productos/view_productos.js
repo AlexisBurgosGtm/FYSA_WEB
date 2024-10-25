@@ -11,7 +11,7 @@ function getView(){
                             ${view.vista_ficha_producto() + view.modal_nuevo_precio() + view.modal_medidas() + view.modal_sucursales_precio() + view.modal_marcas()}
                         </div>
                         <div class="tab-pane fade" id="tres" role="tabpanel" aria-labelledby="home-tab">
-                            
+                            ${view.vista_movimientos_kardex()}
                         </div>
                         <div class="tab-pane fade" id="cuatro" role="tabpanel" aria-labelledby="home-tab">
                             
@@ -81,7 +81,7 @@ function getView(){
 
                     <div class="form-group">
                         <label>Búsqueda de productos</label>
-                        <input type="text" class="form-control border-naranja negrita text-naranja" placeholder="Escriba para filtrar..." id="txtBuscar">
+                        <input type="text" class="form-control border-naranja negrita text-naranja" placeholder="Escriba para filtrar..." id="txtBuscar" autocomplete="off">
                     </div>
                     <table class="table table-responsive h-full" id="tblProductos">
                         <thead class="bg-naranja text-white f-med">
@@ -135,7 +135,7 @@ function getView(){
                                         <hr class="solid">
                                             <button class="btn btn-circle btn-naranja" id="btnProdMenKardex">
                                                 <i class="fal fa-list"></i>
-                                            </button>  <b class="text-naranja hand">Kardex</b>
+                                            </button>  <b class="text-naranja hand">Kardex Movimientos</b>
                                         <hr class="solid">
                                         
                                             <button class="btn btn-circle btn-danger" id="btnProdMenEliminar">
@@ -995,6 +995,40 @@ function getView(){
             
             `
         },
+        vista_movimientos_kardex:()=>{
+            return `
+            <div class="card card-rounded col-12 shadow">
+                <div class="card-body p-4">
+
+                    <h5 class="negrita text-secondary">Movimientos del producto</h5>
+                    <h2 class="negrita text-naranja" id="lbMovimientosDesprod">PRODUCTO</h2>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-responsive h-full col-12 table-hover table-bordered" id="tblMovimientosProducto">
+                            <thead class="bg-naranja text-white negrita">
+                                <tr>
+                                    <td>FECHA</td>
+                                    <td>DOCUMENTO</td>
+                                    <td>ENTRADA</td>
+                                    <td>SALIDA</td>
+                                    <td>SALDO</td>
+                                    <td>PRECIO</td>
+                                    <td>MODIFICADO</td>
+                                </tr>
+                            </thead>
+                            <tbody id="tblDataMovimientosProducto">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary btn-bottom-l btn-xl btn-circle hand shadow" onclick="document.getElementById('tab-uno').click()">
+                <i class="fal fa-arrow-left"></i>
+            </button>
+
+            `
+        }
     }
     
 
@@ -1386,6 +1420,28 @@ function listeners_menu_productos(){
             })
 
         });
+
+        let btnProdMenKardex = document.getElementById('btnProdMenKardex');
+        btnProdMenKardex.addEventListener('click',()=>{
+
+            $("#modal_menu_producto").modal('hide');
+
+            document.getElementById('lbMovimientosDesprod').innerText = GlobalSelected_Desprod;
+            document.getElementById('tab-tres').click();
+
+            let container = document.getElementById('tblDataMovimientosProducto');
+            container.innerHTML = GlobalLoader;
+
+
+            GF.get_tbl_movimientos_producto(GlobalSelected_Codprod)
+            .then((tbl)=>{
+                container.innerHTML = tbl;    
+            })
+            .catch(()=>{
+                container.innerHTML = 'No hay datos....';
+            })
+
+        })
 
 };
 

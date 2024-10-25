@@ -25,7 +25,7 @@ function getView(){
                         
                     </div>
                 </div>
-                <br>
+                
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
@@ -607,6 +607,9 @@ function addListeners(){
         
 
     });
+
+
+  
 
 
     document.getElementById('txtPosCodprod').focus();
@@ -1804,7 +1807,7 @@ function finalizar_pedido(){
 
         gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/compras/insertventa', {
+            axios.post('/compras/insertcompra', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
@@ -2135,3 +2138,7 @@ function anular_factura(coddoc,correlativo,status,idbtn){
    
 
 };
+
+
+
+

@@ -3,6 +3,25 @@ const express = require('express');
 const router = express.Router();
 
 
+router.post("/documentos_pendientes", async(req,res)=>{
+   
+    const { token, sucursal, tipodoc} = req.body;
+
+    let qry = `
+        SELECT DOCUMENTOS.EMPNIT, DOCUMENTOS.FECHA, DOCUMENTOS.HORA, DOCUMENTOS.CODDOC, DOCUMENTOS.CORRELATIVO, 
+            DOCUMENTOS.DOC_NIT AS NIT, DOCUMENTOS.DOC_NOMCLIE AS NOMBRE, 
+            DOCUMENTOS.DOC_DIRCLIE AS DIRECCION, DOCUMENTOS.TOTALVENTA AS IMPORTE, DOCUMENTOS.STATUS, DOCUMENTOS.OBS, DOCUMENTOS.ETIQUETA
+        FROM  DOCUMENTOS LEFT OUTER JOIN
+                  TIPODOCUMENTOS ON DOCUMENTOS.CODDOC = TIPODOCUMENTOS.CODDOC AND DOCUMENTOS.EMPNIT = TIPODOCUMENTOS.EMPNIT
+        WHERE (DOCUMENTOS.EMPNIT = '${sucursal}') 
+            AND (TIPODOCUMENTOS.TIPODOC = '${tipodoc}') 
+            AND (DOCUMENTOS.STATUS = 'O')
+    `
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
 
 router.post("/detalle_documento", async(req,res)=>{
    

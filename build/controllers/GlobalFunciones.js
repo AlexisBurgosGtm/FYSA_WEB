@@ -274,6 +274,74 @@ let GF = {
             });
         })     
     },
+    get_data_movimientos_producto:(codprod)=>{
+
+        return new Promise((resolve,reject)=>{
+
+            axios.post(GlobalUrlCalls + '/productos/movimientos_kardex', {
+                token:TOKEN,
+                sucursal:GlobalEmpnit,
+                codprod:codprod
+            })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        }) 
+    
+    },
+    get_tbl_movimientos_producto:(codprod)=>{
+
+        return new Promise((resolve,reject)=>{
+            GF.get_data_movimientos_producto(codprod)
+            .then((data)=>{
+                
+                let str =''
+                let saldo = 0;
+
+                data.recordset.map((r)=>{
+                    let entrada = 0;
+                    let salida = 0;
+                    let strSaldoClass = '';
+
+                    if(Number(r.INV)==1){entrada=Number(r.TOTALUNIDADES);salida=0}else{entrada=0;salida=Number(r.TOTALUNIDADES)}
+                    
+                    saldo += Number(r.TOTALUNIDADES) * Number(r.INV);
+                    if(saldo<0){strSaldoClass="negrita text-danger"}else{strSaldoClass="negrita text-info"}
+                    
+                    str += `
+                        <tr>
+                            <td>${funciones.convertDateNormal(r.FECHA)}</td>
+                            <td>${r.CODDOC}-${r.CORRELATIVO}</td>
+                            <td>${entrada}</td>
+                            <td>${salida}</td>
+                            <td class="${strSaldoClass}">${saldo}</td>
+                            <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                            <td>${funciones.convertDateNormal(r.LASTUPDATE)}</td>
+                            <td></td>
+                        </tr>
+                        `
+                })
+                resolve(str);    
+            })
+            .catch(()=>{
+                resolve('No hay datos....');
+            })
+        })
+
+        
+
+    },
     get_data_documentos:(tipo,mes,anio)=>{
         return new Promise((resolve,reject)=>{
     
