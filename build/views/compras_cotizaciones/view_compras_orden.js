@@ -29,7 +29,7 @@ function getView(){
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() + view.modal_tomar_datos()}
+                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() + view.modal_tomar_datos() + view.modal_detalle_tomar_datos()}
                         </div> 
                         <div class="tab-pane fade" id="precios" role="tabpanel" aria-labelledby="clientes-tab">
                           
@@ -562,7 +562,7 @@ function getView(){
         },
         modal_tomar_datos:()=>{
             return `
-            <div class="modal" id="modal_tomar_datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade"  id="modal_tomar_datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
 
@@ -571,6 +571,10 @@ function getView(){
                         </div>
             
                         <div class="modal-body p-4">
+                            <div class="form-group">
+                                <label class="negrita text-naranja">Escriba para buscar..</label>
+                                <input type="search" class="form-control negrita text-naranja" oninput="funciones.crearBusquedaTabla('tblTomarDatos','txtBuscarTomarDatos')" id="txtBuscarTomarDatos">
+                            </div>
                             <div class="table-responsive col-12">
                                 <table class="table table-responsive table-bordered table-hover" id="tblTomarDatos">
                                     <thead class="bg-verde text-white">
@@ -586,6 +590,58 @@ function getView(){
                                     </thead>
                                     <tbody id="tblDataTomarDatos"></tbody>
                                 </table>
+
+                            
+                            </div>
+                                
+        
+                            <div class="row">
+                                    <div class="col-5 text-right">
+                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
+                                            <i class="fal fa-arrow-left"></i>
+                                        </button>                                
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        },
+        modal_detalle_tomar_datos:()=>{
+            return `
+            <div class="modal fade"  id="modal_tomar_datos_detalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-verde">
+                            <label class="modal-title text-white h3" id="">Detalle de la Requisicion</label>
+                        </div>
+            
+                        <div class="modal-body p-4">
+                            
+                            <h4 class="negrita text-naranja" id="lbDetalleTomarDatosNombre"></h4>
+                            <br>
+
+                            <div class="table-responsive col-12">
+                                <table class="table table-responsive table-bordered table-hover">
+                                    <thead class="bg-verde text-white">
+                                        <tr>
+                                            <td>CODIGO</td>
+                                            <td>PRODUCTO</td>
+                                            <td>MARCA</td>
+                                            <td>MEDIDA</td>
+                                            <td>CANTIDAD</td>
+                                            <td>PRECIO</td>
+                                            <td>IMPORTE</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblDataTomarDatosDetalle"></tbody>
+                                </table>
+
+                                <div class="form-group">
+                                    <label>Observaciones</label>
+                                    <textarea class="form-control negrita" id="lbDetaleTomarDatosObs" rows="4"></textarea>
+                                </div>
 
                             
                             </div>
@@ -2265,12 +2321,12 @@ function get_tbl_tomar_datos(tipo){
                 <td>${r.OBS}</td>
                 <td class="negrita text-naranja">${funciones.setMoneda(r.IMPORTE,'Q')}</td>
                 <td>
-                    <button class="btn btn-md btn-info btn-circle hand shadow" onclick="">
-                        <i class="fal fa-edit"></i>
+                    <button class="btn btn-md btn-verde btn-circle hand shadow" onclick="get_detalle_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
+                        <i class="fal fa-list"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-md btn-naranja btn-circle hand shadow" onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}')">
+                    <button class="btn btn-md btn-naranja btn-circle hand shadow" onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.CODPROV}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
                         <i class="fal fa-download"></i>
                     </button>
                 </td>
@@ -2290,4 +2346,55 @@ function get_tbl_tomar_datos(tipo){
 
 
 
+};
+
+
+function get_detalle_tomar_datos(coddoc,correlativo,nombre,prioridad,obs){
+
+    $("#modal_tomar_datos_detalle").modal('show');
+
+    document.getElementById('lbDetalleTomarDatosNombre').textContent = nombre;
+    document.getElementById('lbDetaleTomarDatosObs').value = obs;
+
+    let container = document.getElementById('tblDataTomarDatosDetalle');
+    container.innerHTML = GlobalLoader;
+
+
+    GF.get_data_detalle_documento(GlobalEmpnit,coddoc,correlativo)
+    .then((data)=>{
+        let str = "";
+
+        data.recordset.map((r)=>{
+            str += `
+            <tr>
+                <td>${r.CODPROD}</td>
+                <td>${r.DESPROD}</td>
+                <td>${r.DESMARCA}</td>
+                <td>${r.CODMEDIDA}</td>
+                <td>${r.CANTIDAD}</td>
+                <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+            </tr>
+            `
+        })
+        container.innerHTML = str;
+
+    })
+    .catch(()=>{
+        container.innerHTML = 'No hay datos...'
+
+    })
+
+
+
+
+
+
 }
+
+
+function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nombre,prioridad,obs){
+
+
+
+};
