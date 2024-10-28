@@ -473,7 +473,7 @@ function getView(){
                                 </button>
                             </div>
 
-                            <div class="form-group hidden">
+                            <div class="form-group">
                                 <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
                                 <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
                             </div>
@@ -639,7 +639,7 @@ function getView(){
                                 </table>
 
                                 <div class="form-group">
-                                    <label>Observaciones</label>
+                                    <label class="negrita text-naranja">Observaciones</label>
                                     <textarea class="form-control negrita" id="lbDetaleTomarDatosObs" rows="4"></textarea>
                                 </div>
 
@@ -2309,7 +2309,7 @@ function get_tbl_tomar_datos(tipo){
     .then((data)=>{
 
         data.recordset.map((r)=>{
-            console.log(r)
+            let idbtn = `btnDownload${r.CODDOC}-${r.CORRELATIVO}`
             str += `
             <tr>
                 <td>${funciones.convertDateNormal(r.FECHA)}</td>
@@ -2321,12 +2321,14 @@ function get_tbl_tomar_datos(tipo){
                 <td>${r.OBS}</td>
                 <td class="negrita text-naranja">${funciones.setMoneda(r.IMPORTE,'Q')}</td>
                 <td>
-                    <button class="btn btn-md btn-verde btn-circle hand shadow" onclick="get_detalle_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
+                    <button class="btn btn-md btn-verde btn-circle hand shadow" 
+                        onclick="get_detalle_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
                         <i class="fal fa-list"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-md btn-naranja btn-circle hand shadow" onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.CODPROV}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
+                    <button class="btn btn-md btn-naranja btn-circle hand shadow" id="${idbtn}"
+                        onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.CODCLIENTE}','${r.NIT}','${r.NOMBRE}','${r.DIRECCION}','${r.ETIQUETA}','${r.OBS}','${idbtn}')">
                         <i class="fal fa-download"></i>
                     </button>
                 </td>
@@ -2390,10 +2392,129 @@ function get_detalle_tomar_datos(coddoc,correlativo,nombre,prioridad,obs){
 
 
 
-}
+};
 
 
-function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nombre,prioridad,obs){
+function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,direccion,prioridad,obs,idBtn){
+
+    funciones.Confirmacion('¿Está seguro que desea Cargar este Documento?')
+    .then((value)=>{
+        if(value==true){
+            
+            funciones.showToast("Cargando documento...");
+
+            deleteTempVenta_pos(GlobalUsuario)
+            .then(()=>{
+
+                document.getElementById('txtPosCobroNitclie').value = codigoprov;
+                document.getElementById('txtPosCobroNit').value = nit;
+                document.getElementById('txtPosCobroNombre').value = nombre;
+                document.getElementById('txtPosCobroDireccion').value = direccion;
+                document.getElementById('cmbPrioridad').value = prioridad;
+                document.getElementById('txtObs').value = obs;
+            
+                let btn = document.getElementById(idBtn);
+              
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fal fa-spin fa-download"></i>`
+            
+                get_download_datos(coddoc,correlativo)
+                .then(()=>{
+            
+                    get_tbl_pedido();
+                    $("#modal_tomar_datos").modal("hide");
+               
+                    funciones.showToast("Documento cargado...");
+
+                })
+                .catch(()=>{
+                      
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fal fa-download"></i>`
+
+                    funciones.showToast("No se cargó el documento...");
+
+            
+                })
+
+            })
+
+
+        }
+    })
+
+  
+
+
+
+
+
+
+
+
+
+};
+
+function get_download_datos(coddoc,correlativo){
+
+    
+    return new Promise((resolve,reject)=>{
+
+        GF.get_data_detalle_documento(GlobalEmpnit,coddoc,correlativo)
+        .then((data)=>{
+          
+            data.recordset.map((r)=>{
+               
+                let datos = 
+                {
+                    CODSUCURSAL:GlobalEmpnit.toString(),
+                    EMPNIT:GlobalEmpnit.toString(),
+                    USUARIO:'',
+                    CODPROD:r.CODPROD.toString(),
+                    DESPROD:r.DESPROD.toString(),
+                    CODMEDIDA:r.CODMEDIDA.toString(),
+                    EQUIVALE:Number(r.EQUIVALE),
+                    COSTO:Number(r.COSTO),
+                    TOTALCOSTO:Number(r.TOTALCOSTO),
+                    PRECIO:Number(r.PRECIO),
+                    CANTIDAD:Number(r.CANTIDAD),
+                    TOTALUNIDADES:Number(r.TOTALUNIDADES),
+                    TOTALPRECIO:Number(r.TOTALPRECIO),
+                    EXENTO:Number(r.EXENTO),
+                    TIPOPROD:r.TIPOPROD,
+                    TIPOPRECIO:r.TIPOPRECIO,
+                    EXISTENCIA:Number(r.EXISTENCIA),
+                    BONO:Number(r.BONO),
+                    DESCUENTO:Number(r.DESCUENTO)
+                };
+        
+                insertTempVentasPOS(datos)
+                .then(()=>{
+                    
+                }) 
+                .catch(()=>{
+                    
+                }) 
+    
+            })
+            
+            resolve();
+           
+    
+        })
+        .catch(()=>{
+            
+            reject();
+        })
+
+    })
+
+ 
+
+   
+
+
+
 
 
 
