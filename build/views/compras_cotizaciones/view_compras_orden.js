@@ -406,11 +406,11 @@ function getView(){
                                
                                 
 
-                                <div class="form-group hidden">
-                                    <label class="text-secondary">Serie y Número Factura Proveedor</label>
+                                <div class="form-group">
+                                    <label class="text-secondary">Serie y Número de Referencia</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
+                                        <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura" disabled="true">
+                                        <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura" disabled="true">
                                     </div>
                                 </div>        
 
@@ -473,7 +473,7 @@ function getView(){
                                 </button>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group hidden">
                                 <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
                                 <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
                             </div>
@@ -1911,7 +1911,8 @@ function finalizar_pedido(){
     let longdoc = '0';
 
     let tipo_pago = document.getElementById('cmbConCre').value; 
-    let tipo_doc = 'COMPRA';
+
+    let tipo_doc = 'ORD_COMPRA';
     
   
     let entrega_contacto = ClienteNombre;
@@ -1933,13 +1934,15 @@ function finalizar_pedido(){
 
         gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/compras/insertcompra', {
+            axios.post('/compras/insertcompra_cot', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
                 correlativo: correlativoDoc,
                 serie_fac:serie_fac,
                 numero_fac:numero_fac,
+                coddoc_origen:serie_fac,
+                correlativo_origen:numero_fac,
                 anio:anio,
                 mes:mes,
                 fecha:fecha,
@@ -2015,10 +2018,14 @@ function fcnNuevoPedido(){
         
         document.getElementById('txtFechaPago').value = funciones.getFecha();
     
-        document.getElementById('txtPosCobroNit').value = 'CF';
-        document.getElementById('txtPosCobroNitclie').value = 0;
-        document.getElementById('txtPosCobroNombre').value = 'PROVEEDORES VARIOS';
-        document.getElementById('txtPosCobroDireccion').value = 'CIUDAD';
+        document.getElementById('txtPosCobroNit').value = '';
+        document.getElementById('txtPosCobroNitclie').value = '';
+        document.getElementById('txtPosCobroNombre').value = '';
+        document.getElementById('txtPosCobroDireccion').value = '';
+
+        document.getElementById('txtSerieFac').value = '';
+        document.getElementById('txtNumeroFac').value = '';
+    
        
         document.getElementById('btnPosDocumentoAtras').click();
         get_tbl_pedido();
@@ -2412,6 +2419,9 @@ function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,dire
                 document.getElementById('txtPosCobroDireccion').value = direccion;
                 document.getElementById('cmbPrioridad').value = prioridad;
                 document.getElementById('txtObs').value = obs;
+
+                document.getElementById('txtSerieFac').value = coddoc;
+                document.getElementById('txtNumeroFac').value = correlativo;
             
                 let btn = document.getElementById(idBtn);
               

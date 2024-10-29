@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 
+
 router.post("/insertcompra", async(req,res)=>{
    
 
@@ -35,6 +36,81 @@ router.post("/insertcompra", async(req,res)=>{
     execute.QueryToken(res,qry,token);
      
 });
+
+router.post("/insertcompra_req", async(req,res)=>{
+   
+
+    const { token,jsondocproductos,sucursal,
+            coddoc,correlativo,serie_fac,numero_fac,anio,mes,fecha,fechaentrega,formaentrega,
+            codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+            nitclie, dirclie, obs, direntrega, usuario,
+            codven, lat, long, hora, tipo_pago, tipo_doc,
+            entrega_contacto, entrega_telefono, entrega_direccion,
+            entrega_referencia, entrega_lat, entrega_long,
+            codcaja, iva, etiqueta, coddoc_origen, correlativo_origen} = req.body;
+
+    let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
+        coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
+        codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+        nitclie, dirclie, obs, direntrega, usuario,
+        codven, lat, long, hora, tipo_pago, tipo_doc,
+        entrega_contacto, entrega_telefono, entrega_direccion,
+        entrega_referencia, entrega_lat, entrega_long,
+        codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc_origen,correlativo_origen);
+
+    let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
+   
+    let nuevoCorrelativo = Number(correlativo) + 1;
+    
+    let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
+    let qryStatusDocCot = `UPDATE DOCUMENTOS SET STATUS='D' WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc_origen}' AND CORRELATIVO=${correlativo_origen};`
+
+    let qry = qryDocumentos + qryDocproductos + qryStatusDocCot + qryTipodocumentos;
+
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
+router.post("/insertcompra_cot", async(req,res)=>{
+   
+
+    const { token,jsondocproductos,sucursal,
+            coddoc,correlativo,serie_fac,numero_fac,anio,mes,fecha,fechaentrega,formaentrega,
+            codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+            nitclie, dirclie, obs, direntrega, usuario,
+            codven, lat, long, hora, tipo_pago, tipo_doc,
+            entrega_contacto, entrega_telefono, entrega_direccion,
+            entrega_referencia, entrega_lat, entrega_long,
+            codcaja, iva, etiqueta, coddoc_origen, correlativo_origen} = req.body;
+
+    let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
+        coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
+        codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+        nitclie, dirclie, obs, direntrega, usuario,
+        codven, lat, long, hora, tipo_pago, tipo_doc,
+        entrega_contacto, entrega_telefono, entrega_direccion,
+        entrega_referencia, entrega_lat, entrega_long,
+        codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc_origen,correlativo_origen);
+
+    let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
+   
+    let nuevoCorrelativo = Number(correlativo) + 1;
+    
+    let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
+    let qryStatusDocCot = `UPDATE DOCUMENTOS SET STATUS='D' WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc_origen}' AND CORRELATIVO=${correlativo_origen};`
+
+    let qry = qryDocumentos + qryDocproductos + qryStatusDocCot + qryTipodocumentos;
+
+    
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
+
+
+
 
 router.post("/insertventa", async(req,res)=>{
    
@@ -77,7 +153,7 @@ function str_qry_documentos(jsondocproductos,sucursal,
     codven, lat, long, hora, tipo_pago, tipo_doc,
     entrega_contacto, entrega_telefono, entrega_direccion,
     entrega_referencia, entrega_lat, entrega_long,
-    codcaja, iva,serie_fac,numero_fac,etiqueta){
+    codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc_origen,correlativo_origen){
 
     let qry = `INSERT INTO DOCUMENTOS (
             EMPNIT,
@@ -121,6 +197,8 @@ function str_qry_documentos(jsondocproductos,sucursal,
             POR_IVA,
             TIPO_VENTA,
             ETIQUETA,
+            CODDOC_ORIGEN,
+            CORRELATIVO_ORIGEN,
             JSONDOCPRODUCTOS)
         SELECT
             '${sucursal}' AS EMPNIT,
@@ -165,6 +243,8 @@ function str_qry_documentos(jsondocproductos,sucursal,
             ${iva} POR_IVA,
             '${tipo_doc}' AS TIPO_VENTA,
             '${etiqueta}' AS ETIQUETA,
+            '${coddoc_origen}' AS CODDOC_ORIGEN,
+            '${correlativo_origen}' AS CORRELATIVO_ORIGEN,
             '${jsondocproductos}' AS JSONDOCPRODUCTOS;
         `
 

@@ -1785,7 +1785,7 @@ function finalizar_pedido(){
     let longdoc = '0';
 
     let tipo_pago = document.getElementById('cmbConCre').value; 
-    let tipo_doc = 'COMPRA';
+    let tipo_doc = 'REQ_COMPRA';
     
   
     let entrega_contacto = ClienteNombre;
@@ -1807,13 +1807,15 @@ function finalizar_pedido(){
 
         gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/compras/insertcompra', {
+            axios.post('/compras/insertcompra_req', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
                 correlativo: correlativoDoc,
                 serie_fac:serie_fac,
                 numero_fac:numero_fac,
+                coddoc_origen:coddoc,
+                correlativo_origen:correlativo,
                 anio:anio,
                 mes:mes,
                 fecha:fecha,
