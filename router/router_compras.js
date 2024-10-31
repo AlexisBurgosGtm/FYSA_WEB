@@ -480,5 +480,23 @@ router.post("/total_rellenos", async(req,res)=>{
 
 
 
+router.post("/verify_factura_compra_fel", async(req,res)=>{
+   
+
+    const { token, sucursal, seriefac, numerofac} = req.body;
+
+    let qry ='';
+    qry = `SELECT CODDOC,CORRELATIVO, FECHA 
+            FROM DOCUMENTOS 
+            WHERE EMPNIT ='${sucursal}' AND SERIEFAC='${seriefac}' AND NOFAC='${numerofac}'
+             `
+
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
+
+
 
 module.exports = router;

@@ -25,11 +25,11 @@ function getView(){
                         
                     </div>
                 </div>
-                
+                <br>
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
-                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() + view.modal_tomar_datos() + view.modal_detalle_tomar_datos()}
+                            ${view.pedido() + view.modal_cantidad() + view.modal_editar_cantidad() + view.modal_lista_precios() + view.modal_lista_documentos() }
                         </div> 
                         <div class="tab-pane fade" id="precios" role="tabpanel" aria-labelledby="clientes-tab">
                           
@@ -73,35 +73,16 @@ function getView(){
                             <div class="card card-rounded shadow border-naranja col-12 p-2">
                                 <div class="card-body">
                                     
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                
-                                                    <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                                                    <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
-                                                        <i class="fal fa-search"></i>
-                                                    </button>
-                                                                                            
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                
-                                                    <button class="btn btn-info hand shadow" id="btnTomarDatos">
-                                                        <i class="fal fa-download"></i> Tomar Orden Compra
-                                                    </button>
-                                                                                            
-                                                </div>
-                                            </div>
-                                            
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                           
+                                            <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
+                                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
+                                                <i class="fal fa-search"></i>
+                                            </button>
+                                                                                    
                                         </div>
                                     </div>
-
-                                   
 
                                     <div class="row">
 
@@ -335,26 +316,43 @@ function getView(){
                         <div class="card-body">
 
                             <div class="row">
+                                <div class="form-group">
+                                    <label class="text-secondary">Tipo de Documento</label>
+                                    <select class="form-control col-12" id="cmbTipoDocumento">
+                                        <option value="COM">COMPRAS IVA</option>
+                                        <option value="COP">COMPRAS PEQ CONTRE</option>
+                                    </select>   
+                                </div>
+                                <div class="form-group text-left">
+                                    <label class="text-secondary">Serie Documento</label>
+                                    <div class="input-group">
+                                        <select class="form-control col-12" id="cmbCoddoc">
+                                        </select>
+                                        <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
+                                    </div>    
+                                </div>
+                            </div>
+                            
 
+                            <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
-                                        <div class="form-group">
-                                            <label class="text-secondary">Tipo de Documento</label>
-                                            <select class="form-control col-12" id="cmbTipoDocumento">
-                                                <option value="COM">COMPRAS IVA</option>
-                                                <option value="COP">COMPRA PEQUEÑO CONTRIBUYENTE</option>
-                                            </select>   
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Caja</label>
+                                        <div class="input-group">
+                                            <select class="form-control col-12" id="cmbCaja">
+                                            </select>
+                                            <input type="date" id="txtFecha" class="form-control text-naranja negrita border-naranja">
                                         </div>
+                                    </div>
+                                    
+                                    <div class="form-group text-left">
+                                        <label class="text-secondary">Empleado</label>
+                                        <select class="form-control col-12" id="cmbVendedor">
+                                        </select>   
+                                    </div>
 
-                                        <div class="form-group text-left">
-                                            <label class="text-secondary">Serie Documento</label>
-                                            <div class="input-group">
-                                                <select class="form-control col-12" id="cmbCoddoc">
-                                                </select>
-                                                <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
-                                            </div>    
-                                        </div>
-
+                                    <div class="row">
+                                        
                                         <div class="form-group">
                                             <label class="text-secondary">Forma de Pago</label>
                                             <div class="input-group">
@@ -365,61 +363,33 @@ function getView(){
                                                 <input type="date" class="form-control negrita" id="txtFechaPago">
                                             </div>
                                         </div>
-
                                         
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    </div>
 
-                                        <div class="form-group text-left">
-                                            <label class="text-secondary">Caja</label>
+                                    <br>
+                                    <div class="row">
+                                        
+                                        <div class="form-group">
+                                            <label class="text-secondary">Serie y Número Factura Proveedor</label>
                                             <div class="input-group">
-                                                <select class="form-control col-12" id="cmbCaja">
-                                                </select>
-                                                <input type="date" id="txtFecha" class="form-control text-naranja negrita border-naranja">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group text-left">
-                                            <label class="text-secondary">Empleado</label>
-                                            <select class="form-control col-12" id="cmbVendedor">
-                                            </select>   
-                                        </div>
-                                    
-                                        <div class="form-group">
-                                                <label class="text-secondary">Prioridad</label>
-                                                <select class="form-control negrita text-naranja" id="cmbPrioridad"></select>
-                                        </div>
+                                    </div>
 
                                 </div>
-                                        
-
-                            </div>
-                            
-
-                            <br>
-
-                            <div class="form-group">
-                                <label class="text-secondary">Observaciones</label>
-                                <textarea class="form-control negrita col-12" rows="4" value="" id="txtObs"></textarea>   
-                            </div>
-
-                            <div class="row">
-                               
                                 
-
-                                <div class="form-group">
-                                    <label class="text-secondary">Serie y Número de Factura de Compra</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
+                                
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="form-group text-right">
+                                        <label class="negrita text-secondary h4">Total Compra</label>
+                                        <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
                                     </div>
-                                </div>        
-
-                                
-                                <h2 class="negrita text-danger hidden" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
-                            
+                                </div>
                             </div>  
-
+                            
                         </div>
                     </div>
                 
@@ -500,7 +470,7 @@ function getView(){
                         <div class="modal-body p-4">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label class="negrita text-secondary">Búsqueda de Proveedores</label>
+                                    <label>Búsqueda de Proveedores</label>
                                     <div class="input-group">
                                         <input type="search" autocomplete="off" class="form-control border-naranja negrita" id="txtBuscarClie">
                                         <button class="btn btn-naranja hand text-white" id="btnBuscarClie">
@@ -544,7 +514,7 @@ function getView(){
                                             <input type="date" class="negrita form-control" id="txtFechaDoc">
                                             <select class="form-control negrita" id="cmbTipoDoc">
                                                 <option value="COM">COMPRAS IVA</option>
-                                                <option value="COP">COMPRA PEQUEÑO CONTRIBUYENTE</option>
+                                                <option value="COP">COMPRAS PEQ CONTR</option>
                                             </select>
                                         </div>
                                         
@@ -560,116 +530,16 @@ function getView(){
                     </div>
                 </div>
             </div>`
-        },
-        modal_tomar_datos:()=>{
-            return `
-            <div class="modal fade"  id="modal_tomar_datos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-
-                        <div class="modal-header bg-naranja">
-                            <label class="modal-title text-white h3" id="">Seleccione una Orden de compra para Cargar</label>
-                        </div>
-            
-                        <div class="modal-body p-4">
-                            <div class="form-group">
-                                <label class="negrita text-naranja">Escriba para buscar..</label>
-                                <input type="search" class="form-control negrita text-naranja" oninput="funciones.crearBusquedaTabla('tblTomarDatos','txtBuscarTomarDatos')" id="txtBuscarTomarDatos">
-                            </div>
-                            <div class="table-responsive col-12">
-                                <table class="table table-responsive table-bordered table-hover" id="tblTomarDatos">
-                                    <thead class="bg-verde text-white">
-                                        <tr>
-                                            <td>FECHA</td>
-                                            <td>DOCUMENTO</td>
-                                            <td>PROVEEDOR</td>
-                                            <td>OBSERVACIONES</td>
-                                            <td>IMPORTE</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblDataTomarDatos"></tbody>
-                                </table>
-
-                            
-                            </div>
-                                
-        
-                            <div class="row">
-                                    <div class="col-5 text-right">
-                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
-                                            <i class="fal fa-arrow-left"></i>
-                                        </button>                                
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        },
-        modal_detalle_tomar_datos:()=>{
-            return `
-            <div class="modal fade"  id="modal_tomar_datos_detalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-
-                        <div class="modal-header bg-verde">
-                            <label class="modal-title text-white h3" id="">Detalle de la Requisicion</label>
-                        </div>
-            
-                        <div class="modal-body p-4">
-                            
-                            <h4 class="negrita text-naranja" id="lbDetalleTomarDatosNombre"></h4>
-                            <br>
-
-                            <div class="table-responsive col-12">
-                                <table class="table table-responsive table-bordered table-hover">
-                                    <thead class="bg-verde text-white">
-                                        <tr>
-                                            <td>CODIGO</td>
-                                            <td>PRODUCTO</td>
-                                            <td>MARCA</td>
-                                            <td>MEDIDA</td>
-                                            <td>CANTIDAD</td>
-                                            <td>PRECIO</td>
-                                            <td>IMPORTE</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblDataTomarDatosDetalle"></tbody>
-                                </table>
-
-                                <div class="form-group">
-                                    <label class="negrita text-naranja">Observaciones</label>
-                                    <textarea class="form-control negrita" id="lbDetaleTomarDatosObs" rows="4"></textarea>
-                                </div>
-
-                            
-                            </div>
-                                
-        
-                            <div class="row">
-                                    <div class="col-5 text-right">
-                                        <button class="btn btn-secondary btn-xl btn-circle hand shadow waves-effect waves-themed" data-dismiss="modal" id="">
-                                            <i class="fal fa-arrow-left"></i>
-                                        </button>                                
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        },
+        }
     }
 
     root.innerHTML = view.body();
 
 };
 
-
 function addListeners(){
 
-    document.title = "Ordenes de Compra";
+    document.title = "Compras";
 
     funciones.slideAnimationTabs();
 
@@ -677,7 +547,6 @@ function addListeners(){
     //cmbEmpresa.removeEventListener('change', handle_empresa_change)
     //cmbEmpresa.addEventListener('change', handle_empresa_change)
 
-    document.getElementById('cmbPrioridad').innerHTML = funciones.get_prioridades();
 
 
     // LISTENER DE LA VENTANA DE PEDIDOS
@@ -727,16 +596,6 @@ function addListeners(){
         
 
     });
-
-
-    document.getElementById('btnTomarDatos').addEventListener('click',()=>{
-
-        $("#modal_tomar_datos").modal("show");
-
-        get_tbl_tomar_datos('ORC');
-
-
-    })
 
 
     document.getElementById('txtPosCodprod').focus();
@@ -1883,7 +1742,7 @@ function finalizar_pedido(){
     GlobalSelectedNomCliente = ClienteNombre;
     let dirclie = document.getElementById('txtPosCobroDireccion').value;
     GlobalSelectedDirCliente = dirclie;
-    let obs = document.getElementById('txtObs').value || '';  
+    let obs = 'SN';  
     let direntrega = "SN"; 
     let codbodega = GlobalCodBodega;
     let cmbTipoEntrega = ''; 
@@ -1905,9 +1764,6 @@ function finalizar_pedido(){
     let serie_fac = document.getElementById('txtSerieFac').value || '';
     let numero_fac = document.getElementById('txtNumeroFac').value || '';
 
-   
-
-
     let cmbCaja = document.getElementById('cmbCaja');
     let cmbVendedor = document.getElementById('cmbVendedor');
 
@@ -1915,8 +1771,7 @@ function finalizar_pedido(){
     let longdoc = '0';
 
     let tipo_pago = document.getElementById('cmbConCre').value; 
-
-    let tipo_doc = 'ORD_COMPRA';
+    let tipo_doc = 'COMPRA';
     
   
     let entrega_contacto = ClienteNombre;
@@ -1930,104 +1785,80 @@ function finalizar_pedido(){
     
     get_tbl_pedido();
 
-
-
-    GF.verify_serie_compra_fel(serie_fac,numero_fac)
-    .then(()=>{
-
-        funciones.AvisoError("Este documento serie FEL ya existe, por favor verifique");
-        return;
-
-    })
-    .catch(()=>{
+        //VERIFICACIONES
+    if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
     
-            //VERIFICACIONES
-            if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
-            
-            btnGuardarFactura.disabled = true;
-            btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
-    
-            gettempDocproductos_pos(GlobalUsuario)
-            .then((response)=>{
-                axios.post('/compras/insertcompra_cot', {
-                    jsondocproductos:JSON.stringify(response),
-                    sucursal:GlobalEmpnit,
-                    coddoc:coddoc,
-                    correlativo: correlativoDoc,
-                    serie_fac:serie_fac,
-                    numero_fac:numero_fac,
-                    coddoc_origen:serie_fac,
-                    correlativo_origen:numero_fac,
-                    anio:anio,
-                    mes:mes,
-                    fecha:fecha,
-                    fechaentrega:fechapago,
-                    formaentrega:cmbTipoEntrega,
-                    codbodega:codbodega,
-                    codcaja:cmbCaja.value,
-                    codcliente: codcliente, //x
-                    nomclie:ClienteNombre,
-                    totalcosto:GlobalTotalCostoDocumento,
-                    totalprecio:GlobalTotalDocumento,
-                    totaldescuento:GlobalTotalDescuento,
-                    nitclie:nit,
-                    dirclie:dirclie,
-                    obs:funciones.limpiarTexto(obs),
-                    direntrega:direntrega,
-                    usuario:GlobalUsuario,
-                    codven:cmbVendedor.value,
-                    lat:latdoc,
-                    long:longdoc,
-                    hora:hora,
-                    tipo_pago:tipo_pago,
-                    tipo_doc:tipo_doc,
-                    entrega_contacto:entrega_contacto,
-                    entrega_telefono:entrega_telefono,
-                    entrega_direccion:entrega_direccion,
-                    entrega_referencia:entrega_referencia,
-                    entrega_lat:entrega_lat,
-                    entrega_long:entrega_long,
-                    iva:GlobalConfigIVA,
-                    etiqueta:document.getElementById('cmbPrioridad').value
-                })
-                .then((response) => {
-                    const data = response.data;
-                    if (data=='error'){
-                        funciones.AvisoError('No se pudo guardar');
-                        btnGuardarFactura.disabled = false;
-                        btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
-                    }else{
-                        funciones.Aviso('Generado Exitosamente !!!')
-                        btnGuardarFactura.disabled = false;
-                        btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
-    
-                        deleteTempVenta_pos(GlobalUsuario);
-    
-                        fcnNuevoPedido();
-                    }
-                }, (error) => {
-                    console.log(error);
+    btnGuardarFactura.disabled = true;
+    btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+
+        gettempDocproductos_pos(GlobalUsuario)
+        .then((response)=>{
+            axios.post('/compras/insertventa', {
+                jsondocproductos:JSON.stringify(response),
+                sucursal:GlobalEmpnit,
+                coddoc:coddoc,
+                correlativo: correlativoDoc,
+                serie_fac:serie_fac,
+                numero_fac:numero_fac,
+                anio:anio,
+                mes:mes,
+                fecha:fecha,
+                fechaentrega:fechapago,
+                formaentrega:cmbTipoEntrega,
+                codbodega:codbodega,
+                codcaja:cmbCaja.value,
+                codcliente: codcliente, //x
+                nomclie:ClienteNombre,
+                totalcosto:GlobalTotalCostoDocumento,
+                totalprecio:GlobalTotalDocumento,
+                totaldescuento:GlobalTotalDescuento,
+                nitclie:nit,
+                dirclie:dirclie,
+                obs:entrega_referencia,
+                direntrega:direntrega,
+                usuario:GlobalUsuario,
+                codven:cmbVendedor.value,
+                lat:latdoc,
+                long:longdoc,
+                hora:hora,
+                tipo_pago:tipo_pago,
+                tipo_doc:tipo_doc,
+                entrega_contacto:entrega_contacto,
+                entrega_telefono:entrega_telefono,
+                entrega_direccion:entrega_direccion,
+                entrega_referencia:entrega_referencia,
+                entrega_lat:entrega_lat,
+                entrega_long:entrega_long,
+                iva:GlobalConfigIVA
+            })
+            .then((response) => {
+                const data = response.data;
+                if (data=='error'){
                     funciones.AvisoError('No se pudo guardar');
                     btnGuardarFactura.disabled = false;
                     btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
-                });        
-            })
-            .catch((error)=>{
+                }else{
+                    funciones.Aviso('Generado Exitosamente !!!')
+                    btnGuardarFactura.disabled = false;
+                    btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+
+                    deleteTempVenta_pos(GlobalUsuario);
+
+                    fcnNuevoPedido();
+                }
+            }, (error) => {
                 console.log(error);
                 funciones.AvisoError('No se pudo guardar');
                 btnGuardarFactura.disabled = false;
                 btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
-            })
-
-
-    })
-
- 
-
-
-
-       
-
+            });        
+        })
+        .catch((error)=>{
+            console.log(error);
+            funciones.AvisoError('No se pudo guardar');
+            btnGuardarFactura.disabled = false;
+            btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
+        })
 
             
 };
@@ -2043,14 +1874,10 @@ function fcnNuevoPedido(){
         
         document.getElementById('txtFechaPago').value = funciones.getFecha();
     
-        document.getElementById('txtPosCobroNit').value = '';
-        document.getElementById('txtPosCobroNitclie').value = '';
-        document.getElementById('txtPosCobroNombre').value = '';
-        document.getElementById('txtPosCobroDireccion').value = '';
-
-        document.getElementById('txtSerieFac').value = '';
-        document.getElementById('txtNumeroFac').value = '';
-    
+        document.getElementById('txtPosCobroNit').value = 'CF';
+        document.getElementById('txtPosCobroNitclie').value = 0;
+        document.getElementById('txtPosCobroNombre').value = 'PROVEEDORES VARIOS';
+        document.getElementById('txtPosCobroDireccion').value = 'CIUDAD';
        
         document.getElementById('btnPosDocumentoAtras').click();
         get_tbl_pedido();
@@ -2294,263 +2121,5 @@ function anular_factura(coddoc,correlativo,status,idbtn){
         }
     })
    
-
-};
-
-
-
-
-
-
-function get_data_tomar_datos(tipo){
-
-    return new Promise((resolve,reject)=>{
-
-        axios.post('/documentos/documentos_pendientes', {
-            sucursal: GlobalEmpnit,
-            token:TOKEN,
-            tipodoc:tipo
-        })
-        .then((response) => {
-            if(response.status.toString()=='200'){
-                let data = response.data;
-                if(Number(data.rowsAffected[0])>0){
-                    resolve(data);             
-                }else{
-                    reject();
-                }            
-            }else{
-                reject();
-            }
-        }, (error) => {
-            funciones.AvisoError('Error en la solicitud');
-        });
-
-    })
-
-};
-
-function get_tbl_tomar_datos(tipo){
-
-    let container = document.getElementById('tblDataTomarDatos');
-    container.innerHTML = GlobalLoader;
-
-    let str = "";
-
-    get_data_tomar_datos(tipo)
-    .then((data)=>{
-
-        data.recordset.map((r)=>{
-            let idbtn = `btnDownload${r.CODDOC}-${r.CORRELATIVO}`
-            str += `
-            <tr>
-                <td>${funciones.convertDateNormal(r.FECHA)}</td>
-                <td>${r.CODDOC}-${r.CORRELATIVO}</td>
-                <td>${r.NOMBRE}
-                    <br>
-                    <small class="col-12 text-center negrita text-white ${funciones.get_color_prioridad(r.ETIQUETA)}">Prioridad: ${r.ETIQUETA}</small>
-                </td>
-                <td>${r.OBS}</td>
-                <td class="negrita text-naranja">${funciones.setMoneda(r.IMPORTE,'Q')}</td>
-                <td>
-                    <button class="btn btn-md btn-verde btn-circle hand shadow" 
-                        onclick="get_detalle_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
-                        <i class="fal fa-list"></i>
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-md btn-naranja btn-circle hand shadow" id="${idbtn}"
-                        onclick="get_documento_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.CODCLIENTE}','${r.NIT}','${r.NOMBRE}','${r.DIRECCION}','${r.ETIQUETA}','${r.OBS}','${idbtn}')">
-                        <i class="fal fa-download"></i>
-                    </button>
-                </td>
-            </tr>
-            `
-        })
-
-        container.innerHTML = str;
-
-    })
-    .catch((error)=>{
-        console.log(error)
-        container.innerHTML = 'No hay datos para mostrar....';
-
-    })
-
-
-
-
-};
-
-
-function get_detalle_tomar_datos(coddoc,correlativo,nombre,prioridad,obs){
-
-    $("#modal_tomar_datos_detalle").modal('show');
-
-    document.getElementById('lbDetalleTomarDatosNombre').textContent = nombre;
-    document.getElementById('lbDetaleTomarDatosObs').value = obs;
-
-    let container = document.getElementById('tblDataTomarDatosDetalle');
-    container.innerHTML = GlobalLoader;
-
-
-    GF.get_data_detalle_documento(GlobalEmpnit,coddoc,correlativo)
-    .then((data)=>{
-        let str = "";
-
-        data.recordset.map((r)=>{
-            str += `
-            <tr>
-                <td>${r.CODPROD}</td>
-                <td>${r.DESPROD}</td>
-                <td>${r.DESMARCA}</td>
-                <td>${r.CODMEDIDA}</td>
-                <td>${r.CANTIDAD}</td>
-                <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
-                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
-            </tr>
-            `
-        })
-        container.innerHTML = str;
-
-    })
-    .catch(()=>{
-        container.innerHTML = 'No hay datos...'
-
-    })
-
-
-
-
-
-
-};
-
-
-function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,direccion,prioridad,obs,idBtn){
-
-    funciones.Confirmacion('¿Está seguro que desea Cargar este Documento?')
-    .then((value)=>{
-        if(value==true){
-            
-            funciones.showToast("Cargando documento...");
-
-            deleteTempVenta_pos(GlobalUsuario)
-            .then(()=>{
-
-                document.getElementById('txtPosCobroNitclie').value = codigoprov;
-                document.getElementById('txtPosCobroNit').value = nit;
-                document.getElementById('txtPosCobroNombre').value = nombre;
-                document.getElementById('txtPosCobroDireccion').value = direccion;
-                document.getElementById('cmbPrioridad').value = prioridad;
-                document.getElementById('txtObs').value = obs;
-
-                document.getElementById('txtSerieFac').value = coddoc;
-                document.getElementById('txtNumeroFac').value = correlativo;
-            
-                let btn = document.getElementById(idBtn);
-              
-                btn.disabled = true;
-                btn.innerHTML = `<i class="fal fa-spin fa-download"></i>`
-            
-                get_download_datos(coddoc,correlativo)
-                .then(()=>{
-            
-                    get_tbl_pedido();
-                    $("#modal_tomar_datos").modal("hide");
-               
-                    funciones.showToast("Documento cargado...");
-
-                })
-                .catch(()=>{
-                      
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="fal fa-download"></i>`
-
-                    funciones.showToast("No se cargó el documento...");
-
-            
-                })
-
-            })
-
-
-        }
-    })
-
-  
-
-
-
-
-
-
-
-
-
-};
-
-function get_download_datos(coddoc,correlativo){
-
-    
-    return new Promise((resolve,reject)=>{
-
-        GF.get_data_detalle_documento(GlobalEmpnit,coddoc,correlativo)
-        .then((data)=>{
-          
-            data.recordset.map((r)=>{
-               
-                let datos = 
-                {
-                    CODSUCURSAL:GlobalEmpnit.toString(),
-                    EMPNIT:GlobalEmpnit.toString(),
-                    USUARIO:'',
-                    CODPROD:r.CODPROD.toString(),
-                    DESPROD:r.DESPROD.toString(),
-                    CODMEDIDA:r.CODMEDIDA.toString(),
-                    EQUIVALE:Number(r.EQUIVALE),
-                    COSTO:Number(r.COSTO),
-                    TOTALCOSTO:Number(r.TOTALCOSTO),
-                    PRECIO:Number(r.PRECIO),
-                    CANTIDAD:Number(r.CANTIDAD),
-                    TOTALUNIDADES:Number(r.TOTALUNIDADES),
-                    TOTALPRECIO:Number(r.TOTALPRECIO),
-                    EXENTO:Number(r.EXENTO),
-                    TIPOPROD:r.TIPOPROD,
-                    TIPOPRECIO:r.TIPOPRECIO,
-                    EXISTENCIA:Number(r.EXISTENCIA),
-                    BONO:Number(r.BONO),
-                    DESCUENTO:Number(r.DESCUENTO)
-                };
-        
-                insertTempVentasPOS(datos)
-                .then(()=>{
-                    
-                }) 
-                .catch(()=>{
-                    
-                }) 
-    
-            })
-            
-            resolve();
-           
-    
-        })
-        .catch(()=>{
-            
-            reject();
-        })
-
-    })
-
- 
-
-   
-
-
-
-
-
 
 };

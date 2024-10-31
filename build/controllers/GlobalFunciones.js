@@ -71,6 +71,36 @@ let GF = {
         })   
     
     },
+    verify_serie_compra_fel:(serie,numero)=>{
+    
+        return new Promise((resolve,reject)=>{
+    
+            if(serie==''){reject();return};
+            
+            axios.post(GlobalUrlCalls + '/compras/verify_factura_compra_fel',
+                {
+                    sucursal:GlobalEmpnit,
+                    token:TOKEN,
+                    seriefac:serie,
+                    numerofac:numero
+                })
+            .then((response) => {
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(Number(data.rowsAffected[0])>0){
+                        resolve(data);             
+                    }else{
+                        reject();
+                    }            
+                }else{
+                    reject();
+                }             
+            }, (error) => {
+                reject();
+            });
+        })   
+    
+    },
     get_data_buscar_producto(filtro){
     
   
