@@ -14,7 +14,7 @@ router.post("/insertcompra", async(req,res)=>{
             codven, lat, long, hora, tipo_pago, tipo_doc,
             entrega_contacto, entrega_telefono, entrega_direccion,
             entrega_referencia, entrega_lat, entrega_long,
-            codcaja, iva, etiqueta} = req.body;
+            codcaja, iva, etiqueta, coddoc_origen, correlativo_origen} = req.body;
 
     let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
         coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
@@ -23,15 +23,17 @@ router.post("/insertcompra", async(req,res)=>{
         codven, lat, long, hora, tipo_pago, tipo_doc,
         entrega_contacto, entrega_telefono, entrega_direccion,
         entrega_referencia, entrega_lat, entrega_long,
-        codcaja, iva,serie_fac,numero_fac,etiqueta);
+        codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc_origen,correlativo_origen);
 
     let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
    
     let nuevoCorrelativo = Number(correlativo) + 1;
     let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
-    
-    let qry = qryDocumentos + qryDocproductos + qryTipodocumentos;
+    let qryStatusDocCot = `UPDATE DOCUMENTOS SET STATUS='D' WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc_origen}' AND CORRELATIVO=${correlativo_origen};`
 
+    let qry = qryDocumentos + qryDocproductos + qryStatusDocCot + qryTipodocumentos;
+
+ 
     
     execute.QueryToken(res,qry,token);
      
@@ -63,9 +65,8 @@ router.post("/insertcompra_req", async(req,res)=>{
     let nuevoCorrelativo = Number(correlativo) + 1;
     
     let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
-    let qryStatusDocCot = `UPDATE DOCUMENTOS SET STATUS='D' WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc_origen}' AND CORRELATIVO=${correlativo_origen};`
-
-    let qry = qryDocumentos + qryDocproductos + qryStatusDocCot + qryTipodocumentos;
+    
+    let qry = qryDocumentos + qryDocproductos + qryTipodocumentos;
 
     
     execute.QueryToken(res,qry,token);

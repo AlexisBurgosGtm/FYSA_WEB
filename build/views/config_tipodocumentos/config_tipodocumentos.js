@@ -198,17 +198,28 @@ function addListeners(){
                         let cmbFContaCon = document.getElementById('cmbFContaCon').value;
                         let cmbFContaCre = document.getElementById('cmbFContaCre').value;
     
+                        btnGuardar.disabled = true;
+                        btnGuardar.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
     
                         classTipodocumentos.edit_tipodocumento(txtCoddoc,txtCorrelativo,txtDescripcion,cmbFContaCon,cmbFContaCre)
                         .then(()=>{
                             
+                           
                             funciones.Aviso("Documento actualizado exitosamente!!");
                             $("#modal_nuevo").modal("hide");
+
+                            btnGuardar.disabled = false;
+                            btnGuardar.innerHTML = `<i class="fal fa-save"></i>`;
+
     
                             get_tbl_documentos();
                         })
                         .catch(()=>{
                             funciones.AvisoError("No se pudo actualizar");
+
+                            btnGuardar.disabled = false;
+                            btnGuardar.innerHTML = `<i class="fal fa-save"></i>`;
+
                         })
     
                     }

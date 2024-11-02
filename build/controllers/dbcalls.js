@@ -534,150 +534,9 @@ function dbDeletePedido(id){
 
 }
 
-function deletePedidoEnviado(id){
-    return new Promise(async(resolve,reject)=>{
-        var rowsDeleted = await connection.remove({
-            from: "documentos",
-            where: {
-                ID: Number(id)
-            }
-        });
-        if(rowsDeleted>0){resolve()}else{resolve()}
-    })            
-};
-
-function getPedidoEnviar(id){
-
-    return new Promise(async(resolve,reject)=>{
-        var response = await connection.select({
-            
-            from: "documentos",
-            where: {
-                    ID: Number(id)
-                }
-        });
-        resolve(response)
-    });
-}
-
-function dbSendPedido(id){
-   
-        funciones.Confirmacion('¿Está seguro que desea Enviar este Pedido')
-        .then((value)=>{
-            if(value==true){
-                
-                setLog(`<label class="text-danger">Intentando obtener el correlativo de documentos...</label>`,'rootWait');
-                $('#modalWait').modal('show');
-
-                classTipoDocumentos.getCorrelativoDocumento('PED',GlobalCoddoc)
-                .then((correlativo)=>{
-                    //lee el documento de la base de datos local y lo intenta enviar
-                    setLog(`<label class="text-danger">Cargando los datos del documento para intentarlo enviar...</label>`,'rootWait');
-                        
-                    let datos; 
-                    let nit;
-                    getPedidoEnviar(id)
-                    .then((response)=>{
-                        response.map((rs)=>{
-                            nit = rs.NITCLIE;
-                            GlobalSelectedCodCliente = rs.CODCLIE;
-                            datos = {
-                                jsondocproductos:rs.JSONPRODUCTOS,
-                                codsucursal:rs.CODSUCURSAL,
-                                empnit: rs.EMPNIT,
-                                coddoc:rs.CODDOC,
-                                correl: correlativo.toString(),
-                                anio:rs.ANIO,
-                                mes:rs.MES,
-                                dia:rs.DIA,
-                                fecha:rs.FECHA,
-                                fechaentrega:rs.FECHAENTREGA,
-                                formaentrega:rs.FORMAENTREGA,
-                                codbodega:GlobalCodBodega,
-                                codcliente: rs.CODCLIE,
-                                nomclie:rs.NOMCLIE,
-                                totalcosto:rs.TOTALCOSTO,
-                                totalprecio:rs.TOTALPRECIO,
-                                nitclie:rs.NITCLIE,
-                                dirclie:rs.DIRCLIE,
-                                obs:rs.OBS,
-                                direntrega:rs.DIRENTREGA,
-                                usuario:rs.USUARIO,
-                                codven:rs.CODVEN,
-                                lat:rs.LAT,
-                                long:rs.LONG, 
-                                tipo_pago: rs.tipo_pago,
-                                tipo_doc: rs.tipo_doc,
-                                entrega_contacto: rs.entrega_contacto,
-                                entrega_telefono: rs.entrega_telefono,
-                                entrega_direccion: rs.entrega_direccion,
-                                entrega_referencia: rs.entrega_referencia,
-                                entrega_lat: rs.entrega_lat,
-                                entrega_long: rs.entrega_long
-                            }
-                        })
-                        
-                        setLog(`<label class="text-info">Intentando enviar el pedido...</label>`,'rootWait');
-                
-                        axios.post('/ventas/insertventa', datos)
-                        .then(async(response) => {
-                            const data = response.data;
-                            if (data.rowsAffected[0]==0){
-                                hideWaitForm();
-                                funciones.AvisoError('No se logró Enviar este pedido, se intentará guardarlo en el teléfono');   
-                            }else{
-                                hideWaitForm();
-                                funciones.Aviso('Pedido Enviado Exitosamente !!!')
-                            
-                                //actualiza la ubicación del empleado
-                                await classEmpleados.updateMyLocation();
-                                //actualiza la última venta del cliente
-                                await apigen.updateClientesLastSale(nit,'VENTA');
-                                deletePedidoEnviado(id)
-                                .then(()=>{
-                                    dbCargarPedidosPendientes();
-                                })
-                                                                                
-                            }
-                            //$('#modalWait').modal('hide');
-                        }, (error) => {
-                            //$('#modalWait').modal('hide'); 
-                            hideWaitForm();
-                            funciones.AvisoError('Ha ocurrido un error y no se pudo enviar');
-                           
-                        })
-                        .catch((error)=>{
-                            //$('#modalWait').modal('hide');
-                            hideWaitForm();
-                            funciones.AvisoError('Error: ' + error);
-                           
-                        })
-        
-                    })
 
 
-                })
-                .catch(()=>{
-                    //$('#modalWait').modal('hide');
-                    hideWaitForm();
-                    funciones.AvisoError('No se pudo obtener el correlativo del documento a generar, revise su conexión a internet')
-                })
-                
-                            
-                
-          
 
-            }
-        })
-};
-
-
-function dbSendPedidosBackground(usuario){
-    return new Promise((resolve,reject)=>{
-        resolve();
-    })
-    
-};
 
 
 
@@ -775,3 +634,198 @@ function selectDataRowVentaPOS(id,nuevacantidad,nuevoprecio,descuento) {
 
 // POS
 
+
+// --------------------------------
+// MOVIMIENTOS INVENTARIO
+// --------------------------------
+
+let db_movinv = {
+        selectTempVentasPOS:(sucursal)=>{
+
+            return new Promise(async(resolve,reject)=>{
+                var response = await connection.select({
+                    from: "temp_pos_movinv",
+                    order: { by: 'ID', type: 'desc' }
+                });
+                let datos = JSON.stringify(response);
+                datos = datos.replace('[','');
+                datos = datos.replace(']','');
+                let result = '[' + datos + ']';
+                let data = JSON.parse(result);
+                resolve(data);
+            });
+        },
+        insertTempVentasPOS:(datos)=>{
+            return new Promise((resolve,reject)=>{
+                connection.insert({
+                    into: "temp_pos_movinv",
+                    values: [datos] //you can insert multiple values at a time
+                })
+                resolve();    
+            }) 
+        
+        },
+        deleteItemVentaPOS:(id)=>{
+            console.log('eliminar id: ' + id.toString())
+            return new Promise(async(resolve,reject)=>{
+                var rowsDeleted = await connection.remove({
+                    from: "temp_pos_movinv",
+                    where: {
+                        ID: Number(id)
+                    }
+                });
+                console.log(rowsDeleted);
+                if(rowsDeleted>0){resolve()}else{reject()}
+            })            
+        },
+        selectDataRowVentaPOS:(id,nuevacantidad,nuevoprecio,descuento)=>{
+        
+            let costo = 0; let precio = 0; let equivale =0; let exento=0; let cantidad= nuevacantidad;
+            
+            return new Promise(async(resolve,reject)=>{
+                var response = await connection.select({
+                    from: "temp_pos_movinv",
+                    where: {
+                            ID: Number(id)
+                        }
+                });
+                console.log(response);
+        
+                response.map((rows)=>{
+                    costo = rows.COSTO;
+                    precio = nuevoprecio; //rows.PRECIO;
+                    equivale = rows.EQUIVALE;
+                    exento = rows.EXENTO;
+                });
+                let totalcosto = Number(costo) * Number(cantidad);
+                let totalprecio = Number(precio) * Number(cantidad);
+                let totalexento = Number(exento) * Number(cantidad);
+                let totalunidades = Number(equivale) * Number(cantidad);
+                //actualiza la fila
+                let updatedrow = await connection.update({
+                    in: "temp_pos_movinv",
+                    set: {
+                        CANTIDAD:Number(nuevacantidad),
+                        TOTALUNIDADES:Number(totalunidades),
+                        TOTALCOSTO:Number(totalcosto),
+                        PRECIO:Number(nuevoprecio),
+                        TOTALPRECIO:Number(totalprecio),
+                        EXENTO:totalexento,
+                        DESCUENTO:Number(descuento)
+                    },
+                    where: {
+                        ID: Number(id)
+                    }
+                })
+                console.log(updatedrow);
+                if(updatedrow>0){
+                    resolve();
+                }else{
+                    reject();
+                }
+        
+            });
+        }
+}
+
+// --------------------------------
+// MOVIMIENTOS INVENTARIO
+// --------------------------------
+
+
+// --------------------------------
+// COMPRAS
+// --------------------------------
+
+let db_compra = {
+    selectTempVentasPOS:(sucursal)=>{
+
+        return new Promise(async(resolve,reject)=>{
+            var response = await connection.select({
+                from: "temp_compras",
+                order: { by: 'ID', type: 'desc' }
+            });
+            let datos = JSON.stringify(response);
+            datos = datos.replace('[','');
+            datos = datos.replace(']','');
+            let result = '[' + datos + ']';
+            let data = JSON.parse(result);
+            resolve(data);
+        });
+    },
+    insertTempVentasPOS:(datos)=>{
+        return new Promise((resolve,reject)=>{
+            connection.insert({
+                into: "temp_compras",
+                values: [datos] //you can insert multiple values at a time
+            })
+            resolve();    
+        }) 
+    
+    },
+    deleteItemVentaPOS:(id)=>{
+        console.log('eliminar id: ' + id.toString())
+        return new Promise(async(resolve,reject)=>{
+            var rowsDeleted = await connection.remove({
+                from: "temp_compras",
+                where: {
+                    ID: Number(id)
+                }
+            });
+            console.log(rowsDeleted);
+            if(rowsDeleted>0){resolve()}else{reject()}
+        })            
+    },
+    selectDataRowVentaPOS:(id,nuevacantidad,nuevoprecio,descuento)=>{
+    
+        let costo = 0; let precio = 0; let equivale =0; let exento=0; let cantidad= nuevacantidad;
+        
+        return new Promise(async(resolve,reject)=>{
+            var response = await connection.select({
+                from: "temp_compras",
+                where: {
+                        ID: Number(id)
+                    }
+            });
+            console.log(response);
+    
+            response.map((rows)=>{
+                costo = rows.COSTO;
+                precio = nuevoprecio; //rows.PRECIO;
+                equivale = rows.EQUIVALE;
+                exento = rows.EXENTO;
+            });
+            let totalcosto = Number(costo) * Number(cantidad);
+            let totalprecio = Number(precio) * Number(cantidad);
+            let totalexento = Number(exento) * Number(cantidad);
+            let totalunidades = Number(equivale) * Number(cantidad);
+            //actualiza la fila
+            let updatedrow = await connection.update({
+                in: "temp_compras",
+                set: {
+                    CANTIDAD:Number(nuevacantidad),
+                    TOTALUNIDADES:Number(totalunidades),
+                    TOTALCOSTO:Number(totalcosto),
+                    PRECIO:Number(nuevoprecio),
+                    TOTALPRECIO:Number(totalprecio),
+                    EXENTO:totalexento,
+                    DESCUENTO:Number(descuento)
+                },
+                where: {
+                    ID: Number(id)
+                }
+            })
+            console.log(updatedrow);
+            if(updatedrow>0){
+                resolve();
+            }else{
+                reject();
+            }
+    
+        });
+    }
+}
+
+// --------------------------------
+// COMPRAS
+// --------------------------------

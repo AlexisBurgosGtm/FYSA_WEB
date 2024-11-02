@@ -324,7 +324,7 @@ router.post("/productos_filtro", async(req,res)=>{
                         AND (view_invsaldo.EMPNIT = '${sucursal}') AND (PRODUCTOS.CODPROD2 = '${filtro}')
                     `
     
-                    console.log(qry)
+                
 
     execute.QueryToken(res,qry,token);
      
@@ -359,7 +359,7 @@ FROM            DOCUMENTOS LEFT OUTER JOIN
                          TIPODOCUMENTOS ON DOCUMENTOS.CODDOC = TIPODOCUMENTOS.CODDOC AND DOCUMENTOS.EMPNIT = TIPODOCUMENTOS.EMPNIT
 WHERE        (DOCUMENTOS.EMPNIT = '${sucursal}') AND (DOCUMENTOS.FECHA = '${fecha}') AND (TIPODOCUMENTOS.TIPODOC = '${tipo}')`
     
-   console.log(qry)
+   
 
     execute.QueryToken(res,qry,token);
      

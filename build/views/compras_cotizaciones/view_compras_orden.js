@@ -5,7 +5,7 @@ function getView(){
             return `
                 <div class="row">
                     <div class="col-1 text-left">
-                            <img src="./favicon.png" width="80px" height="80px">
+                            <img src="./favicon.png" width="70px" height="70px">
                     </div>
                     <div class="card border-naranja card-rounded shadow col-11 p-2">
                         
@@ -936,6 +936,7 @@ function listener_vista_pedido(){
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            document.getElementById('txtPosCodprod').focus();
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -993,6 +994,7 @@ function listener_vista_pedido(){
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            document.getElementById('txtPosCodprod').focus();
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');

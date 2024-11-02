@@ -5,13 +5,13 @@ function getView(){
             return `
                 <div class="row">
                     <div class="col-1 text-left">
-                            <img src="./favicon.png" width="80px" height="80px">
+                            <img src="./favicon.png" width="70px" height="70px">
                     </div>
                     <div class="card border-naranja card-rounded shadow col-11 p-2">
                         
                             <div class="row">
                                 <div class="col-4 text-left">   
-                                    <label class="text-verde negrita h5" style="font-size:120%">Ingreso de Compras</label>
+                                    <label class="text-naranja negrita h5" style="font-size:120%">Ingreso de Compras</label>
                                     <br>
                                     <label class="text-naranja negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
@@ -405,15 +405,27 @@ function getView(){
 
                             <div class="row">
                                
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="text-secondary">Serie y Número de Factura de Compra</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="text-secondary">No. orden de Compra</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtCoddocOrigen" placeholder="Serie Orden" disabled="true">
+                                                <input type="text" class="form-control text-naranja negrita" id="txtCorrelativoOrigen" placeholder="Número Orden" disabled="true">
+                                            </div>
+                                        </div>
+                                </div>
                                 
 
-                                <div class="form-group">
-                                    <label class="text-secondary">Serie y Número de Factura de Compra</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
-                                        <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
-                                    </div>
-                                </div>        
+                                        
 
                                 
                                 <h2 class="negrita text-danger hidden" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
@@ -937,6 +949,7 @@ function listener_vista_pedido(){
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            document.getElementById('txtPosCodprod').focus();
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -994,6 +1007,7 @@ function listener_vista_pedido(){
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
+            document.getElementById('txtPosCodprod').focus();
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -1905,6 +1919,8 @@ function finalizar_pedido(){
     let serie_fac = document.getElementById('txtSerieFac').value || '';
     let numero_fac = document.getElementById('txtNumeroFac').value || '';
 
+    let coddoc_origen = document.getElementById('txtCoddocOrigen').value || '';
+    let correlativo_origen = document.getElementById('txtCorrelativoOrigen').value || '';
    
 
 
@@ -1916,7 +1932,7 @@ function finalizar_pedido(){
 
     let tipo_pago = document.getElementById('cmbConCre').value; 
 
-    let tipo_doc = 'ORD_COMPRA';
+    let tipo_doc = 'COMPRA';
     
   
     let entrega_contacto = ClienteNombre;
@@ -1949,15 +1965,15 @@ function finalizar_pedido(){
     
             gettempDocproductos_pos(GlobalUsuario)
             .then((response)=>{
-                axios.post('/compras/insertcompra_cot', {
+                axios.post('/compras/insertcompra', {
                     jsondocproductos:JSON.stringify(response),
                     sucursal:GlobalEmpnit,
                     coddoc:coddoc,
                     correlativo: correlativoDoc,
                     serie_fac:serie_fac,
                     numero_fac:numero_fac,
-                    coddoc_origen:serie_fac,
-                    correlativo_origen:numero_fac,
+                    coddoc_origen:coddoc_origen,
+                    correlativo_origen:correlativo_origen,
                     anio:anio,
                     mes:mes,
                     fecha:fecha,
@@ -2445,8 +2461,8 @@ function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,dire
                 document.getElementById('cmbPrioridad').value = prioridad;
                 document.getElementById('txtObs').value = obs;
 
-                document.getElementById('txtSerieFac').value = coddoc;
-                document.getElementById('txtNumeroFac').value = correlativo;
+                document.getElementById('txtCoddocOrigen').value = coddoc;
+                document.getElementById('txtCorrelativoOrigen').value = correlativo;
             
                 let btn = document.getElementById(idBtn);
               

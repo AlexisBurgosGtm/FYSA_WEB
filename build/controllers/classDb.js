@@ -1,4 +1,4 @@
-const DbName = "posdb_r4";
+const DbName = "posdb_r5";
 
 var tblDocumentos = {
     name: 'documentos',
@@ -122,6 +122,35 @@ var tblTempCompras = {
     }
 };
 
+var tblTempventasMovinv = {
+    name: 'temp_pos_movinv',
+    columns: {
+        ID:{ primaryKey: true, autoIncrement: true },
+        CODSUCURSAL:{dataType: "string"},
+        EMPNIT:{dataType: "string"},
+        CODDOC:{dataType: "string"},
+        CODPROD:{dataType: "string"},
+        DESPROD:{dataType: "string"},
+        CODMEDIDA:{dataType: "string"},
+        EQUIVALE:{dataType: "number"},
+        CANTIDAD:{dataType: "number"},
+        TOTALUNIDADES:{dataType: "number"},
+        COSTO:{dataType: "number"},
+        PRECIO:{dataType: "number"},
+        DESCUENTO:{dataType: "number"},
+        TOTALCOSTO:{dataType: "number"},
+        TOTALPRECIO:{dataType: "number"},       
+        EXENTO:{dataType: "number"},
+        USUARIO:{dataType: "string"},
+        TIPOPRECIO:{dataType: "string"},
+        EXISTENCIA:{dataType: "number"},
+        CODBODEGA:{dataType: "string"},
+        NOLOTE:{dataType: "string"},
+        TIPOPROD:{dataType: "string"},
+        BONO:{dataType: "number"},
+    }
+};
+
 var tblCredenciales = {
     name: 'credenciales',
     columns: {
@@ -138,7 +167,7 @@ var tblCredenciales = {
 
 var database = {
     name: DbName,
-    tables: [tblDocumentos,tblTempventas,tblTempventasPos,tblTempCompras,tblCredenciales]
+    tables: [tblDocumentos,tblTempventas,tblTempventasPos,tblTempCompras,tblTempventasMovinv,tblCredenciales]
 };
  
 // initiate jsstore connection

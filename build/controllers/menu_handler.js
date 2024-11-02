@@ -142,6 +142,16 @@ let Menu = {
             funciones.AvisoError('No tiene permitido entrar a esta sección');
         }
     },
+    bodega_traslados:(tipodoc)=>{
+        if(Menu.verify()==true){
+            funciones.loadScript('../views/bodega_traslados/view_traslados.js','root')
+            .then(async()=>{
+                initView(tipodoc);
+            })
+        }else{
+            funciones.AvisoError('No tiene permitido entrar a esta sección');
+        }
+    },
     documentos:()=>{
         if(Menu.verify()==true){
             funciones.loadScript('../views/archivo_documentos/view_documentos.js','root')

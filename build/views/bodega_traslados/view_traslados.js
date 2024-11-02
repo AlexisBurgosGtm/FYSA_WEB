@@ -5,27 +5,27 @@ function getView(){
             return `
                 <div class="row">
                     <div class="col-1 text-left">
-                            <img src="./favicon.png" width="80px" height="80px">
+                            <img src="./favicon.png" width="70px" height="70px">
                     </div>
                     <div class="card border-naranja card-rounded shadow col-11 p-2">
                         
                             <div class="row">
                                 <div class="col-4 text-left">   
-                                    <label class="text-naranja negrita h5" style="font-size:120%">Punto de Venta</label>
+                                    <label class="text-verde-claro negrita h5" style="font-size:120%" id="lbTitulo">MOVINV</label>
                                     <br>
                                     <label class="text-naranja negrita h5" style="font-size:120%" id="lbTotalItems">0 items</label>
                                 </div>
                                 
                                 <div class="col-8 text-right">
-                                    <h5 class="text-verde negrita" id="lbTotalVenta">Q 0.00</h5>
-                                    <h5 class="text-danger negrita" id="lbTotalDescuento">Q 0.00</h5>
-                                    <h1 class="text-naranja negrita" id="lbTotalVentaDescuento">Q 0.00</h1>
+                                    <h1 class="text-naranja negrita" id="lbTotalVenta">Q 0.00</h1>
+                                    <h5 class="text-danger negrita hidden" id="lbTotalDescuento">Q 0.00</h5>
+                                    <h1 class="text-naranja negrita hidden" id="lbTotalVentaDescuento">Q 0.00</h1>
                                 </div>
                             </div>
                         
                     </div>
                 </div>
-                <br>
+                
                 <div class="col-12 p-0">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="pedido" role="tabpanel" aria-labelledby="dias-tab">
@@ -61,11 +61,9 @@ function getView(){
             return `
             <div class="row">
 
-                <div class="col-12">
-
-                                  
+                <div class="col-12">              
                
-                <hr class="solid">
+                <br>
                 
                    <div class="row">
                       
@@ -96,9 +94,7 @@ function getView(){
                                                 <td>PRODUCTO</td>
                                                 <td>MEDIDA</td>
                                                 <td>CANTIDAD</td>
-                                                <td>PRECIO</td>
-                                                <td>SUBTOTAL</td>
-                                                <td>DESCUENTO</td>
+                                                <td>COSTO</td>
                                                 <td>IMPORTE</td>
                                                 <td></td>
                                                 <td></td>
@@ -143,9 +139,8 @@ function getView(){
                                                 <td>MARCA</td>
                                                 <td>PRODUCTO</td>
                                                 <td>MEDIDA</td>
-                                                <td>PRECIO</td>
+                                                <td>COSTO</td>
                                                 <td>EXISTENCIA</td>
-                                                <td>IPs</td>
                                                 <td>TIPO</td>
                                             </tr>
                                         </thead>
@@ -192,7 +187,7 @@ function getView(){
                                     </div>   
                                     
                                     <div class="form-group">
-                                        <label class="negrita text-secondary">Precio ${GlobalSignoMoneda}:</label>
+                                        <label class="negrita text-secondary">Costo ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCPrecio">
                                     </div>
                                     
@@ -201,12 +196,12 @@ function getView(){
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecio" disabled>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuento" oninput="calcular_descuento('txtMCDescuento','txtMCTotalPrecio','txtMCTotalPrecioDescuento')">
                                     </div>
                                     
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioDescuento" disabled>
                                     </div>
@@ -259,7 +254,7 @@ function getView(){
                                     </div>   
                                     
                                     <div class="form-group">
-                                        <label class="negrita text-secondary">Precio ${GlobalSignoMoneda}:</label>
+                                        <label class="negrita text-secondary">Costo ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCPrecioE">
                                     </div>
                                     
@@ -269,12 +264,12 @@ function getView(){
                                     </div>
 
 
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="negrita text-secondary">Descuento ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:140%" class="form-control negrita text-info border-naranja shadow col-10" id="txtMCDescuentoE" oninput="calcular_descuento('txtMCDescuentoE','txtMCTotalPrecioE','txtMCTotalPrecioDescuentoE')">
                                     </div>
                                     
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                         <label class="negrita text-secondary">Importe ${GlobalSignoMoneda}:</label>
                                         <input type="number" style="font-size:150%" class="form-control negrita text-danger border-naranja shadow col-10" id="txtMCTotalPrecioDescuentoE" disabled>
                                     </div>
@@ -307,82 +302,132 @@ function getView(){
         },
         documento:()=>{
             return `
+            <br>
             <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                    ${view.documento_card_cliente()}
-                </div>
+              
 
                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-                    <div class="card card-rounded shadow col-12 border-naranja">
+                    <div class="card card-rounded shadow col-12">
                         <div class="card-body">
 
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="text-secondary">Tipo de Documento</label>
-                                    <select class="form-control col-12" id="cmbTipoDocumento">
-                                        <option value="FEL">MODO A</option>    
-                                        <option value="FAC">MODO B</option>
-                                        <option value="COT">COTIZACIÓN</option>
-                                    </select>   
+
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                                        <div class="form-group">
+                                            <label class="text-secondary">Tipo de Documento</label>
+                                            <select class="form-control col-12" id="cmbTipoDocumento" disabled="true">
+                                                <option value="TIN">TRAS ENTRADA BODEGA</option>
+                                                <option value="TSL">TRAS SALIDA BODEGA</option>
+                                                <option value="TES">TRAS ENTRADA SUCURSAL</option>
+                                                <option value="TSS">TRAS SALIDA SUCURSAL</option>
+                                            </select>   
+                                        </div>
+
+                                        <div class="form-group text-left">
+                                            <label class="text-secondary">Serie Documento</label>
+                                            <div class="input-group">
+                                                <select class="form-control col-12" id="cmbCoddoc">
+                                                </select>
+                                                <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
+                                            </div>    
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group hidden">
+                                            <label class="text-secondary">Forma de Pago</label>
+                                            <div class="input-group">
+                                                <select class="form-control negrita text-naranja" id="cmbConCre">
+                                                    <option value="CON">CONTADO</option>
+                                                    <option value="CRE">CREDITO</option>
+                                                </select>
+                                                <input type="date" class="form-control negrita" id="txtFechaPago">
+                                            </div>
+                                        </div>
+
+                                        
                                 </div>
-                                <div class="form-group text-left">
-                                    <label class="text-secondary">Serie Documento</label>
-                                    <div class="input-group">
-                                        <select class="form-control col-12" id="cmbCoddoc">
-                                        </select>
-                                        <input type="number" id="txtCorrelativo" class="form-control" disabled="true" value=0>
-                                    </div>    
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                                        <div class="form-group text-left">
+                                            <label class="text-secondary">Fecha del Documento</label>
+                                            <div class="input-group">
+                                                
+                                                <input type="date" id="txtFecha" class="form-control text-naranja negrita border-naranja">
+                                                <select class="form-control col-12 hidden" id="cmbCaja">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group text-left">
+                                            <label class="text-secondary">Empleado</label>
+                                            <select class="form-control col-12" id="cmbVendedor">
+                                            </select>   
+                                        </div>
+                                    
+                                      
+
                                 </div>
+                                        
+
                             </div>
+                            
+
                             <br>
 
+                            <div class="form-group">
+                                <label class="text-secondary">Observaciones</label>
+                                <textarea class="form-control negrita col-12" rows="4" value="" id="txtObs"></textarea>   
+                            </div>
+
                             <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group text-left">
-                                        <label class="text-secondary">Caja</label>
-                                        <div class="input-group">
-                                            <select class="form-control col-12" id="cmbCaja">
-                                            </select>
-                                            <input type="date" id="txtFecha" class="form-control text-naranja negrita border-naranja">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group text-left">
-                                        <label class="text-secondary">Vendedor</label>
-                                        <select class="form-control col-12" id="cmbVendedor">
-                                        </select>   
-                                    </div>
+                               
+                                
 
-                                    <div class="">
-                                        
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="mostrador" checked>
-                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio1">Mostrador  </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="domicilio">
-                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio2">Domicilio  </label>
-                                        </div>
-                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input hand" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="callcenter">
-                                            <label class="form-check-label negrita text-naranja hand" for="inlineRadio3">Call Center</label>
-                                        </div>
-
+                                <div class="form-group hidden">
+                                    <label class="text-secondary">Serie y Número Factura Proveedor</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-naranja negrita" id="txtSerieFac" placeholder="Serie Factura">
+                                        <input type="text" class="form-control text-naranja negrita" id="txtNumeroFac" placeholder="Número Factura">
                                     </div>
+                                </div>        
 
-                                </div>    
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group text-right">
-                                        <label class="negrita text-secondary h4">Total a Pagar</label>
-                                        <h2 class="negrita text-danger" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
-                                    </div>
-                                </div>
-                            </div>  
+                                
+                                <h2 class="negrita text-danger hidden" style="font-size:280%" id="lbPosCobroTotalPagar">Q 0.00</h2>
                             
+                            </div>  
+
                         </div>
                     </div>
                 
                 </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                    <div class="card card-rounded col-12 shadow">
+                        <div class="card-body p-4">
+
+                            <h5 class="negrita text-naranja">Datos del Destino</h5>
+                        
+                            <div class="form-group">
+                                <label class="text-secondary negrita">Sucursal de Destino</label>
+                                <select class="negrita form-control" id="cmbEmpresas">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-secondary negrita">Prioridad</label>
+                                <select class="form-control negrita text-naranja" id="cmbPrioridad"></select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div>
 
             <button class="btn btn-secondary btn-xl btn-bottom-l btn-circle shadow hand" id="btnPosDocumentoAtras">
@@ -392,15 +437,17 @@ function getView(){
             <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow" id="btnGuardarFactura">
                 <i class="fal fa-save"></i>
             </button>
+
+            ${view.documento_card_cliente()}
             `
         },
         documento_card_cliente:()=>{
             return `
             <div class="card card-rounded shadow border-naranja p-4"  style="font-size:80%">
                 <div class="card-body">
-                            
+                            <h3 class="negrita text-naranja">Selecciona al Proveedor</h3>
                             <div class="form-group">
-                                <label class="negrita text-naranja">NIT / DPI</label>
+                                <label class="negrita text-naranja">NIT</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNit">
                                     <button class="btn btn-naranja text-white hand" id="btnBuscarCliente">
@@ -413,29 +460,29 @@ function getView(){
 
                         
                             <div class="form-group">
-                                <label class="negrita text-naranja">CLIENTE</label>
-                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNombre">
+                                <label class="negrita text-naranja">PROVEEDOR</label>
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNombre" value="CF">
                             </div>
                             
                             <div class="form-group">
                                 <label class="negrita text-naranja">DIRECCIÓN</label>
-                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroDireccion">
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroDireccion" value="CIUDAD">
                             </div>
 
                             <div class="form-group">
                                 <label class="negrita text-naranja">TELÉFONO/S</label>
-                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroTelefono">
+                                <input type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroTelefono"  value="">
                             </div>
 
                             <div class="text-right">
                                 <button class="btn btn-verde hand text-white" id="btnNuevoCliente">
-                                    <i class="fal fa-plus"></i> Crear Nuevo cliente
+                                    <i class="fal fa-plus"></i> Crear Nuevo Proveedor
                                 </button>
                             </div>
 
                             <div class="form-group hidden">
                                 <label class="negrita text-naranja">CÓDIGO CLIENTE</label>
-                                <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off">                            
+                                <input disabled type="text" class="form-control form-control-md border-naranja negrita text-verde" id="txtPosCobroNitclie" autocomplete="off"  value="0">                            
                             </div>
 
                           
@@ -459,7 +506,7 @@ function getView(){
                         <div class="modal-body p-4">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label>Búsqueda de Clientes</label>
+                                    <label class="text-secondary">Búsqueda de Proveedores</label>
                                     <div class="input-group">
                                         <input type="search" autocomplete="off" class="form-control border-naranja negrita" id="txtBuscarClie">
                                         <button class="btn btn-naranja hand text-white" id="btnBuscarClie">
@@ -474,7 +521,7 @@ function getView(){
                                     <thead class="bg-naranja text-white">
                                         <tr>
                                             <td>NIT / CÓDIGO</td>
-                                            <td>CLIENTE</td>
+                                            <td>PROVEEDOR</td>
                                             <td>TELÉFONO</td>
                                             <td>SALDO</td>
                                         </tr>
@@ -502,9 +549,8 @@ function getView(){
                                         <div class="input-group">
                                             <input type="date" class="negrita form-control" id="txtFechaDoc">
                                             <select class="form-control negrita" id="cmbTipoDoc">
-                                                <option value="FAC">FACTURAS NORMALES</option>
-                                                <option value="FEF">FACTURAS IVA (CONTADO)</option>
-                                                <option value="FEC">FACTURAS CAMBIARIAS IVA (CREDITO)</option>
+                                                <option value="REQ">REQUISICIONES DE COMPRA</option>
+                                                
                                             </select>
                                         </div>
                                         
@@ -527,9 +573,44 @@ function getView(){
 
 };
 
-function addListeners(){
+function addListeners(tipodoc){
 
-    document.title = "Ventas";
+    switch (tipodoc) {
+        
+        case 'TIN': // T. ENTRADA BODEGA
+            
+            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE ENTRADA A BODEGA';
+            document.title = "TRAS ENT BODEGA";
+
+            break;
+        
+        case 'TSL': // T. SALIDA BODEGA
+            
+            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE SALIDA DE BODEGA';
+            document.title = "TRAS SAL BODEGA";
+
+            break;
+    
+        case 'TES': // T. ENTRADA SUCURSAL
+            
+            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE ENTRADA A SUCURSAL';
+            document.title = "TRAS ENT SUCURSAL";
+
+            break;
+        
+        case 'TSS': // T. SALIDA SUCURSAL
+            
+            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE SALIDA DE SUCURSAL';
+            document.title = "TRAS SAL SUCURSAL";
+
+            break;   
+
+    }
+
+   
+
+
+
 
     funciones.slideAnimationTabs();
 
@@ -537,7 +618,10 @@ function addListeners(){
     //cmbEmpresa.removeEventListener('change', handle_empresa_change)
     //cmbEmpresa.addEventListener('change', handle_empresa_change)
 
+    document.getElementById('cmbPrioridad').innerHTML = funciones.get_prioridades();
 
+    //define el tipe de documento a cargar al inicio
+    document.getElementById('cmbTipoDocumento').value = tipodoc;
 
     // LISTENER DE LA VENTANA DE PEDIDOS
     listener_vista_pedido();
@@ -554,6 +638,7 @@ function addListeners(){
 
 
     document.getElementById('txtFecha').value = funciones.getFecha();
+    document.getElementById('txtFechaPago').value = funciones.getFecha();
     
    
     
@@ -563,10 +648,26 @@ function addListeners(){
 
     //carga las cajas
     get_cajas();
+
+
     
     listener_coddoc();
 
    
+    GF.get_data_empresas()
+    .then((data)=>{
+        let str = '<option value="SN">NO SELECCIONADO</option>';
+        data.recordset.map((r)=>{
+            str += `<option value="${r.EMPNIT}">${r.NOMBRE}</option>`
+        })
+
+        document.getElementById('cmbEmpresas').innerHTML = str;
+    })
+    .catch(()=>{
+        document.getElementById('cmbEmpresas').innerHTML = '<option value="SN">NO SELECCIONADO</option>'
+    })
+    
+    
 
     let btnGuardarFactura = document.getElementById('btnGuardarFactura');
     btnGuardarFactura.addEventListener('click',()=>{
@@ -598,6 +699,8 @@ function listener_coddoc(){
     cmbTipoDocumento.addEventListener('change',()=>{
         get_coddoc(cmbTipoDocumento.value);
     })
+
+   
 
     function get_coddoc(tipo){
         let container = document.getElementById('cmbCoddoc');
@@ -782,9 +885,7 @@ function listener_vista_pedido(){
 
             funciones.showToast('Producto agregado ' + Selected_desprod);
             get_tbl_pedido();
-            
             document.getElementById('txtPosCodprod').focus();
-
         })
         .catch(()=>{
             funciones.AvisoError('No se pudo agregar');
@@ -836,7 +937,7 @@ function listener_vista_pedido(){
 
 
         let nuevacantidad = Number(cantidad);
-        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
+        db_movinv.selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
         .then(()=>{
             $("#modal_editar_cantidad").modal('hide');
 
@@ -1040,15 +1141,15 @@ function listener_listado_documentos(){
 
 };
 
-function initView(){                                                                                                                                             
+function initView(tipodoc){                                                                                                                                             
    
     getView();
-    addListeners();
+    addListeners(tipodoc);
 
 };
 
 function get_vendedores(){
-    GF.get_data_empleados_tipo(3)
+    GF.get_data_empleados_tipo(2)
     .then((data)=>{
         let str = '';
         data.recordset.map((r)=>{
@@ -1094,7 +1195,7 @@ function tbl_clientes(filtro){
 
     let str = '';
 
-    axios.post('/clientes/buscar_cliente', {
+    axios.post('/proveedores/buscar_proveedor', {
         token:TOKEN,
         sucursal: GlobalEmpnit,
         filtro:filtro
@@ -1171,9 +1272,10 @@ function fcn_buscar_cliente(nit){
             return;
         };
     
-        axios.post('/pos/buscar_cliente_nit', {
+        axios.post('/proveedores/buscar_proveedor_nit', {
             sucursal: GlobalEmpnit,
-            nit:nit
+            nit:nit,
+            token:TOKEN
         })
         .then((response) => {        
             if(response=='error'){
@@ -1187,9 +1289,9 @@ function fcn_buscar_cliente(nit){
                 }
                 data.map((r)=>{
                     document.getElementById('txtPosCobroNit').value = r.NIT;
-                    document.getElementById('txtPosCobroNitclie').value = r.NITCLIE;
-                    document.getElementById('txtPosCobroNombre').value = r.NOMCLIE;
-                    document.getElementById('txtPosCobroDireccion').value = r.DIRCLIE;
+                    document.getElementById('txtPosCobroNitclie').value = r.CODCLIENTE;
+                    document.getElementById('txtPosCobroNombre').value = r.NOMBRE;
+                    document.getElementById('txtPosCobroDireccion').value = r.DIRECCION;
                 })
                 resolve();
             }
@@ -1263,23 +1365,21 @@ function get_buscar_producto(filtro){
         }else{
             const data = response.data.recordset;
             data.map((r)=>{
-                let strClassIps = '';
-                if(r.BONO.toString()=='0'){}else{}strClassIps = 'negrita text-naranja'
+                
                 let strClassExistencia = '';
                 let existencia = Number(r.EXISTENCIA);
                 if(existencia<=0){strClassExistencia='bg-danger text-white'};
 
                 str += `
-                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.PRECIO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}','${r.BONO}')">
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.COSTO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}','${r.BONO}')">
                         <td>${r.DESMARCA}</td>
                         <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
                             <br>
                             <small class="negrita text-danger">Cód:${r.CODPROD}</small>
                         </td>
                         <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
-                        <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                        <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
                         <td class="${strClassExistencia}">${r.EXISTENCIA}</td>
-                        <td class='${strClassIps}'>${funciones.setMoneda(r.BONO,'Q')}</td>
                         <td>${r.TIPOPROD}</td>
                     </tr>
                 `
@@ -1536,7 +1636,7 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
     
 
     return new Promise((resolve,reject)=>{
-        insertTempVentasPOS(datos)
+        db_movinv.insertTempVentasPOS(datos)
         .then(()=>{
             resolve();
         }) 
@@ -1558,7 +1658,7 @@ function get_tbl_pedido(){
     let varTotalCosto = 0;
     let varTotalDescuento = 0;
 
-    selectTempVentasPOS(GlobalEmpnit)
+    db_movinv.selectTempVentasPOS(GlobalEmpnit)
     .then((data)=>{
         let datos = data.map((rows)=>{
             varTotalItems += 1;
@@ -1584,9 +1684,6 @@ function get_tbl_pedido(){
                 </td>
                 <td class="negrita">${funciones.setMoneda(rows.PRECIO,'Q')}</td>
                 <td class="negrita h4">${funciones.setMoneda(rows.TOTALPRECIO,'Q')}</td>
-                <td class="negrita text-danger">${funciones.setMoneda(rows.DESCUENTO,'Q')}</td>
-                <td class="negrita text-verde h4">${funciones.setMoneda((Number(rows.TOTALPRECIO)-Number(rows.DESCUENTO)),'Q')}</td>
-
                 <td>
                     <button class="btn btn-md btn-circle btn-info shadow hand" onclick="edit_item_pedido('${rows.ID}','${rows.CODPROD}','${rows.DESPROD}','${rows.CODMEDIDA}','${rows.EQUIVALE}','${rows.CANTIDAD}','${rows.COSTO}','${rows.PRECIO}','${rows.TIPOPROD}','${rows.EXENTO}','${rows.EXISTENCIA}','${rows.BONO}','${rows.DESCUENTO}')">
                         <i class="fal fa-edit"></i>
@@ -1662,7 +1759,7 @@ function delete_item_pedido(id){
     funciones.Confirmacion('¿Está seguro que desea quitar este item?')
     .then((value)=>{
         if(value==true){
-            deleteItemVentaPOS(id)
+            db_movinv.deleteItemVentaPOS(id)
             .then(()=>{
                 funciones.showToast('Item eliminado');
                 get_tbl_pedido();
@@ -1733,7 +1830,7 @@ function finalizar_pedido(){
     GlobalSelectedNomCliente = ClienteNombre;
     let dirclie = document.getElementById('txtPosCobroDireccion').value;
     GlobalSelectedDirCliente = dirclie;
-    let obs = 'SN';  
+    let obs = document.getElementById('txtObs').value || '';  
     let direntrega = "SN"; 
     let codbodega = GlobalCodBodega;
     let cmbTipoEntrega = ''; 
@@ -1744,10 +1841,16 @@ function finalizar_pedido(){
     let dia = txtFecha.getUTCDate() 
     let fecha = funciones.devuelveFecha('txtFecha'); //funciones.getFecha() //anio + '-' + mes + '-' + d; 
     
+    let fechapago =funciones.devuelveFecha('txtFechaPago');
+
+
     let hora = funciones.getHora();
 
     let coddoc = document.getElementById('cmbCoddoc').value;
     let correlativoDoc = document.getElementById('txtCorrelativo').value;
+
+    let serie_fac = document.getElementById('txtSerieFac').value || '';
+    let numero_fac = document.getElementById('txtNumeroFac').value || '';
 
     let cmbCaja = document.getElementById('cmbCaja');
     let cmbVendedor = document.getElementById('cmbVendedor');
@@ -1755,17 +1858,10 @@ function finalizar_pedido(){
     let latdoc = '0';
     let longdoc = '0';
 
-    let tipo_pago = 'CON'; 
-    let tipo_doc = '';
+    let tipo_pago = document.getElementById('cmbConCre').value; 
+    let tipo_doc = 'REQ_COMPRA';
     
-    let var_mostrador = document.getElementById('inlineRadio1').checked.toString();
-    let var_domicilio = document.getElementById('inlineRadio2').checked.toString();
-    let var_callcenter = document.getElementById('inlineRadio3').checked.toString();
-    if(var_mostrador=="true"){tipo_doc='MOSTRADOR'};
-    if(var_domicilio=="true"){tipo_doc='DOMICILIO'};
-    if(var_callcenter=="true"){tipo_doc='CALLCENTER'};
-
-
+  
     let entrega_contacto = ClienteNombre;
     let entrega_telefono = ''; 
     let entrega_direccion = ''; 
@@ -1785,15 +1881,19 @@ function finalizar_pedido(){
 
         gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/pos/insertventa', {
+            axios.post('/compras/insertcompra_req', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
                 correlativo: correlativoDoc,
+                serie_fac:serie_fac,
+                numero_fac:numero_fac,
+                coddoc_origen:coddoc,
+                correlativo_origen:correlativo,
                 anio:anio,
                 mes:mes,
                 fecha:fecha,
-                fechaentrega:fecha,
+                fechaentrega:fechapago,
                 formaentrega:cmbTipoEntrega,
                 codbodega:codbodega,
                 codcaja:cmbCaja.value,
@@ -1804,7 +1904,7 @@ function finalizar_pedido(){
                 totaldescuento:GlobalTotalDescuento,
                 nitclie:nit,
                 dirclie:dirclie,
-                obs:entrega_referencia,
+                obs:funciones.limpiarTexto(obs),
                 direntrega:direntrega,
                 usuario:GlobalUsuario,
                 codven:cmbVendedor.value,
@@ -1819,7 +1919,8 @@ function finalizar_pedido(){
                 entrega_referencia:entrega_referencia,
                 entrega_lat:entrega_lat,
                 entrega_long:entrega_long,
-                iva:GlobalConfigIVA
+                iva:GlobalConfigIVA,
+                etiqueta:document.getElementById('cmbPrioridad').value
             })
             .then((response) => {
                 const data = response.data;
@@ -1862,11 +1963,11 @@ function fcnNuevoPedido(){
         GlobalTotalCostoDocumento=0;
         
         
-        document.getElementById('inlineRadio1').checked = true;
-
+        document.getElementById('txtFechaPago').value = funciones.getFecha();
+    
         document.getElementById('txtPosCobroNit').value = 'CF';
         document.getElementById('txtPosCobroNitclie').value = 0;
-        document.getElementById('txtPosCobroNombre').value = 'CONSUMIDOR FINAL';
+        document.getElementById('txtPosCobroNombre').value = 'PROVEEDORES VARIOS';
         document.getElementById('txtPosCobroDireccion').value = 'CIUDAD';
        
         document.getElementById('btnPosDocumentoAtras').click();
@@ -2068,7 +2169,7 @@ function loadDetallePedido(coddoc,correlativo){
         .then((response) => {
             const data = response.data;
            data.recordset.map((rows)=>{
-                insertTempVentasPOS(rows);
+            db_movinv.insertTempVentasPOS(rows);
            })
             resolve();
         }, (error) => {
@@ -2113,3 +2214,7 @@ function anular_factura(coddoc,correlativo,status,idbtn){
    
 
 };
+
+
+
+
