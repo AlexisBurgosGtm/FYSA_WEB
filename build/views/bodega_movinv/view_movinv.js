@@ -317,10 +317,9 @@ function getView(){
                                         <div class="form-group">
                                             <label class="text-secondary">Tipo de Documento</label>
                                             <select class="form-control col-12" id="cmbTipoDocumento" disabled="true">
-                                                <option value="TIN">TRAS ENTRADA BODEGA</option>
-                                                <option value="TSL">TRAS SALIDA BODEGA</option>
-                                                <option value="TES">TRAS ENTRADA SUCURSAL</option>
-                                                <option value="TSS">TRAS SALIDA SUCURSAL</option>
+                                                <option value="ENT">AJUST.ENTRADA INV</option>
+                                                <option value="SAL">AJUST.SALIDA INV</option>
+                                                
                                             </select>   
                                         </div>
 
@@ -574,34 +573,20 @@ function addListeners(tipodoc){
 
     switch (tipodoc) {
         
-        case 'TIN': // T. ENTRADA BODEGA
+        case 'ENT': // T. ENTRADA INVENTARIO
             
-            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE ENTRADA A BODEGA';
-            document.title = "TRAS ENT BODEGA";
+            document.getElementById('lbTitulo').textContent = 'AJUSTE DE ENTRADA DE INVENTARIO';
+            document.title = "ENTRADA INVENTARIO";
 
             break;
         
-        case 'TSL': // T. SALIDA BODEGA
+        case 'SAL': // T. SALIDA INVENTARIO
             
-            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE SALIDA DE BODEGA';
-            document.title = "TRAS SAL BODEGA";
+            document.getElementById('lbTitulo').textContent = 'AJUSTE DE SALIDA DE INVENTARIO';
+            document.title = "SALIDA INVENTARIO";
 
             break;
     
-        case 'TES': // T. ENTRADA SUCURSAL
-            
-            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE ENTRADA A SUCURSAL';
-            document.title = "TRAS ENT SUCURSAL";
-
-            break;
-        
-        case 'TSS': // T. SALIDA SUCURSAL
-            
-            document.getElementById('lbTitulo').textContent = 'TRASLADOS DE SALIDA DE SUCURSAL';
-            document.title = "TRAS SAL SUCURSAL";
-
-            break;   
-
     }
 
    

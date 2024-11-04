@@ -1,4 +1,4 @@
-let versionapp = "M.28102024.1420"
+let versionapp = "M.04112024.1420"
 
 
 let map; //mapa de leaflet
@@ -90,6 +90,7 @@ let GlobalCodBodega  = 0;
 let GlobalTotalDocumento = 0;
 let GlobalTotalCostoDocumento = 0;
 let GlobalTotalDescuento = 0;
+let GlobalTotalItems = 0;
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');

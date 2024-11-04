@@ -43,9 +43,14 @@ function getView(){
                     <h1 class="text-naranja negrita">Documentos disponibles</h1>
                     
                     <br>
+                    <div class="form-group">
+                        <label class="negrita text-verde">Escriba para buscar</label>
+                        <input type="search" class="form-control negrita text-naranja" placeholder="Escriba para buscar..." id="txtBuscar" 
+                        oninput="funciones.FiltrarTabla('tblDocumentos','txtBuscar')">
+                    </div>
 
                     <div class="table-responsive col-12">
-                        <table class="table table-responsive table-hover h-full">
+                        <table class="table table-responsive table-hover h-full" id="tblDocumentos">
                             <thead class="bg-naranja text-white">
                                 <tr>
                                     <td>TIPO</td>

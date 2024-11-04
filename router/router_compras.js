@@ -352,6 +352,52 @@ router.post("/surtido_sucursales", async(req,res)=>{
 
     if(sucursal=='TODAS'){
         qry = `
+       SELECT view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, 
+			SUM(view_invsaldo.MINIMO) AS MINIMO, 
+			SUM(view_invsaldo.MAXIMO) AS MAXIMO, 
+			SUM(view_invsaldo.EXISTENCIA) AS EXISTENCIA, 
+			MARCAS.DESMARCA,
+            (SUM(view_invsaldo.MAXIMO) - SUM(view_invsaldo.EXISTENCIA)) AS RELLENO
+        FROM     view_invsaldo LEFT OUTER JOIN
+                        PRODUCTOS ON view_invsaldo.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
+                        MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
+        WHERE  (view_invsaldo.HABILITADO = 'SI')
+        GROUP BY view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, MARCAS.DESMARCA
+        HAVING (PRODUCTOS.TIPOPROD = 'B') AND (SUM(view_invsaldo.EXISTENCIA) <= SUM(view_invsaldo.MINIMO))
+
+        `
+    }else{
+        qry = `
+        SELECT view_invsaldo.EMPNIT, view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, view_invsaldo.MINIMO, 
+            view_invsaldo.MAXIMO, view_invsaldo.EXISTENCIA, 
+            MARCAS.DESMARCA,
+            (view_invsaldo.MAXIMO - view_invsaldo.EXISTENCIA) AS RELLENO, '2000-01-01' AS LASTUPDATE
+        FROM     view_invsaldo LEFT OUTER JOIN
+                      PRODUCTOS ON view_invsaldo.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
+                      MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
+        WHERE  (view_invsaldo.EMPNIT = '${sucursal}') AND (PRODUCTOS.TIPOPROD = 'B') 
+            AND (view_invsaldo.HABILITADO='SI') AND (view_invsaldo.EXISTENCIA<=view_invsaldo.MINIMO)
+        `
+
+    }
+
+   
+
+
+
+    execute.QueryToken(res,qry,token);
+     
+});
+
+router.post("/BACKUP_ORIGINAL_surtido_sucursales", async(req,res)=>{
+   
+
+    const { token,sucursal,tipobi} = req.body;
+
+    let qry ='';
+
+    if(sucursal=='TODAS'){
+        qry = `
        SELECT INVSALDO.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, 
 			SUM(INVSALDO.MINIMO) AS MINIMO, 
 			SUM(INVSALDO.MAXIMO) AS MAXIMO, 

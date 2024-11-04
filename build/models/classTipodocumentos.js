@@ -17,14 +17,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }              
             }, (error) => {
                 reject();
             });
@@ -45,14 +49,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -70,14 +78,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }               
             }, (error) => {
                 reject();
             });
@@ -102,11 +114,15 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
                 }             
@@ -133,14 +149,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }      
             }, (error) => {
                 reject();
             });
@@ -160,14 +180,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }            
             }, (error) => {
                 reject();
             });
@@ -187,14 +211,18 @@ let classTipodocumentos = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                
             }, (error) => {
                 reject();
             });

@@ -934,7 +934,7 @@ function listener_vista_pedido(){
 
 
         let nuevacantidad = Number(cantidad);
-        db_movinv.selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
+        db_movinv_bod.selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
         .then(()=>{
             $("#modal_editar_cantidad").modal('hide');
 
@@ -1612,8 +1612,8 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
             CODSUCURSAL:GlobalEmpnit.toString(),
             EMPNIT:GlobalEmpnit.toString(),
             USUARIO:'',
-            CODPROD:codprod.toString(),
-            DESPROD:desprod.toString(),
+            CODPROD:funciones.limpiarTexto(codprod.toString()),
+            DESPROD:funciones.limpiarTexto(desprod.toString()),
             CODMEDIDA:codmedida.toString(),
             EQUIVALE:Number(equivale),
             COSTO:Number(costo),
@@ -1633,7 +1633,7 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
     
 
     return new Promise((resolve,reject)=>{
-        db_movinv.insertTempVentasPOS(datos)
+        db_movinv_bod.insertTempVentasPOS(datos)
         .then(()=>{
             resolve();
         }) 
@@ -1655,8 +1655,10 @@ function get_tbl_pedido(){
     let varTotalCosto = 0;
     let varTotalDescuento = 0;
 
-    db_movinv.selectTempVentasPOS(GlobalEmpnit)
+    db_movinv_bod.selectTempVentasPOS(GlobalEmpnit)
     .then((data)=>{
+        
+
         let datos = data.map((rows)=>{
             varTotalItems += 1;
             varTotalVenta = varTotalVenta + Number(rows.TOTALPRECIO);
@@ -1698,6 +1700,7 @@ function get_tbl_pedido(){
         GlobalTotalCostoDocumento = varTotalCosto;
         GlobalTotalDocumento = varTotalVenta;
         GlobalTotalDescuento = varTotalDescuento;
+       GlobalTotalItems = varTotalItems ;
 
         document.getElementById('lbTotalItems').innerText = varTotalItems.toString() + ' items';
         document.getElementById('lbTotalVenta').innerText = funciones.setMoneda(varTotalVenta,'Q');
@@ -1756,7 +1759,7 @@ function delete_item_pedido(id){
     funciones.Confirmacion('¿Está seguro que desea quitar este item?')
     .then((value)=>{
         if(value==true){
-            db_movinv.deleteItemVentaPOS(id)
+            db_movinv_bod.deleteItemVentaPOS(id)
             .then(()=>{
                 funciones.showToast('Item eliminado');
                 get_tbl_pedido();
@@ -1872,12 +1875,12 @@ function finalizar_pedido(){
     get_tbl_pedido();
 
         //VERIFICACIONES
-    if(Number(GlobalTotalDocumento)==0){funciones.AvisoError('No hay productos agregados');return;}
+    if(Number(GlobalTotalItems)==0){funciones.AvisoError('No hay productos agregados');return;}
     
     btnGuardarFactura.disabled = true;
     btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-        db_movinv.gettempDocproductos_pos(GlobalUsuario)
+        db_movinv_bod.gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
             axios.post('/inventarios/insertmovinv', {
                 jsondocproductos:JSON.stringify(response),
@@ -1932,7 +1935,7 @@ function finalizar_pedido(){
                     btnGuardarFactura.disabled = false;
                     btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
 
-                    db_movinv.deleteTempVenta_pos(GlobalUsuario);
+                    db_movinv_bod.deleteTempVenta_pos(GlobalUsuario);
 
                     fcnNuevoPedido();
                 }
@@ -2168,7 +2171,7 @@ function loadDetallePedido(coddoc,correlativo){
         .then((response) => {
             const data = response.data;
            data.recordset.map((rows)=>{
-            db_movinv.insertTempVentasPOS(rows);
+            db_movinv_bod.insertTempVentasPOS(rows);
            })
             resolve();
         }, (error) => {

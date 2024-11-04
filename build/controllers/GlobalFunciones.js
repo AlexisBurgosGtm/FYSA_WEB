@@ -8,12 +8,20 @@ let GF = {
             axios.get(`http://192.168.0.250:9000/ticket_soporte?sucursal=${GlobalEmpnit}&correlativo=${noorden}`)
             .then((response) => {
                 if(response.status.toString()=='200'){
-                    let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
+                    if(response.status.toString()=='200'){
+                        let data = response.data;
+                        if(data.toString()=="error"){
+                            reject();
+                        }else{
+                            if(Number(data.rowsAffected[0])>0){
+                                resolve(data);             
+                            }else{
+                                reject();
+                            } 
+                        }       
                     }else{
                         reject();
-                    }            
+                    }                  
                 }else{
                     reject();
                 }             
@@ -30,14 +38,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -57,14 +69,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -87,14 +103,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -116,14 +136,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -145,14 +169,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -172,14 +200,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])==0){
-                        resolve();             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -198,14 +230,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -222,14 +258,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -242,14 +282,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -266,14 +310,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -291,14 +339,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -316,14 +368,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -386,14 +442,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -414,14 +474,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -434,14 +498,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -460,16 +528,20 @@ let GF = {
     
             axios.post(`/documentos/detalle_documento`, data)
             .then(res => {
-                if(res.status.toString()=='200'){
-                    let data = res.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                if(response.status.toString()=='200'){
+                    let data = response.data;
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                } 
+                }       
             })
             .catch(()=>{
                 reject();
@@ -490,14 +562,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -517,14 +593,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -544,14 +624,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -571,14 +655,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });
@@ -605,14 +693,18 @@ let GF = {
             .then((response) => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
-                    if(Number(data.rowsAffected[0])>0){
-                        resolve(data);             
-                    }else{
+                    if(data.toString()=="error"){
                         reject();
-                    }            
+                    }else{
+                        if(Number(data.rowsAffected[0])>0){
+                            resolve(data);             
+                        }else{
+                            reject();
+                        } 
+                    }       
                 }else{
                     reject();
-                }             
+                }                   
             }, (error) => {
                 reject();
             });

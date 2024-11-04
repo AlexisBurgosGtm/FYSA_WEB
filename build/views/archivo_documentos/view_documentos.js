@@ -5,7 +5,7 @@ function getView(){
                 <div class="col-12 p-0 bg-white">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="uno" role="tabpanel" aria-labelledby="receta-tab">
-                            ${view.vista_listado()}
+                            ${view.vista_listado() + view.modal_detalle_documento()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
                            
@@ -74,6 +74,7 @@ function getView(){
                                     <td>FPAGO</td>
                                     <td>ST</td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody id="tblDataDocumentos">
@@ -84,8 +85,64 @@ function getView(){
             </div>
             `
         },
-        vista_nuevo:()=>{
+        modal_detalle_documento:()=>{
+            return `
+            <div id="modal_tomar_datos_detalle" class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-right modal-xl">
+                    <div class="modal-content">
+                        <div class="dropdown-header bg-naranja d-flex justify-content-center align-items-center w-100">
+                            <h4 class="m-0 text-center color-white" id="">
+                                Detalle del Documento
+                            </h4>
+                        </div>
+                        <div class="modal-body p-4">
+                            
+                            <div class="card card-rounded">
+                                <div class="card-body p-2">
 
+                                        <h4 class="negrita text-naranja" id="lbDetalleTomarDatosNombre"></h4>
+                                        <br>
+
+                                        <div class="table-responsive col-12">
+                                            <table class="table table-responsive table-bordered table-hover">
+                                                <thead class="bg-verde text-white">
+                                                    <tr>
+                                                        <td>CODIGO</td>
+                                                        <td>PRODUCTO</td>
+                                                        <td>MARCA</td>
+                                                        <td>MEDIDA</td>
+                                                        <td>CANTIDAD</td>
+                                                        <td>PRECIO</td>
+                                                        <td>IMPORTE</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblDataTomarDatosDetalle"></tbody>
+                                            </table>
+
+                                            <div class="form-group">
+                                                <label class="negrita text-naranja">Observaciones</label>
+                                                <textarea class="form-control negrita" id="lbDetaleTomarDatosObs" rows="4"></textarea>
+                                            </div>
+
+                                        
+                                        </div>
+
+                                </div>
+                            </div>
+
+                                
+                            <div class="row">
+                                <button class="btn btn-secondary btn-circle btn-xl hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-arrow-left"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            `
         }
     }
 
@@ -97,7 +154,7 @@ function addListeners(){
 
     document.title = "Documentos";
 
-    document.getElementById('cmbTipos').innerHTML = get_tipo_documentos();
+   
     document.getElementById('cmbMes').innerHTML = funciones.ComboMeses();
     document.getElementById('cmbAnio').innerHTML = funciones.ComboAnio();
 
@@ -105,9 +162,27 @@ function addListeners(){
     document.getElementById('cmbMes').value = f.getMonth()+1;
     document.getElementById('cmbAnio').value = f.getFullYear();
 
-    //carga la lista de documentos
-    get_documentos();
 
+     // CARGA COMBO TIPO DOCUMENTOS
+     classTipodocumentos.get_data_tipos()
+     .then((data)=>{
+        let str = '';
+        data.recordset.map((r)=>{
+             str += `
+                 <option value="${r.TIPODOC}">(${r.TIPODOC}) ${r.DESCRIPCION}</option>
+             `
+        })
+        document.getElementById('cmbTipos').innerHTML = str;
+        //carga la lista de documentos
+        get_documentos();
+
+     })
+     .catch(()=>{
+         document.getElementById('cmbTipos').innerHTML = '';
+     })
+
+
+   
 
     document.getElementById('cmbTipos').addEventListener('change',()=>{
         get_documentos();
@@ -155,7 +230,15 @@ function get_documentos(){
                     <td>${funciones.setMoneda(r.TOTALVENTA,'Q')}</td>
                     <td>${r.CONCRE}</td>
                     <td>${r.STATUS}</td>
-                    <td></td>
+                    <td>
+                        <button class="btn btn-md btn-circle hand shadow btn-info" 
+                            onclick="get_detalle_tomar_datos('${r.CODDOC}','${r.CORRELATIVO}','${r.NOMBRE}','${r.ETIQUETA}','${r.OBS}')">
+                            <i class="fal fa-list"></i>
+                        </button>
+                    </td>
+                    <td>
+                    
+                    </td>
                 </tr>
             `
         })
@@ -166,4 +249,51 @@ function get_documentos(){
     })
 
 
+
+   
+
 }
+
+
+function get_detalle_tomar_datos(coddoc,correlativo,nombre,prioridad,obs){
+
+    $("#modal_tomar_datos_detalle").modal('show');
+
+    document.getElementById('lbDetalleTomarDatosNombre').textContent = nombre;
+    document.getElementById('lbDetaleTomarDatosObs').value = obs;
+
+    let container = document.getElementById('tblDataTomarDatosDetalle');
+    container.innerHTML = GlobalLoader;
+
+
+    GF.get_data_detalle_documento(GlobalEmpnit,coddoc,correlativo)
+    .then((data)=>{
+        let str = "";
+
+        data.recordset.map((r)=>{
+            str += `
+            <tr>
+                <td>${r.CODPROD}</td>
+                <td>${r.DESPROD}</td>
+                <td>${r.DESMARCA}</td>
+                <td>${r.CODMEDIDA}</td>
+                <td>${r.CANTIDAD}</td>
+                <td>${funciones.setMoneda(r.PRECIO,'Q')}</td>
+                <td>${funciones.setMoneda(r.TOTALPRECIO,'Q')}</td>
+            </tr>
+            `
+        })
+        container.innerHTML = str;
+
+    })
+    .catch(()=>{
+        container.innerHTML = 'No hay datos...'
+
+    })
+
+
+
+
+
+
+};
