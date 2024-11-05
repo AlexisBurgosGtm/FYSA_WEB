@@ -571,6 +571,9 @@ function getView(){
 
 function addListeners(tipodoc){
 
+    document.title = "Ajuste inventario";
+
+
     switch (tipodoc) {
         
         case 'ENT': // T. ENTRADA INVENTARIO

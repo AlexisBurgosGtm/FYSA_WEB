@@ -394,6 +394,15 @@ function getView(){
                                 </select>
                             </div>
 
+                            <div class="form-group text-left">
+                                <label class="text-secondary">Serie Documento Destino</label>
+                                <div class="input-group">
+                                    <select class="form-control col-12" id="cmbCoddocDest">
+                                    </select>
+                                    <input type="number" id="txtCorrelativoDest" class="form-control" disabled="true" value=0>
+                                </div>    
+                            </div>
+
                             <div class="form-group">
                                 <label class="text-secondary negrita">Prioridad</label>
                                 <select class="form-control negrita text-naranja" id="cmbPrioridad"></select>
@@ -572,6 +581,9 @@ function getView(){
 
 function addListeners(tipodoc){
 
+    document.title = "Traslado relleno";
+
+
     switch (tipodoc) {
         
         case 'TIN': // T. ENTRADA BODEGA
@@ -735,6 +747,57 @@ function listener_coddoc(){
     })
 
     get_coddoc(cmbTipoDocumento.value);
+
+
+
+    function get_coddoc_destino(sucursalDest){
+
+        let container = document.getElementById('cmbCoddocDest');
+        container.innerHTML = '';
+
+        axios.post('/tipodocumentos/coddoc',{
+            sucursal:sucursalDest,
+            tipo:'TIN',
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let coddoc = ''
+                data.recordset.map((r)=>{
+                    coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
+                })        
+                container.innerHTML = coddoc;
+                get_correlativo_destino(container.value,document.getElementById('cmbEmpresas').value)
+                .then((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})
+                .catch((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})  
+            }else{
+                container.innerHTML = '';
+            }                     
+        }, (error) => {
+            container.innerHTML = '';
+        });
+    };
+
+    let cmbCoddocDest = document.getElementById('cmbCoddocDest');
+    cmbCoddocDest.addEventListener('change',()=>{
+        get_correlativo_destino(cmbCoddocDest.value,document.getElementById('cmbEmpresas').value)
+        .then((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})
+        .catch((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})
+    })
+
+    get_coddoc_destino(document.getElementById('cmbEmpresas').value)
+
+
+
+    document.getElementById('cmbEmpresas').addEventListener('change',()=>{
+      
+        get_coddoc_destino(document.getElementById('cmbEmpresas').value)
+    
+    })
+
+
+
 };
 
 function get_correlativo(coddoc){
@@ -742,6 +805,32 @@ function get_correlativo(coddoc){
     return new Promise((resolve,reject)=>{
         axios.post('/tipodocumentos/correlativo',{
             sucursal:GlobalEmpnit,
+            coddoc:coddoc,
+            token:TOKEN
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0){
+                let correlativo = '';
+                data.recordset.map((r)=>{
+                    correlativo = r.CORRELATIVO
+                })
+                resolve(correlativo);             
+            }else{
+                reject('0');
+            }                     
+        }, (error) => {
+            reject('0');
+        });
+    })
+
+};
+
+function get_correlativo_destino(coddoc,sucursal){
+      
+    return new Promise((resolve,reject)=>{
+        axios.post('/tipodocumentos/correlativo',{
+            sucursal:sucursal,
             coddoc:coddoc,
             token:TOKEN
         })
@@ -1862,6 +1951,8 @@ function finalizar_pedido(){
     let tipo_doc = 'TRAS';
     
     let sucursal_destino = document.getElementById('cmbEmpresas').value;
+    let coddoc_destino = document.getElementById('cmbCoddocDest').value;
+    let correlativo_destino = document.getElementById('txtCorrelativoDest').value || '0'
   
     let entrega_contacto = ClienteNombre;
     let entrega_telefono = ''; 
@@ -1882,7 +1973,7 @@ function finalizar_pedido(){
 
         db_movinv_bod.gettempDocproductos_pos(GlobalUsuario)
         .then((response)=>{
-            axios.post('/inventarios/insertmovinv', {
+            axios.post('/inventarios/insertmovinv_relleno', {
                 jsondocproductos:JSON.stringify(response),
                 sucursal:GlobalEmpnit,
                 coddoc:coddoc,
@@ -1891,6 +1982,8 @@ function finalizar_pedido(){
                 numero_fac:numero_fac,
                 coddoc_origen:coddoc,
                 correlativo_origen:correlativoDoc,
+                coddoc_destino:coddoc_destino,
+                correlativo_destino:correlativo_destino,
                 sucursal_destino:sucursal_destino,
                 anio:anio,
                 mes:mes,

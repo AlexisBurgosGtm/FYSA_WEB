@@ -48,7 +48,7 @@ function getView(){
                                 <select class="form-control" id="cmbSucursal">
                                 </select>
                                 <button class="btn hidden"></button>
-                                <button class="btn btn-naranja shadow hand" id="btnCrearTraslado">
+                                <button class="btn btn-verde shadow hand" id="btnCrearTraslado">
                                     <i class="fal fa-plus"></i> Crear Traslado a Sucursal
                                 </button>
                             </div>
@@ -518,8 +518,8 @@ function create_traslado_sucursal(sucursal){
                 let desprod = r.DESPROD;
                 let codmedida = 'UN_BOD';
                 let equivale = 1;
-                let costo = 0;
-                let preciounitario = 0;
+                let costo = Number(r.COSTO_ULTIMO);
+                let preciounitario = Number(r.COSTO_ULTIMO);
                 let cantidad = Number(r.RELLENO);
                 let exento = 0;
                 let tipoprod = r.TIPOPROD;

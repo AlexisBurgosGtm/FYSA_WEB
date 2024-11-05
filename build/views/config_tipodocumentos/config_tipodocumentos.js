@@ -172,6 +172,9 @@ function getView(){
 
 function addListeners(){
 
+    document.title = "Tipo Documentos";
+
+
         funciones.slideAnimationTabs();
 
 

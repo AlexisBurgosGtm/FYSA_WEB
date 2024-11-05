@@ -3,6 +3,65 @@ const express = require('express');
 const router = express.Router();
 
 
+router.post("/insertmovinv_relleno", async(req,res)=>{
+   
+
+    const { token,jsondocproductos,sucursal,
+            coddoc,correlativo,serie_fac,numero_fac,anio,mes,fecha,fechaentrega,formaentrega,
+            codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+            nitclie, dirclie, obs, direntrega, usuario,
+            codven, lat, long, hora, tipo_pago, tipo_doc,
+            entrega_contacto, entrega_telefono, entrega_direccion,
+            entrega_referencia, entrega_lat, entrega_long,
+            codcaja, iva, etiqueta, coddoc_origen, correlativo_origen,sucursal_destino,
+            coddoc_destino,correlativo_destino} = req.body;
+
+
+    let qryDocumentos = str_qry_documentos(jsondocproductos,sucursal,
+        coddoc,correlativo,anio,mes,fecha,fechaentrega,formaentrega,
+        codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+        nitclie, dirclie, obs, direntrega, usuario,
+        codven, lat, long, hora, tipo_pago, tipo_doc,
+        entrega_contacto, entrega_telefono, entrega_direccion,
+        entrega_referencia, entrega_lat, entrega_long,
+        codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc_origen,correlativo_origen,sucursal_destino);
+
+    let qryDocproductos = str_qry_docproductos(sucursal,coddoc,correlativo,anio,mes,iva,codbodega,fecha,jsondocproductos);
+   
+    let nuevoCorrelativo = Number(correlativo) + 1;
+    let qryTipodocumentos = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativo} WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc}';`;
+    //let qryStatusDocCot =  '' //`UPDATE DOCUMENTOS SET STATUS='D' WHERE EMPNIT='${sucursal}' AND CODDOC='${coddoc_origen}' AND CORRELATIVO=${correlativo_origen};`
+
+    let qryOrigen = qryDocumentos + qryDocproductos + qryTipodocumentos; // qryStatusDocCot
+    
+
+
+    let qryDocumentosDestino = str_qry_documentos(jsondocproductos,sucursal_destino,
+        coddoc_destino,correlativo_destino,anio,mes,fecha,fechaentrega,formaentrega,
+        codbodega,codcliente,nomclie,totalcosto,totalprecio,totaldescuento,
+        nitclie, dirclie, obs, direntrega, usuario,
+        codven, lat, long, hora, tipo_pago, tipo_doc,
+        entrega_contacto, entrega_telefono, entrega_direccion,
+        entrega_referencia, entrega_lat, entrega_long,
+        codcaja, iva,serie_fac,numero_fac,etiqueta,coddoc,correlativo,sucursal_destino);
+
+    let qryDocproductosDestino = str_qry_docproductos(sucursal_destino,coddoc_destino,correlativo_destino,anio,mes,iva,codbodega,fecha,jsondocproductos);
+  
+    let nuevoCorrelativoDestino = Number(correlativo_destino) + 1;
+    let qryTipodocumentosDestino = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevoCorrelativoDestino} WHERE EMPNIT='${sucursal_destino}' 
+                                                        AND CODDOC='${coddoc_destino}';`;
+    
+
+    
+    let qryDestino = qryDocumentosDestino + qryDocproductosDestino + qryTipodocumentosDestino;
+    
+    console.log(qryOrigen)
+
+    execute.QueryToken(res,qryOrigen + qryDestino,token);
+     
+    
+});
+
 router.post("/insertmovinv", async(req,res)=>{
    
 

@@ -572,6 +572,9 @@ function getView(){
 
 function addListeners(tipodoc){
 
+    document.title = "Traslados de inventario";
+
+
     switch (tipodoc) {
         
         case 'TIN': // T. ENTRADA BODEGA

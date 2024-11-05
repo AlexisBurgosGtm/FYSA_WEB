@@ -357,12 +357,13 @@ router.post("/surtido_sucursales", async(req,res)=>{
 			SUM(view_invsaldo.MAXIMO) AS MAXIMO, 
 			SUM(view_invsaldo.EXISTENCIA) AS EXISTENCIA, 
 			MARCAS.DESMARCA,
-            (SUM(view_invsaldo.MAXIMO) - SUM(view_invsaldo.EXISTENCIA)) AS RELLENO
+            (SUM(view_invsaldo.MAXIMO) - SUM(view_invsaldo.EXISTENCIA)) AS RELLENO,
+            view_invsaldo.COSTO_ULTIMO,view_invsaldo.COSTO_PROMEDIO
         FROM     view_invsaldo LEFT OUTER JOIN
                         PRODUCTOS ON view_invsaldo.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
                         MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
         WHERE  (view_invsaldo.HABILITADO = 'SI')
-        GROUP BY view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, MARCAS.DESMARCA
+        GROUP BY view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, MARCAS.DESMARCA,view_invsaldo.COSTO_ULTIMO,view_invsaldo.COSTO_PROMEDIO
         HAVING (PRODUCTOS.TIPOPROD = 'B') AND (SUM(view_invsaldo.EXISTENCIA) <= SUM(view_invsaldo.MINIMO))
 
         `
@@ -371,7 +372,9 @@ router.post("/surtido_sucursales", async(req,res)=>{
         SELECT view_invsaldo.EMPNIT, view_invsaldo.CODPROD, PRODUCTOS.DESPROD, PRODUCTOS.TIPOPROD, view_invsaldo.MINIMO, 
             view_invsaldo.MAXIMO, view_invsaldo.EXISTENCIA, 
             MARCAS.DESMARCA,
-            (view_invsaldo.MAXIMO - view_invsaldo.EXISTENCIA) AS RELLENO, '2000-01-01' AS LASTUPDATE
+            (view_invsaldo.MAXIMO - view_invsaldo.EXISTENCIA) AS RELLENO, 
+            '2000-01-01' AS LASTUPDATE,
+            view_invsaldo.COSTO_ULTIMO,view_invsaldo.COSTO_PROMEDIO
         FROM     view_invsaldo LEFT OUTER JOIN
                       PRODUCTOS ON view_invsaldo.CODPROD = PRODUCTOS.CODPROD LEFT OUTER JOIN
                       MARCAS ON PRODUCTOS.CODMARCA = MARCAS.CODMARCA
