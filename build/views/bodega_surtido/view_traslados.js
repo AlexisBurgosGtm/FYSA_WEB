@@ -75,7 +75,7 @@ function getView(){
                                         <div class="input-group">
                                            
                                             <input type="text" autocomplete="off" class="form-control border-naranja negrita col-7" placeholder='Escriba para buscar...' id="txtPosCodprod">
-                                            <button class="btn btn-naranja hand col-1" id="btnBuscarProd">
+                                            <button class="btn btn-naranja hand col-1 hidden" id="btnBuscarProd">
                                                 <i class="fal fa-search"></i>
                                             </button>
                                                                                     
@@ -88,7 +88,7 @@ function getView(){
                                             <b class="text-naranja">Productos agregados a la Factura</b>
                                         </div>
                                     </div>
-                                    <table class="table table-responsive  table-hover col-12 h-full">
+                                    <table class="table table-responsive  table-hover col-12 h-full" id="tblPedido">
                                         <thead class="bg-verde text-white">
                                             <tr>
                                                 <td>PRODUCTO</td>
@@ -390,7 +390,7 @@ function getView(){
                         
                             <div class="form-group">
                                 <label class="text-secondary negrita">Sucursal de Destino</label>
-                                <select class="negrita form-control" id="cmbEmpresas">
+                                <select class="negrita form-control" id="cmbEmpresas" disabled="true">
                                 </select>
                             </div>
 
@@ -416,8 +416,8 @@ function getView(){
 
             </div>
 
-            <button class="btn btn-secondary btn-xl btn-bottom-l btn-circle shadow hand" id="btnPosDocumentoAtras">
-                <i class="fal fa-arrow-left"></i>
+            <button class="btn-bottom-l button_back btn btn-xl btn-circle btn-secondary" id="btnPosDocumentoAtras">
+                ${special_html_button_back}
             </button>
 
             <button class="btn btn-info btn-xl btn-bottom-r btn-circle shadow" id="btnGuardarFactura">
@@ -579,7 +579,7 @@ function getView(){
 
 };
 
-function addListeners(tipodoc){
+function addListeners(tipodoc,sucursal_destino){
 
     document.title = "Traslado relleno";
 
@@ -616,8 +616,8 @@ function addListeners(tipodoc){
 
     }
 
-   
-
+    get_coddoc(tipodoc);
+    get_coddoc_destino(sucursal_destino);
 
 
 
@@ -671,6 +671,9 @@ function addListeners(tipodoc){
         })
 
         document.getElementById('cmbEmpresas').innerHTML = str;
+        document.getElementById('cmbEmpresas').value = sucursal_destino;
+        get_coddoc_destino(sucursal_destino);
+        
     })
     .catch(()=>{
         document.getElementById('cmbEmpresas').innerHTML = '<option value="SN">NO SELECCIONADO</option>'
@@ -698,6 +701,8 @@ function addListeners(tipodoc){
 
     document.getElementById('txtPosCodprod').focus();
 
+
+
 };
 
 
@@ -709,35 +714,7 @@ function listener_coddoc(){
         get_coddoc(cmbTipoDocumento.value);
     })
 
-   
 
-    function get_coddoc(tipo){
-        let container = document.getElementById('cmbCoddoc');
-        container.innerHTML = '';
-
-        axios.post('/tipodocumentos/coddoc',{
-            sucursal:GlobalEmpnit,
-            tipo:tipo,
-            token:TOKEN
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                let coddoc = ''
-                data.recordset.map((r)=>{
-                    coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
-                })        
-                container.innerHTML = coddoc;
-                get_correlativo(container.value)
-                .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
-                .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})  
-            }else{
-                container.innerHTML = '';
-            }                     
-        }, (error) => {
-            container.innerHTML = '';
-        });
-    };
 
     let cmbCoddoc = document.getElementById('cmbCoddoc');
     cmbCoddoc.addEventListener('change',()=>{
@@ -749,35 +726,6 @@ function listener_coddoc(){
     get_coddoc(cmbTipoDocumento.value);
 
 
-
-    function get_coddoc_destino(sucursalDest){
-
-        let container = document.getElementById('cmbCoddocDest');
-        container.innerHTML = '';
-
-        axios.post('/tipodocumentos/coddoc',{
-            sucursal:sucursalDest,
-            tipo:'TIN',
-            token:TOKEN
-        })
-        .then((response) => {
-            let data = response.data;
-            if(Number(data.rowsAffected[0])>0){
-                let coddoc = ''
-                data.recordset.map((r)=>{
-                    coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
-                })        
-                container.innerHTML = coddoc;
-                get_correlativo_destino(container.value,document.getElementById('cmbEmpresas').value)
-                .then((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})
-                .catch((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})  
-            }else{
-                container.innerHTML = '';
-            }                     
-        }, (error) => {
-            container.innerHTML = '';
-        });
-    };
 
     let cmbCoddocDest = document.getElementById('cmbCoddocDest');
     cmbCoddocDest.addEventListener('change',()=>{
@@ -798,6 +746,35 @@ function listener_coddoc(){
 
 
 
+};
+
+
+function get_coddoc(tipo){
+    let container = document.getElementById('cmbCoddoc');
+    container.innerHTML = '';
+
+    axios.post('/tipodocumentos/coddoc',{
+        sucursal:GlobalEmpnit,
+        tipo:tipo,
+        token:TOKEN
+    })
+    .then((response) => {
+        let data = response.data;
+        if(Number(data.rowsAffected[0])>0){
+            let coddoc = ''
+            data.recordset.map((r)=>{
+                coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
+            })        
+            container.innerHTML = coddoc;
+            get_correlativo(container.value)
+            .then((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})
+            .catch((correlativo)=>{document.getElementById('txtCorrelativo').value = correlativo})  
+        }else{
+            container.innerHTML = '';
+        }                     
+    }, (error) => {
+        container.innerHTML = '';
+    });
 };
 
 function get_correlativo(coddoc){
@@ -824,6 +801,35 @@ function get_correlativo(coddoc){
         });
     })
 
+};
+
+function get_coddoc_destino(sucursalDest){
+
+    let container = document.getElementById('cmbCoddocDest');
+    container.innerHTML = '';
+
+    axios.post('/tipodocumentos/coddoc',{
+        sucursal:sucursalDest,
+        tipo:'TIN',
+        token:TOKEN
+    })
+    .then((response) => {
+        let data = response.data;
+        if(Number(data.rowsAffected[0])>0){
+            let coddoc = ''
+            data.recordset.map((r)=>{
+                coddoc += `<option value="${r.CODDOC}">${r.CODDOC}</option>`
+            })        
+            container.innerHTML = coddoc;
+            get_correlativo_destino(container.value,document.getElementById('cmbEmpresas').value)
+            .then((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})
+            .catch((correlativo)=>{document.getElementById('txtCorrelativoDest').value = correlativo})  
+        }else{
+            container.innerHTML = '';
+        }                     
+    }, (error) => {
+        container.innerHTML = '';
+    });
 };
 
 function get_correlativo_destino(coddoc,sucursal){
@@ -912,10 +918,18 @@ function listener_vista_pedido(){
     txtPosCodprod.addEventListener('keyup',(e)=>{
 
         txtPosCodprod.value = txtPosCodprod.value.toUpperCase();
+
         let filtro = txtPosCodprod.value || '';
         
 
         if(filtro==''){return;}
+
+        funciones.FiltrarTabla('tblPedido','txtPosCodprod')
+
+
+
+        return;
+
 
         if (e.code === 'Enter') { 
             document.getElementById('btnBuscarProd').click();
@@ -1227,10 +1241,10 @@ function listener_listado_documentos(){
 
 };
 
-function initView(tipodoc){                                                                                                                                             
+function initView(tipodoc,sucursal_destino){                                                                                                                                             
    
     getView();
-    addListeners(tipodoc);
+    addListeners(tipodoc,sucursal_destino);
 
 };
 
@@ -1424,7 +1438,74 @@ function CalcularTotalPrecioEditar(){
 
 };
 
+
 function get_buscar_producto(filtro){
+
+    $("#modal_lista_precios").modal('show');
+
+    let container = document.getElementById('tblDataProductos');
+    container.innerHTML = GlobalLoader;
+
+    document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-sync fa-spin"></i>';
+    document.getElementById('btnBuscarProd').disabled=true;
+
+
+    let str = '';
+
+    let idf = 'first-element'; let i =0;
+
+    axios.post('/pos/productos_filtro', {
+        sucursal: GlobalEmpnit,
+        token:TOKEN,
+        filtro:filtro,
+        tipoprecio:data_empresa_config.TIPO_PRECIO
+    })
+    .then((response) => {        
+        if(response=='error'){
+            funciones.AvisoError('Error en la solicitud');
+            container.innerHTML = 'No day datos....';
+        }else{
+            const data = response.data.recordset;
+            data.map((r)=>{
+                
+                let strClassExistencia = '';
+                let existencia = Number(r.EXISTENCIA);
+                if(existencia<=0){strClassExistencia='bg-danger text-white'};
+
+                str += `
+                    <tr class="hand" onclick="get_producto('${r.CODPROD}','${r.DESPROD}','${r.CODMEDIDA}','${r.EQUIVALE}','${r.COSTO}','${r.COSTO}','${r.TIPOPROD}','${r.EXENTO}','${r.EXISTENCIA}','${r.BONO}')">
+                        <td>${r.DESMARCA}</td>
+                        <td><b style="color:${r.COLOR}">${r.DESPROD}</b>
+                            <br>
+                            <small class="negrita text-danger">Cód:${r.CODPROD}</small>
+                        </td>
+                        <td>${r.CODMEDIDA} (Eq:${r.EQUIVALE})</td>
+                        <td>${funciones.setMoneda(r.COSTO,'Q')}</td>
+                        <td class="${strClassExistencia}">${r.EXISTENCIA}</td>
+                        <td>${r.TIPOPROD}</td>
+                    </tr>
+                `
+            })
+            container.innerHTML = str;
+            
+            document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-search"></i>';
+            document.getElementById('btnBuscarProd').disabled=false;
+
+            //getMoveTable();
+        }
+    }, (error) => {
+        funciones.AvisoError('Error en la solicitud');
+        container.innerHTML = 'No day datos....';
+        document.getElementById('btnBuscarProd').innerHTML = '<i class="fal fa-search"></i>';
+        document.getElementById('btnBuscarProd').disabled=false;
+    });
+
+
+
+};
+
+
+function BACKUP_get_buscar_producto(filtro){
 
     $("#modal_lista_precios").modal('show');
 
@@ -1487,6 +1568,8 @@ function get_buscar_producto(filtro){
 
 
 };
+
+
 
 
 
@@ -1861,7 +1944,7 @@ function delete_item_pedido(id){
     
 };
 
-function get_coddoc(tipo){
+function BACKUP_get_coddoc(tipo){
     return new Promise((resolve, reject)=>{
         axios.post('/tipodocumentos/series_doc', {
             sucursal: GlobalEmpnit,
@@ -2030,7 +2113,8 @@ function finalizar_pedido(){
 
                     db_movinv_bod.deleteTempVenta_pos(GlobalUsuario);
 
-                    fcnNuevoPedido();
+                    //fcnNuevoPedido();
+                    Menu.bodega_surtido();
                 }
             }, (error) => {
                 console.log(error);

@@ -258,11 +258,16 @@ function addListeners(){
     btnCrearTraslado.addEventListener('click',()=>{
 
 
+
+
         funciones.Confirmacion('Desea crear un traslado hasta la sucursal seleccionada?')
         .then((value)=>{
             if(value==true){
 
                 funciones.showToast('Limpiado tabla para crear traslado...');
+
+                btnCrearTraslado.innerHTML = special_loader_reloj;
+                btnCrearTraslado.disabled = true;
 
                 //eliminando la tabla anterior
                 db_movinv_bod.deleteTempVenta_pos()
@@ -271,10 +276,14 @@ function addListeners(){
                     create_traslado_sucursal(cmbSucursal.value)
                     .then((conteo)=>{
                         funciones.Aviso(`Filas agregadas: ${conteo}`);
-                        Menu.bodega_surtido_traslado();
+                        Menu.bodega_surtido_traslado(cmbSucursal.value);
                     })
                     .catch(()=>{
-                        funciones.AvisoError('No se creo la tabla del traslado')
+                        funciones.AvisoError('No se creo la tabla del traslado');
+                        
+                        btnCrearTraslado.innerHTML = `<i class="fal fa-plus"></i> Crear Traslado a Sucursal`;
+                        btnCrearTraslado.disabled = false;
+
                     })
 
                     

@@ -154,12 +154,12 @@ let Menu = {
             funciones.AvisoError('No tiene permitido entrar a esta sección');
         }
     },
-    bodega_surtido_traslado:()=>{
+    bodega_surtido_traslado:(sucursal_destino)=>{
         if(Menu.verify()==true){
             funciones.loadScript('../views/bodega_surtido/view_traslados.js','root')
             .then(async()=>{
                 
-                initView('TSL');
+                initView('TSL',sucursal_destino);
                   
             })
         }else{

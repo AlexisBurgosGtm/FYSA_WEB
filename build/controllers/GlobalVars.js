@@ -36,7 +36,10 @@ let rootErrores = document.getElementById('rootErrores');
 let navmenu = document.getElementById('js-nav-menu');
 
 
-let GlobalLoader = `
+let GlobalLoader = `<b class="negrita text-naranja">Cargando... </b> ${special_loader}`;
+
+
+let GlobalLoaderX = `
                 <div>
                     <div  class="spinner-border" role="status">
                         <img src="./favicon.png" width="40" height="40">
