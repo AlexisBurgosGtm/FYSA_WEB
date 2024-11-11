@@ -150,6 +150,15 @@ let special_loader_reloj = `
 <div class="loader"></div>
 `
 
+let special_loader_luz = `
+        <div class="container">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        `
+
 let special_switch = `
     <label class="switch-button" for="switch">
       <div class="switch-outer">

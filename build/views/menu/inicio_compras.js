@@ -427,7 +427,7 @@ function addListeners(){
 
     get_total_rellenos()
     .then((data)=>{
-       document.getElementById('lbTotalRelleno').innerHTML = `${data.recordset[0].CONTEO}<small class="m-0 l-h-n">Productos en mínimo</small>` 
+       document.getElementById('lbTotalRelleno').innerHTML = `${funciones.setMoneda(data.recordset[0].CONTEO,'').replace('.00','')}<small class="m-0 l-h-n">Productos en mínimo</small>` 
     })
     .catch(()=>{
         document.getElementById('lbTotalRelleno').innerText = '----'

@@ -55,7 +55,7 @@ router.post("/insertmovinv_relleno", async(req,res)=>{
     
     let qryDestino = qryDocumentosDestino + qryDocproductosDestino + qryTipodocumentosDestino;
     
-    console.log(qryOrigen)
+    //console.log(qryOrigen)
 
     execute.QueryToken(res,qryOrigen + qryDestino,token);
      

@@ -266,7 +266,7 @@ function addListeners(){
 
                 funciones.showToast('Limpiado tabla para crear traslado...');
 
-                btnCrearTraslado.innerHTML = special_loader_reloj;
+                btnCrearTraslado.innerHTML = special_loader_luz;
                 btnCrearTraslado.disabled = true;
 
                 //eliminando la tabla anterior
