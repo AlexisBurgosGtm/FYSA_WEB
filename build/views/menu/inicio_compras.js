@@ -159,7 +159,13 @@ function getView(){
                                </div>
                                
                                <div class="table-responsive">
-                                    <table class="table h-full table-hove table-bordered h-full">
+                                    
+                                    <div class="form-group">
+                                        <label class="negrita text-naranja">Escriba para filtrar</label>
+                                        <input type="text" id="txtBuscarSurtido" class="form-control negrita text-verde" oninput="funciones.FiltrarTabla('tblSurtido','txtBuscarSurtido')">
+                                    </div>
+
+                                    <table class="table h-full table-hove table-bordered h-full" id="tblSurtido">
                                         <thead class="bg-naranja text-white">
                                             <tr>
                                                 <td>PRODUCTO</td>

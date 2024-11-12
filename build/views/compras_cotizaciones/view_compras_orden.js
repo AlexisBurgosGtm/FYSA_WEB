@@ -2439,8 +2439,11 @@ function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,dire
                     funciones.showToast("Documento cargado...");
 
                 })
-                .catch(()=>{
+                .catch((error)=>{
                       
+                    console.log('error al tomar datos')
+                    console.log(error)
+                    
                     btn.disabled = false;
                     btn.innerHTML = `<i class="fal fa-download"></i>`
 

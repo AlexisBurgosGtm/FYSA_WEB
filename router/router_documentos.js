@@ -17,6 +17,8 @@ router.post("/documentos_pendientes", async(req,res)=>{
             AND (TIPODOCUMENTOS.TIPODOC = '${tipodoc}') 
             AND (DOCUMENTOS.STATUS = 'O')
     `
+
+    console.log(qry);
     
     execute.QueryToken(res,qry,token);
      

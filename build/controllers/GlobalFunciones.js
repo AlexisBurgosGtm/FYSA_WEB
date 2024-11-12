@@ -527,7 +527,7 @@ let GF = {
             };
     
             axios.post(`/documentos/detalle_documento`, data)
-            .then(res => {
+            .then(response => {
                 if(response.status.toString()=='200'){
                     let data = response.data;
                     if(data.toString()=="error"){

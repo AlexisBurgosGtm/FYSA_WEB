@@ -1001,7 +1001,7 @@ function listener_vista_pedido(){
 
 
         let nuevacantidad = Number(cantidad);
-        selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
+       db_compra.selectDataRowVentaPOS(Number(Selected_id),nuevacantidad,preciounitario,descuento)
         .then(()=>{
             $("#modal_editar_cantidad").modal('hide');
 
@@ -1700,7 +1700,7 @@ function insert_producto_pedido(codprod,desprod,codmedida,equivale,costo,precio,
     
 
     return new Promise((resolve,reject)=>{
-        insertTempVentasPOS(datos)
+        db_compra.insertTempVentasPOS(datos)
         .then(()=>{
             resolve();
         }) 
@@ -1722,7 +1722,7 @@ function get_tbl_pedido(){
     let varTotalCosto = 0;
     let varTotalDescuento = 0;
 
-    selectTempVentasPOS(GlobalEmpnit)
+    db_compra.selectTempVentasPOS(GlobalEmpnit)
     .then((data)=>{
         let datos = data.map((rows)=>{
             varTotalItems += 1;
@@ -1826,7 +1826,7 @@ function delete_item_pedido(id){
     funciones.Confirmacion('¿Está seguro que desea quitar este item?')
     .then((value)=>{
         if(value==true){
-            deleteItemVentaPOS(id)
+           db_compra.deleteItemVentaPOS(id)
             .then(()=>{
                 funciones.showToast('Item eliminado');
                 get_tbl_pedido();
@@ -1963,7 +1963,7 @@ function finalizar_pedido(){
             btnGuardarFactura.disabled = true;
             btnGuardarFactura.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
     
-            gettempDocproductos_pos(GlobalUsuario)
+           db_compra.gettempDocproductos_pos(GlobalUsuario)
             .then((response)=>{
                 axios.post('/compras/insertcompra', {
                     jsondocproductos:JSON.stringify(response),
@@ -2017,7 +2017,7 @@ function finalizar_pedido(){
                         btnGuardarFactura.disabled = false;
                         btnGuardarFactura.innerHTML = `<i class="fal fa-save"></i>`;
     
-                        deleteTempVenta_pos(GlobalUsuario);
+                        db_compra.deleteTempVenta_pos(GlobalUsuario);
     
                         fcnNuevoPedido();
                     }
@@ -2218,7 +2218,7 @@ function cargarPedidoEdicion(codclie,nit,nombre,direccion,coddoc,correlativo){
                             document.getElementById('txtPosCobroDireccion').value = direccion;
                         
                                                     
-                            deleteTempVenta_pos(GlobalUsuario)
+                            db_compra.deleteTempVenta_pos(GlobalUsuario)
                             .then(()=>{
 
                                 //descarga el pedido y lo inserta en el indexed
@@ -2267,7 +2267,7 @@ function loadDetallePedido(coddoc,correlativo){
         .then((response) => {
             const data = response.data;
            data.recordset.map((rows)=>{
-                insertTempVentasPOS(rows);
+            db_compra.insertTempVentasPOS(rows);
            })
             resolve();
         }, (error) => {
@@ -2451,7 +2451,7 @@ function get_documento_tomar_datos(coddoc,correlativo,codigoprov,nit,nombre,dire
             
             funciones.showToast("Cargando documento...");
 
-            deleteTempVenta_pos(GlobalUsuario)
+            db_compra.deleteTempVenta_pos(GlobalUsuario)
             .then(()=>{
 
                 document.getElementById('txtPosCobroNitclie').value = codigoprov;
@@ -2539,7 +2539,7 @@ function get_download_datos(coddoc,correlativo){
                     DESCUENTO:Number(r.DESCUENTO)
                 };
         
-                insertTempVentasPOS(datos)
+                db_compra.insertTempVentasPOS(datos)
                 .then(()=>{
                     
                 }) 
